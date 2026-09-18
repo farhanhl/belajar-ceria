@@ -1,69 +1,143 @@
-import Image from "next/image";
+"use client";
 
-export default function Home() {
+import React, { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
+import { useProfileStore } from "@/stores/profile-store";
+import { useSettingsStore } from "@/stores/settings-store";
+import { Teacher } from "@/components/teacher/Teacher";
+import { AvatarPicker } from "@/components/profile/AvatarPicker";
+import { ChildButton } from "@/components/ui/ChildButton";
+import { ChildCard } from "@/components/ui/ChildCard";
+import { Sparkles, ArrowRight } from "lucide-react";
+import { getTranslation } from "@/lib/i18n";
+
+export default function HomePage() {
+  const router = useRouter();
+  const { profiles, activeProfile, createProfile, isHydrated } = useProfileStore();
+  const { language } = useSettingsStore();
+
+  const [name, setName] = useState("");
+  const [avatar, setAvatar] = useState("girl-1");
+  const [error, setError] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  useEffect(() => {
+    if (!isHydrated) return;
+
+    if (profiles.length === 1 && activeProfile) {
+      // Exactly 1 profile -> automatically continue to dashboard
+      router.replace("/learn");
+    } else if (profiles.length > 1) {
+      // Multiple profiles -> go to profile selector
+      router.replace("/profiles");
+    }
+  }, [isHydrated, profiles.length, activeProfile, router]);
+
+  const handleCreateInitialProfile = (e: React.FormEvent) => {
+    e.preventDefault();
+    const trimmed = name.trim();
+    if (!trimmed) {
+      setError("Yuk masukkan nama kamu terlebih dahulu!");
+      return;
+    }
+
+    setIsSubmitting(true);
+    try {
+      createProfile(trimmed, avatar);
+      router.push("/learn");
+    } catch {
+      setError("Ups, coba masukkan nama lain ya!");
+      setIsSubmitting(false);
+    }
+  };
+
+  if (!isHydrated || profiles.length > 0) {
+    return (
+      <div className="min-h-screen flex items-center justify-center p-4">
+        <div className="text-center space-y-3">
+          <div className="w-14 h-14 border-4 border-amber-400 border-t-amber-600 rounded-full animate-spin mx-auto" />
+          <p className="font-bold text-amber-900">Membuka Belajar Ceria...</p>
+        </div>
+      </div>
+    );
+  }
+
+  // First time onboarding view
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert h-5 w-[100px]"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the{" "}
-            <code className="rounded bg-black/[.06] px-1.5 py-0.5 font-mono text-[0.9em] dark:bg-white/[.08]">
-              page.tsx
-            </code>{" "}
-            file.
+    <main className="min-h-screen flex flex-col items-center justify-center p-4 sm:p-8">
+      <div className="w-full max-w-xl space-y-6">
+        {/* Brand Header */}
+        <div className="text-center space-y-2">
+          <div className="inline-flex items-center gap-2 bg-amber-200/80 text-amber-900 px-4 py-1.5 rounded-full text-sm font-extrabold shadow-sm">
+            <Sparkles className="w-4 h-4 text-amber-600 fill-amber-500" />
+            {getTranslation("app.tagline", {}, language)}
+          </div>
+          <h1 className="text-4xl sm:text-5xl font-black text-amber-950 tracking-tight">
+            Belajar Ceria
           </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert h-[14px] w-4"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={14}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
-      </main>
-    </div>
+
+        {/* Teacher Welcome Message */}
+        <Teacher
+          expression="happy"
+          message={getTranslation("onboarding.welcomeTeacher", { name: name.trim() || "Teman" }, language)}
+        />
+
+        {/* Create Profile Card */}
+        <ChildCard borderColor="border-amber-300" className="space-y-6 bg-white/95">
+          <div className="text-center space-y-1">
+            <h2 className="text-2xl sm:text-3xl font-black text-amber-950">
+              {getTranslation("onboarding.title", {}, language)}
+            </h2>
+            <p className="text-amber-700 font-bold text-sm sm:text-base">
+              {getTranslation("onboarding.subtitle", {}, language)}
+            </p>
+          </div>
+
+          <form onSubmit={handleCreateInitialProfile} className="space-y-6">
+            {/* Avatar Selector */}
+            <div className="space-y-2">
+              <label className="block text-center text-sm font-black text-amber-900 uppercase tracking-wider">
+                {getTranslation("onboarding.chooseAvatar", {}, language)}
+              </label>
+              <AvatarPicker selectedAvatar={avatar} onSelect={setAvatar} />
+            </div>
+
+            {/* Child Name Input */}
+            <div className="space-y-2">
+              <input
+                type="text"
+                value={name}
+                onChange={(e) => {
+                  setName(e.target.value);
+                  if (error) setError("");
+                }}
+                placeholder={getTranslation("onboarding.namePlaceholder", {}, language)}
+                maxLength={25}
+                className="w-full text-center text-xl sm:text-2xl font-black px-6 py-4 rounded-3xl border-4 border-amber-300 bg-amber-50/50 focus:bg-white focus:border-amber-500 focus:outline-none placeholder:text-amber-300 transition-all shadow-inner"
+                autoFocus
+              />
+              {error && (
+                <p className="text-center font-extrabold text-rose-500 text-sm">{error}</p>
+              )}
+            </div>
+
+            {/* Submit Button */}
+            <div className="flex justify-center">
+              <ChildButton
+                type="submit"
+                variant="primary"
+                size="xl"
+                icon={<ArrowRight className="w-7 h-7 stroke-[3]" />}
+                disabled={isSubmitting || !name.trim()}
+                className="w-full sm:w-auto"
+              >
+                {getTranslation("onboarding.startButton", {}, language)}
+              </ChildButton>
+            </div>
+          </form>
+        </ChildCard>
+      </div>
+    </main>
   );
 }
