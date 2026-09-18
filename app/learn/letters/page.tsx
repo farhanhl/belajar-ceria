@@ -13,6 +13,7 @@ import { motion } from "motion/react";
 import { BookOpen, Gamepad2, ArrowLeft, Star, Sparkles, Play } from "lucide-react";
 import Link from "next/link";
 import { soundFx } from "@/lib/audio/sound-fx";
+import { getTranslation } from "@/lib/i18n";
 
 export default function LettersMenuPage() {
   const router = useRouter();
@@ -45,18 +46,18 @@ export default function LettersMenuPage() {
             className="p-2.5 sm:px-4 sm:py-2 bg-amber-100 hover:bg-amber-200 text-amber-900 rounded-2xl transition flex items-center gap-1.5 font-black text-sm sm:text-base shadow-sm"
           >
             <ArrowLeft className="w-5 h-5" />
-            <span>Kembali ke Menu</span>
+            <span>{getTranslation("app.backToMenu", {}, language)}</span>
           </Link>
 
           <h1 className="text-2xl sm:text-4xl font-black text-amber-950 tracking-tight">
-            Belajar Huruf (A - Z)
+            {getTranslation("games.letters.titleFull", {}, language)}
           </h1>
         </div>
 
         {/* Teacher Welcome */}
         <Teacher
           expression="happy"
-          message="Yuk kita kenali huruf A sampai Z! Kamu bisa melihat kartu huruf atau bermain tebak huruf!"
+          message={getTranslation("games.letters.teacherWelcome", {}, language)}
         />
 
         {/* Two Main Modes Grid */}
@@ -73,20 +74,20 @@ export default function LettersMenuPage() {
 
               <div className="space-y-1">
                 <div className="inline-flex items-center gap-1 bg-pink-200 text-pink-900 font-extrabold text-xs px-2.5 py-0.5 rounded-full uppercase">
-                  <Sparkles className="w-3 h-3" /> Mode Belajar
+                  <Sparkles className="w-3 h-3" /> {getTranslation("games.letters.exploreMode", {}, language)}
                 </div>
                 <h2 className="text-2xl sm:text-3xl font-black text-pink-950">
-                  Kartu Huruf A - Z
+                  {getTranslation("games.letters.exploreMode", {}, language)}
                 </h2>
                 <p className="text-sm sm:text-base font-bold text-pink-800">
-                  Sentuh kartu huruf untuk mendengarkan pelafalan suara dan melihat gambar lucunya!
+                  {getTranslation("games.letters.exploreModeDesc", {}, language)}
                 </p>
               </div>
             </div>
 
             <Link href="/learn/letters/explore">
               <ChildButton variant="pink" size="lg" className="w-full">
-                Buka Kartu Huruf 📖
+                {getTranslation("games.letters.exploreButton", {}, language)}
               </ChildButton>
             </Link>
           </motion.div>
@@ -103,13 +104,13 @@ export default function LettersMenuPage() {
 
               <div className="space-y-1">
                 <div className="inline-flex items-center gap-1 bg-amber-200 text-amber-950 font-extrabold text-xs px-2.5 py-0.5 rounded-full uppercase">
-                  <Sparkles className="w-3 h-3" /> Mode Permainan
+                  <Sparkles className="w-3 h-3" /> {getTranslation("games.letters.quizMode", {}, language)}
                 </div>
                 <h2 className="text-2xl sm:text-3xl font-black text-amber-950">
-                  Kuis Tebak Huruf
+                  {getTranslation("games.letters.quizMode", {}, language)}
                 </h2>
                 <p className="text-sm sm:text-base font-bold text-amber-800">
-                  Pilih tingkat kesulitan, jawab 5 soal seru, dan kumpulkan bintang sebanyak-banyaknya!
+                  {getTranslation("games.letters.quizModeDesc", {}, language)}
                 </p>
               </div>
 
@@ -121,7 +122,7 @@ export default function LettersMenuPage() {
                   className="w-full p-3 rounded-2xl bg-emerald-100 hover:bg-emerald-200 text-emerald-950 border-2 border-emerald-300 font-black text-sm sm:text-base flex items-center justify-between transition cursor-pointer"
                 >
                   <span className="flex items-center gap-2">
-                    <span>🌱</span> Tingkat Mudah (Kenali Huruf)
+                    <span>🌱</span> {getTranslation("games.letters.easyDesc", {}, language)}
                   </span>
                   <span className="text-xs text-emerald-700 font-extrabold flex items-center gap-1">
                     <Star className="w-4 h-4 fill-amber-400 text-amber-500" /> {easyStars}
@@ -134,7 +135,7 @@ export default function LettersMenuPage() {
                   className="w-full p-3 rounded-2xl bg-sky-100 hover:bg-sky-200 text-sky-950 border-2 border-sky-300 font-black text-sm sm:text-base flex items-center justify-between transition cursor-pointer"
                 >
                   <span className="flex items-center gap-2">
-                    <span>⭐</span> Tingkat Sedang (Huruf Benda)
+                    <span>⭐</span> {getTranslation("games.letters.medDesc", {}, language)}
                   </span>
                   <span className="text-xs text-sky-700 font-extrabold flex items-center gap-1">
                     <Star className="w-4 h-4 fill-amber-400 text-amber-500" /> {medStars}
@@ -147,7 +148,7 @@ export default function LettersMenuPage() {
                   className="w-full p-3 rounded-2xl bg-purple-100 hover:bg-purple-200 text-purple-950 border-2 border-purple-300 font-black text-sm sm:text-base flex items-center justify-between transition cursor-pointer"
                 >
                   <span className="flex items-center gap-2">
-                    <span>👑</span> Tingkat Tantangan (Besar & Kecil)
+                    <span>👑</span> {getTranslation("games.letters.hardDesc", {}, language)}
                   </span>
                   <span className="text-xs text-purple-700 font-extrabold flex items-center gap-1">
                     <Star className="w-4 h-4 fill-amber-400 text-amber-500" /> {hardStars}

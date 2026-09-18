@@ -12,6 +12,7 @@ import { PuzzleDifficulty, PuzzleItem, PuzzleTheme } from "@/games/puzzle/types"
 import { usePuzzleGameStore } from "@/stores/puzzle-game-store";
 import { useSettingsStore } from "@/stores/settings-store";
 import { soundFx } from "@/lib/audio/sound-fx";
+import { getTranslation } from "@/lib/i18n";
 import { motion } from "motion/react";
 import { Sparkles, Grid, Play, Layers, ArrowLeft, Trophy } from "lucide-react";
 import Link from "next/link";
@@ -19,7 +20,7 @@ import Link from "next/link";
 export default function PuzzleSelectPage() {
   const router = useRouter();
   const { startPuzzle } = usePuzzleGameStore();
-  const { soundEnabled, volume } = useSettingsStore();
+  const { language, soundEnabled, volume } = useSettingsStore();
 
   const [selectedTheme, setSelectedTheme] = useState<"all" | PuzzleTheme>("all");
   const [selectedDifficulty, setSelectedDifficulty] = useState<PuzzleDifficulty>("easy");
@@ -45,17 +46,17 @@ export default function PuzzleSelectPage() {
           <Link href="/learn">
             <ChildButton variant="secondary" size="sm" className="gap-2">
               <ArrowLeft className="w-4 h-4" />
-              <span>Kembali</span>
+              <span>{getTranslation("app.back", {}, language)}</span>
             </ChildButton>
           </Link>
 
           <div className="text-center sm:text-right space-y-1">
             <div className="inline-flex items-center gap-1.5 bg-amber-100 text-amber-950 px-3 py-1 rounded-full text-xs font-black">
               <Layers className="w-3.5 h-3.5 text-amber-600" />
-              <span>Modul Puzzle Bergambar</span>
+              <span>{getTranslation("games.puzzle.moduleBadge", {}, language)}</span>
             </div>
             <h1 className="text-2xl sm:text-4xl font-black text-amber-950 tracking-tight">
-              Puzzle Bergambar 🧩
+              {getTranslation("games.puzzle.title", {}, language)} 🧩
             </h1>
           </div>
         </div>
@@ -63,7 +64,7 @@ export default function PuzzleSelectPage() {
         {/* Teacher Guide */}
         <Teacher
           expression="happy"
-          message="Pilih gambar yang kamu suka dan tentukan tingkat kesulitannya, lalu ayo kita susun bersama!"
+          message={getTranslation("games.puzzle.teacherWelcome", {}, language)}
           className="w-full"
         />
 
@@ -72,7 +73,7 @@ export default function PuzzleSelectPage() {
           <div className="flex items-center gap-2">
             <Trophy className="w-5 h-5 text-amber-500" />
             <span className="font-extrabold text-amber-950 text-sm sm:text-base">
-              Pilih Tingkat Kesulitan:
+              {getTranslation("games.puzzle.chooseDifficulty", {}, language)}
             </span>
           </div>
 
@@ -88,7 +89,7 @@ export default function PuzzleSelectPage() {
                   : "bg-emerald-50 text-emerald-800 hover:bg-emerald-100"
               }`}
             >
-              🟢 Mudah (4 Pcs)
+              {getTranslation("games.puzzle.easyBtn", {}, language)}
             </button>
             <button
               onClick={() => {
@@ -101,7 +102,7 @@ export default function PuzzleSelectPage() {
                   : "bg-amber-50 text-amber-800 hover:bg-amber-100"
               }`}
             >
-              🟡 Sedang (6 Pcs)
+              {getTranslation("games.puzzle.medBtn", {}, language)}
             </button>
             <button
               onClick={() => {
@@ -114,7 +115,7 @@ export default function PuzzleSelectPage() {
                   : "bg-rose-50 text-rose-800 hover:bg-rose-100"
               }`}
             >
-              🔴 Sulit (9 Pcs)
+              {getTranslation("games.puzzle.hardBtn", {}, language)}
             </button>
           </div>
         </div>
@@ -132,7 +133,7 @@ export default function PuzzleSelectPage() {
                 : "bg-white/80 text-amber-900 hover:bg-white shadow-sm hover:scale-102"
             }`}
           >
-            ✨ Semua Tema ({PUZZLE_CATALOG.length})
+            {getTranslation("games.puzzle.allThemes", { count: PUZZLE_CATALOG.length }, language)}
           </button>
           <button
             onClick={() => {
@@ -145,7 +146,7 @@ export default function PuzzleSelectPage() {
                 : "bg-white/80 text-amber-900 hover:bg-white shadow-sm hover:scale-102"
             }`}
           >
-            🦁 Hewan Ceria
+            {getTranslation("games.puzzle.themeAnimals", {}, language)}
           </button>
           <button
             onClick={() => {
@@ -158,7 +159,7 @@ export default function PuzzleSelectPage() {
                 : "bg-white/80 text-amber-900 hover:bg-white shadow-sm hover:scale-102"
             }`}
           >
-            🚀 Kendaraan Keren
+            {getTranslation("games.puzzle.themeVehicles", {}, language)}
           </button>
         </div>
 
@@ -185,17 +186,17 @@ export default function PuzzleSelectPage() {
                     <span
                       className={`absolute top-2 left-2 ${puzzle.badgeColor} text-white text-[10px] font-black px-2 py-0.5 rounded-full shadow-sm`}
                     >
-                      {puzzle.themeName.id}
+                      {puzzle.themeName[language] || puzzle.themeName.id}
                     </span>
                   </div>
 
                   {/* Title & Description */}
                   <div>
                     <h3 className="text-base sm:text-lg font-black text-amber-950 group-hover:text-amber-600 transition-colors">
-                      {puzzle.title.id}
+                      {puzzle.title[language] || puzzle.title.id}
                     </h3>
                     <p className="text-xs text-slate-600 font-semibold line-clamp-2 mt-0.5">
-                      {puzzle.description.id}
+                      {puzzle.description[language] || puzzle.description.id}
                     </p>
                   </div>
                 </div>
@@ -207,7 +208,7 @@ export default function PuzzleSelectPage() {
                     icon={<Play className="w-4 h-4 fill-amber-950" />}
                     className="w-full text-xs sm:text-sm font-black group-hover:shadow-lg"
                   >
-                    Susun Puzzle
+                    {getTranslation("games.puzzle.assembleBtn", {}, language)}
                   </ChildButton>
                 </div>
               </ChildCard>

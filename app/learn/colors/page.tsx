@@ -1,38 +1,37 @@
 "use client";
 
 import React, { useState } from "react";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { Difficulty } from "@/types/game";
-import { useColorsGameStore } from "@/stores/colors-game-store";
 import { useProfileStore } from "@/stores/profile-store";
 import { useSettingsStore } from "@/stores/settings-store";
+import { useColorsGameStore } from "@/stores/colors-game-store";
 import { ChildNavbar } from "@/components/navigation/ChildNavbar";
 import { Teacher } from "@/components/teacher/Teacher";
-import { ChildButton } from "@/components/ui/ChildButton";
 import { ChildCard } from "@/components/ui/ChildCard";
+import { ChildButton } from "@/components/ui/ChildButton";
+import { Difficulty } from "@/types/game";
 import { soundFx } from "@/lib/audio/sound-fx";
-import { motion } from "motion/react";
+import { getTranslation } from "@/lib/i18n";
 import {
-  Sparkles,
-  Compass,
-  Play,
   Star,
-  Trophy,
-  ArrowLeft,
   Palette,
   Shapes,
+  Compass,
+  Play,
+  ArrowLeft,
 } from "lucide-react";
-import Link from "next/link";
+import { motion } from "motion/react";
 
-export default function ColorsHubPage() {
+export default function ColorsMenuPage() {
   const router = useRouter();
-  const { startGame } = useColorsGameStore();
   const { activeProfile } = useProfileStore();
-  const { soundEnabled, volume } = useSettingsStore();
+  const { language, soundEnabled, volume } = useSettingsStore();
+  const { startGame } = useColorsGameStore();
 
   const [selectedDifficulty, setSelectedDifficulty] = useState<Difficulty>("easy");
 
-  const childName = activeProfile?.name || "Teman";
+  const childName = activeProfile?.name || (language === "id" ? "Teman" : "Friend");
 
   const handleStartPlay = (difficulty: Difficulty) => {
     if (soundEnabled) soundFx.playClick(volume);
@@ -55,21 +54,20 @@ export default function ColorsHubPage() {
           <Link href="/learn">
             <ChildButton variant="secondary" size="sm" className="gap-2">
               <ArrowLeft className="w-4 h-4" />
-              <span>Menu Belajar</span>
+              <span>{getTranslation("app.backToLearn", {}, language)}</span>
             </ChildButton>
           </Link>
 
           <div className="inline-flex items-center gap-2 bg-amber-200 text-amber-950 font-black px-4 py-2 rounded-full text-sm shadow-sm">
             <Star className="w-5 h-5 fill-amber-500 text-amber-600" />
-            <span>{colorsStars} Bintang Terkumpul</span>
+            <span>{getTranslation("app.starsCollected", { count: colorsStars }, language)}</span>
           </div>
         </div>
 
         {/* Teacher Avatar Welcome */}
         <Teacher
           expression="happy"
-          message={`Halo, ${childName}! Mari mengenal warna-warni indah dan bentuk-bentuk lucu bersama Ibu Guru!`}
-          subMessage="Kamu bisa bereksplorasi dengan santai atau mulai tantangan bermain seru!"
+          message={getTranslation("games.colors.teacherWelcome", {}, language)}
         />
 
         {/* Mode Choices: Exploration vs Play Challenge */}
@@ -87,10 +85,10 @@ export default function ColorsHubPage() {
 
                 <div>
                   <h3 className="text-2xl sm:text-3xl font-black text-slate-800">
-                    Eksplorasi Santai
+                    {getTranslation("games.colors.exploreMode", {}, language)}
                   </h3>
                   <p className="text-sm sm:text-base font-bold text-slate-600 mt-1">
-                    Sentuh warna dan bentuk untuk mendengarkan suara & melihat benda-benda nyata di sekitar kita.
+                    {getTranslation("games.colors.exploreModeDesc", {}, language)}
                   </p>
                 </div>
               </div>
@@ -106,7 +104,7 @@ export default function ColorsHubPage() {
                     }}
                   >
                     <Compass className="w-5 h-5" />
-                    <span>Mulai Eksplorasi 🔍</span>
+                    <span>{getTranslation("games.colors.exploreButton", {}, language)}</span>
                   </ChildButton>
                 </Link>
               </div>
@@ -126,17 +124,17 @@ export default function ColorsHubPage() {
 
                 <div>
                   <h3 className="text-2xl sm:text-3xl font-black text-slate-800">
-                    Tantangan Bermain
+                    {getTranslation("games.colors.quizMode", {}, language)}
                   </h3>
                   <p className="text-sm sm:text-base font-bold text-slate-600 mt-1">
-                    Uji ketangkasanmu mencocokkan bentuk, mencari warna, dan mengelompokkan benda ke keranjang!
+                    {getTranslation("games.colors.quizModeDesc", {}, language)}
                   </p>
                 </div>
 
                 {/* Difficulty Selector */}
                 <div className="space-y-2 pt-2">
                   <span className="text-xs font-black uppercase tracking-wider text-amber-900/80">
-                    Pilih Tingkat Kesulitan:
+                    {getTranslation("games.difficulty.selectDifficulty", {}, language)}:
                   </span>
                   <div className="grid grid-cols-3 gap-2">
                     <button
@@ -150,7 +148,7 @@ export default function ColorsHubPage() {
                           : "bg-white text-emerald-700 hover:bg-emerald-50 border border-emerald-200"
                       }`}
                     >
-                      Mudah ⭐
+                      {getTranslation("games.difficulty.easy", {}, language)} ⭐
                     </button>
                     <button
                       onClick={() => {
@@ -163,7 +161,7 @@ export default function ColorsHubPage() {
                           : "bg-white text-amber-700 hover:bg-amber-50 border border-amber-200"
                       }`}
                     >
-                      Sedang ⭐⭐
+                      {getTranslation("games.difficulty.medium", {}, language)} ⭐⭐
                     </button>
                     <button
                       onClick={() => {
@@ -176,7 +174,7 @@ export default function ColorsHubPage() {
                           : "bg-white text-rose-700 hover:bg-rose-50 border border-rose-200"
                       }`}
                     >
-                      Sulit ⭐⭐⭐
+                      {getTranslation("games.difficulty.hard", {}, language)} ⭐⭐⭐
                     </button>
                   </div>
                 </div>
@@ -184,13 +182,13 @@ export default function ColorsHubPage() {
 
               <div className="pt-6">
                 <ChildButton
-                  variant="primary"
+                  variant="success"
                   size="lg"
                   className="w-full gap-2 shadow-lg"
                   onClick={() => handleStartPlay(selectedDifficulty)}
                 >
-                  <Play className="w-5 h-5 fill-amber-950" />
-                  <span>Mulai Bermain 🎮</span>
+                  <Play className="w-5 h-5 fill-white" />
+                  <span>{getTranslation("app.startPlay", {}, language)} 🎮</span>
                 </ChildButton>
               </div>
             </ChildCard>

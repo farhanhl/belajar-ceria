@@ -5,9 +5,8 @@ import Link from "next/link";
 import { useProfileStore } from "@/stores/profile-store";
 import { useSettingsStore } from "@/stores/settings-store";
 import { ChildAvatar } from "@/components/profile/ChildAvatar";
-import { Star, Trophy, Settings, Users, Sparkles } from "lucide-react";
-import { motion } from "motion/react";
-
+import { Star, Trophy, Settings, Users } from "lucide-react";
+import { getTranslation } from "@/lib/i18n";
 import Image from "next/image";
 
 interface ChildNavbarProps {
@@ -18,7 +17,7 @@ export function ChildNavbar({ showControls = true }: ChildNavbarProps) {
   const { activeProfile } = useProfileStore();
   const { language } = useSettingsStore();
 
-  // Calculate total stars across all difficulty levels and games
+  // Calculate total stars across all games
   const matchingStars = activeProfile
     ? (activeProfile.progress?.matching?.easy?.stars || 0) +
       (activeProfile.progress?.matching?.medium?.stars || 0) +
@@ -37,7 +36,25 @@ export function ChildNavbar({ showControls = true }: ChildNavbarProps) {
       (activeProfile.progress?.puzzle?.hard?.stars || 0)
     : 0;
 
-  const totalStars = matchingStars + lettersStars + puzzleStars;
+  const colorsStars = activeProfile
+    ? (activeProfile.progress?.colors?.easy?.stars || 0) +
+      (activeProfile.progress?.colors?.medium?.stars || 0) +
+      (activeProfile.progress?.colors?.hard?.stars || 0)
+    : 0;
+
+  const numbersStars = activeProfile
+    ? (activeProfile.progress?.numbers?.easy?.stars || 0) +
+      (activeProfile.progress?.numbers?.medium?.stars || 0) +
+      (activeProfile.progress?.numbers?.hard?.stars || 0)
+    : 0;
+
+  const memoryStars = activeProfile
+    ? (activeProfile.progress?.memory?.easy?.stars || 0) +
+      (activeProfile.progress?.memory?.medium?.stars || 0) +
+      (activeProfile.progress?.memory?.hard?.stars || 0)
+    : 0;
+
+  const totalStars = matchingStars + lettersStars + puzzleStars + colorsStars + numbersStars + memoryStars;
 
   const currentLevel = activeProfile
     ? Math.max(
@@ -49,7 +66,16 @@ export function ChildNavbar({ showControls = true }: ChildNavbarProps) {
         activeProfile.progress?.letters?.hard?.currentLevel || 1,
         activeProfile.progress?.puzzle?.easy?.currentLevel || 1,
         activeProfile.progress?.puzzle?.medium?.currentLevel || 1,
-        activeProfile.progress?.puzzle?.hard?.currentLevel || 1
+        activeProfile.progress?.puzzle?.hard?.currentLevel || 1,
+        activeProfile.progress?.colors?.easy?.currentLevel || 1,
+        activeProfile.progress?.colors?.medium?.currentLevel || 1,
+        activeProfile.progress?.colors?.hard?.currentLevel || 1,
+        activeProfile.progress?.numbers?.easy?.currentLevel || 1,
+        activeProfile.progress?.numbers?.medium?.currentLevel || 1,
+        activeProfile.progress?.numbers?.hard?.currentLevel || 1,
+        activeProfile.progress?.memory?.easy?.currentLevel || 1,
+        activeProfile.progress?.memory?.medium?.currentLevel || 1,
+        activeProfile.progress?.memory?.hard?.currentLevel || 1
       )
     : 1;
 
@@ -70,10 +96,10 @@ export function ChildNavbar({ showControls = true }: ChildNavbarProps) {
           </div>
           <div>
             <span className="text-xl sm:text-2xl font-black tracking-tight bg-gradient-to-r from-amber-600 via-orange-600 to-rose-600 bg-clip-text text-transparent">
-              Belajar Ceria
+              {getTranslation("app.title", {}, language)}
             </span>
             <span className="hidden md:block text-xs font-bold text-amber-700">
-              Belajar jadi menyenangkan!
+              {getTranslation("app.tagline", {}, language)}
             </span>
           </div>
         </Link>
@@ -94,7 +120,7 @@ export function ChildNavbar({ showControls = true }: ChildNavbarProps) {
                   </span>
                   <span className="flex items-center gap-0.5 text-orange-600">
                     <Trophy className="w-3.5 h-3.5 text-orange-500" />
-                    Lvl {currentLevel}
+                    Level {currentLevel}
                   </span>
                 </div>
               </div>
@@ -106,16 +132,16 @@ export function ChildNavbar({ showControls = true }: ChildNavbarProps) {
               <Link
                 href="/profiles"
                 className="p-2 sm:p-2.5 bg-sky-100 hover:bg-sky-200 text-sky-800 rounded-2xl transition-all shadow-sm flex items-center justify-center"
-                title="Ganti Profil Anak"
-                aria-label="Ganti Profil Anak"
+                title={getTranslation("dashboard.switchProfile", {}, language)}
+                aria-label={getTranslation("dashboard.switchProfile", {}, language)}
               >
                 <Users className="w-5 h-5 sm:w-6 sm:h-6" />
               </Link>
               <Link
                 href="/settings"
                 className="p-2 sm:p-2.5 bg-amber-100 hover:bg-amber-200 text-amber-800 rounded-2xl transition-all shadow-sm flex items-center justify-center"
-                title="Pengaturan"
-                aria-label="Pengaturan"
+                title={getTranslation("dashboard.settings", {}, language)}
+                aria-label={getTranslation("dashboard.settings", {}, language)}
               >
                 <Settings className="w-5 h-5 sm:w-6 sm:h-6" />
               </Link>

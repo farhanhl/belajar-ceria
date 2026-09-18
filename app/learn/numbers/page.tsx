@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { Difficulty } from "@/types/game";
 import { NumberOperationMode } from "@/games/numbers/types";
@@ -9,37 +10,36 @@ import { useProfileStore } from "@/stores/profile-store";
 import { useSettingsStore } from "@/stores/settings-store";
 import { ChildNavbar } from "@/components/navigation/ChildNavbar";
 import { Teacher } from "@/components/teacher/Teacher";
-import { ChildButton } from "@/components/ui/ChildButton";
 import { ChildCard } from "@/components/ui/ChildCard";
+import { ChildButton } from "@/components/ui/ChildButton";
 import { soundFx } from "@/lib/audio/sound-fx";
-import { motion } from "motion/react";
+import { getTranslation } from "@/lib/i18n";
 import {
-  Sparkles,
-  Compass,
-  Play,
   Star,
+  Compass,
+  ArrowLeft,
   Plus,
   Minus,
   Shuffle,
   Binary,
-  ArrowLeft,
+  Play,
 } from "lucide-react";
-import Link from "next/link";
+import { motion } from "motion/react";
 
-export default function NumbersHubPage() {
+export default function NumbersMenuPage() {
   const router = useRouter();
-  const { startGame } = useNumbersGameStore();
   const { activeProfile } = useProfileStore();
-  const { soundEnabled, volume } = useSettingsStore();
+  const { language, soundEnabled, volume } = useSettingsStore();
+  const { startGame } = useNumbersGameStore();
 
   const [selectedMode, setSelectedMode] = useState<NumberOperationMode>("addition");
   const [selectedDifficulty, setSelectedDifficulty] = useState<Difficulty>("easy");
 
-  const childName = activeProfile?.name || "Teman";
+  const childName = activeProfile?.name || (language === "id" ? "Teman" : "Friend");
 
-  const handleStartPlay = (mode: NumberOperationMode, diff: Difficulty) => {
+  const handleStartPlay = (mode: NumberOperationMode, difficulty: Difficulty) => {
     if (soundEnabled) soundFx.playClick(volume);
-    startGame(mode, diff);
+    startGame(mode, difficulty);
     router.push("/learn/numbers/play");
   };
 
@@ -58,21 +58,20 @@ export default function NumbersHubPage() {
           <Link href="/learn">
             <ChildButton variant="secondary" size="sm" className="gap-2">
               <ArrowLeft className="w-4 h-4" />
-              <span>Menu Belajar</span>
+              <span>{getTranslation("app.backToLearn", {}, language)}</span>
             </ChildButton>
           </Link>
 
           <div className="inline-flex items-center gap-2 bg-amber-200 text-amber-950 font-black px-4 py-2 rounded-full text-sm shadow-sm">
             <Star className="w-5 h-5 fill-amber-500 text-amber-600" />
-            <span>{numbersStars} Bintang Terkumpul</span>
+            <span>{getTranslation("app.starsCollected", { count: numbersStars }, language)}</span>
           </div>
         </div>
 
         {/* Teacher Avatar Greeting */}
         <Teacher
           expression="happy"
-          message={`Halo, ${childName}! Ayo kita belajar berhitung, penjumlahan, dan pengurangan dengan buah-buahan manis dan benda-benda lucu!`}
-          subMessage="Pilih mode yang ingin kamu mainkan di bawah ini ya!"
+          message={getTranslation("games.numbers.teacherWelcome", {}, language)}
         />
 
         {/* Mode Choices Grid */}
@@ -90,10 +89,10 @@ export default function NumbersHubPage() {
 
                 <div>
                   <h3 className="text-2xl sm:text-3xl font-black text-slate-800">
-                    Mengenal Angka 1–10
+                    {getTranslation("games.numbers.exploreMode", {}, language)}
                   </h3>
                   <p className="text-sm sm:text-base font-bold text-slate-600 mt-1">
-                    Sentuh angka 1 sampai 10 untuk mendengarkan suaranya dan melihat kelompok benda lucu.
+                    {getTranslation("games.numbers.exploreModeDesc", {}, language)}
                   </p>
                 </div>
               </div>
@@ -109,7 +108,7 @@ export default function NumbersHubPage() {
                     }}
                   >
                     <Compass className="w-5 h-5" />
-                    <span>Mulai Eksplorasi 🔢</span>
+                    <span>{getTranslation("games.numbers.exploreButton", {}, language)}</span>
                   </ChildButton>
                 </Link>
               </div>
@@ -129,17 +128,17 @@ export default function NumbersHubPage() {
 
                 <div>
                   <h3 className="text-2xl sm:text-3xl font-black text-slate-800">
-                    Tantangan Matematika
+                    {getTranslation("games.numbers.quizMode", {}, language)}
                   </h3>
                   <p className="text-sm sm:text-base font-bold text-slate-600 mt-1">
-                    Pilih jenis operasi hitung dan tingkat kesulitan yang kamu inginkan:
+                    {getTranslation("games.numbers.quizModeDesc", {}, language)}
                   </p>
                 </div>
 
                 {/* Mode Selector */}
                 <div className="space-y-2">
                   <span className="text-xs font-black uppercase tracking-wider text-emerald-950">
-                    Pilih Operasi:
+                    {getTranslation("games.matching.selectDifficulty", {}, language)}:
                   </span>
                   <div className="grid grid-cols-2 gap-2">
                     <button
@@ -154,7 +153,7 @@ export default function NumbersHubPage() {
                       }`}
                     >
                       <Plus className="w-4 h-4 stroke-[3]" />
-                      <span>Penjumlahan</span>
+                      <span>{getTranslation("games.numbers.modeAddition", {}, language)}</span>
                     </button>
 
                     <button
@@ -169,7 +168,7 @@ export default function NumbersHubPage() {
                       }`}
                     >
                       <Minus className="w-4 h-4 stroke-[3]" />
-                      <span>Pengurangan</span>
+                      <span>{getTranslation("games.numbers.modeSubtraction", {}, language)}</span>
                     </button>
 
                     <button
@@ -184,7 +183,7 @@ export default function NumbersHubPage() {
                       }`}
                     >
                       <Shuffle className="w-4 h-4" />
-                      <span>Gabungan ➕➖</span>
+                      <span>{getTranslation("games.numbers.modeMixed", {}, language)}</span>
                     </button>
 
                     <button
@@ -198,7 +197,7 @@ export default function NumbersHubPage() {
                           : "bg-white text-amber-800 hover:bg-amber-50 border border-amber-200"
                       }`}
                     >
-                      <span>🍉 Hitung Buah</span>
+                      <span>{getTranslation("games.numbers.modeCounting", {}, language)}</span>
                     </button>
                   </div>
                 </div>
@@ -206,7 +205,7 @@ export default function NumbersHubPage() {
                 {/* Difficulty Selector */}
                 <div className="space-y-2">
                   <span className="text-xs font-black uppercase tracking-wider text-emerald-950">
-                    Rentang Angka:
+                    {getTranslation("parent.colLevel", {}, language)}:
                   </span>
                   <div className="grid grid-cols-3 gap-2">
                     <button
@@ -220,7 +219,7 @@ export default function NumbersHubPage() {
                           : "bg-white text-emerald-800 hover:bg-emerald-50 border border-emerald-200"
                       }`}
                     >
-                      1–5 (Mudah)
+                      1–5 ({getTranslation("games.difficulty.easy", {}, language)})
                     </button>
 
                     <button
@@ -234,7 +233,7 @@ export default function NumbersHubPage() {
                           : "bg-white text-amber-800 hover:bg-amber-50 border border-amber-200"
                       }`}
                     >
-                      1–10 (Sedang)
+                      1–10 ({getTranslation("games.difficulty.medium", {}, language)})
                     </button>
 
                     <button
@@ -248,7 +247,7 @@ export default function NumbersHubPage() {
                           : "bg-white text-rose-800 hover:bg-rose-50 border border-rose-200"
                       }`}
                     >
-                      1–20 (Sulit)
+                      1–20 ({getTranslation("games.difficulty.hard", {}, language)})
                     </button>
                   </div>
                 </div>
@@ -262,7 +261,7 @@ export default function NumbersHubPage() {
                   onClick={() => handleStartPlay(selectedMode, selectedDifficulty)}
                 >
                   <Play className="w-5 h-5 fill-white" />
-                  <span>Mulai Bermain 🎮</span>
+                  <span>{getTranslation("app.startPlay", {}, language)} 🎮</span>
                 </ChildButton>
               </div>
             </ChildCard>

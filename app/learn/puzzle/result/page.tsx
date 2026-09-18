@@ -8,6 +8,7 @@ import { useSettingsStore } from "@/stores/settings-store";
 import { GameResultView } from "@/components/game/GameResultView";
 import { PuzzleArtwork } from "@/games/puzzle/components/PuzzleArtwork";
 import { soundFx } from "@/lib/audio/sound-fx";
+import { getTranslation } from "@/lib/i18n";
 import { motion } from "motion/react";
 import { RotateCcw, Grid, CheckCircle2 } from "lucide-react";
 
@@ -15,9 +16,9 @@ export default function PuzzleResultPage() {
   const router = useRouter();
   const { lastResult, startPuzzle, difficulty } = usePuzzleGameStore();
   const { activeProfile } = useProfileStore();
-  const { soundEnabled, volume } = useSettingsStore();
+  const { language, soundEnabled, volume } = useSettingsStore();
 
-  const childName = activeProfile?.name || "Teman";
+  const childName = activeProfile?.name || (language === "id" ? "Teman" : "Friend");
 
   useEffect(() => {
     if (!lastResult) {
@@ -34,13 +35,13 @@ export default function PuzzleResultPage() {
       : lastResult.totalPieces;
   const isFullyCompleted = placedCount >= lastResult.totalPieces;
 
-  let message = `Luar biasa, ${childName}! Kamu berhasil menyusun gambar ${lastResult.puzzleTitle} dengan sangat rapi!`;
+  let message = getTranslation("games.puzzle.congratsAllPieces", { name: childName, title: lastResult.puzzleTitle }, language);
   if (!isFullyCompleted) {
-    message = `Kerja bagus, ${childName}! Kamu sudah berhasil memasang ${placedCount} dari ${lastResult.totalPieces} kepingan puzzle!`;
+    message = getTranslation("games.puzzle.congratsPartial", { name: childName, placed: placedCount, total: lastResult.totalPieces }, language);
   } else if (stars >= 4) {
-    message = `Hebat sekali, ${childName}! Gambar ${lastResult.puzzleTitle} berhasil kamu selesaikan dengan sangat baik!`;
+    message = getTranslation("games.puzzle.congratsHigh", { name: childName, title: lastResult.puzzleTitle }, language);
   } else if (stars < 3) {
-    message = `Bagus sekali, ${childName}! Terus berlatih agar semakin mahir menyusun puzzle ya!`;
+    message = getTranslation("games.puzzle.congratsPractice", { name: childName }, language);
   }
 
   const handlePlayAgain = () => {
@@ -73,25 +74,25 @@ export default function PuzzleResultPage() {
 
   return (
     <GameResultView
-      title={isFullyCompleted ? "Yeay! Kamu Hebat!" : `Bagus Sekali, ${childName}!`}
-      badgeText={isFullyCompleted ? "🎉 Puzzle Berhasil Disusun!" : "⭐ Permainan Selesai!"}
+      title={isFullyCompleted ? getTranslation("result.congratsTitle", {}, language) : getTranslation("games.letters.praise3", { name: childName }, language)}
+      badgeText={isFullyCompleted ? getTranslation("games.puzzle.completedBadge", {}, language) : getTranslation("result.gameFinishedBadge", {}, language)}
       teacherMessage={message}
       teacherExpression={isFullyCompleted ? "celebrating" : "happy"}
       stars={stars}
       customContent={puzzleArtworkPreview}
       stats={[
-        { label: "Kepingan", value: `${placedCount} / ${lastResult.totalPieces}` },
-        { label: "Langkah", value: lastResult.movesCount },
-        { label: "Waktu", value: `${lastResult.timeSpentSeconds}s` },
+        { label: getTranslation("games.puzzle.pieces", {}, language), value: `${placedCount} / ${lastResult.totalPieces}` },
+        { label: getTranslation("games.puzzle.movesLabel", {}, language), value: lastResult.movesCount },
+        { label: getTranslation("games.puzzle.timeLabel", {}, language), value: `${lastResult.timeSpentSeconds}s` },
       ]}
       onPlayAgain={handlePlayAgain}
-      playAgainLabel="Susun Lagi"
+      playAgainLabel={getTranslation("games.puzzle.playAgain", {}, language)}
       playAgainIcon={<RotateCcw className="w-5 h-5" />}
       chooseLevelHref="/learn/puzzle"
-      chooseLevelLabel="Pilih Gambar Lain"
+      chooseLevelLabel={getTranslation("games.puzzle.chooseOtherImage", {}, language)}
       chooseLevelIcon={<Grid className="w-5 h-5" />}
       homeHref="/learn"
-      homeLabel="Kembali ke Menu Belajar"
+      homeLabel={getTranslation("app.backToLearn", {}, language)}
     />
   );
 }

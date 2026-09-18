@@ -83,8 +83,8 @@ export default function ProfilesPage() {
         expression="happy"
         message={
           activeProfile
-            ? `Halo! Mau belajar sebagai ${activeProfile.name} atau pilih teman lain?`
-            : "Yuk pilih siapa yang mau bermain hari ini!"
+            ? getTranslation("profiles.teacherGreeting", { name: activeProfile.name }, language)
+            : getTranslation("profiles.teacherGreetingNoProfile", {}, language)
         }
       />
 
@@ -173,25 +173,25 @@ export default function ProfilesPage() {
                   <div className="flex items-center justify-center gap-4 text-sm font-extrabold text-amber-800">
                     <span className="flex items-center gap-1 text-amber-600">
                       <Star className="w-4 h-4 fill-amber-400 text-amber-500" />
-                      {totalStars} Bintang
+                      {totalStars} {getTranslation("app.stars", {}, language)}
                     </span>
                     <span className="flex items-center gap-1 text-orange-600">
                       <Trophy className="w-4 h-4 text-orange-500" />
-                      Lvl {level}
+                      Level {level}
                     </span>
                   </div>
                 </div>
 
                 <div className="w-full pt-2 flex items-center justify-center gap-2">
                   <span className="w-full py-2.5 rounded-2xl bg-amber-400 text-amber-950 font-black text-base shadow">
-                    Pilih & Belajar
+                    {getTranslation("app.start", {}, language)}
                   </span>
                   {profiles.length > 1 && (
                     <button
                       type="button"
                       onClick={(e) => handleDelete(e, profile.id, profile.name)}
                       className="p-2.5 rounded-2xl bg-rose-100 hover:bg-rose-200 text-rose-600 transition"
-                      title="Hapus Profil"
+                      title={getTranslation("app.delete", {}, language)}
                     >
                       <Trash2 className="w-5 h-5" />
                     </button>
@@ -230,7 +230,7 @@ export default function ProfilesPage() {
               <ChildCard borderColor="border-sky-400" className="bg-white/95 space-y-5">
                 <div className="flex items-center justify-between">
                   <h3 className="text-2xl font-black text-sky-950">
-                    Tambah Profil Anak Baru
+                    {getTranslation("profiles.addChild", {}, language)}
                   </h3>
                   <button
                     type="button"
@@ -244,7 +244,7 @@ export default function ProfilesPage() {
                 <form onSubmit={handleCreateChild} className="space-y-5">
                   <div>
                     <label className="block text-sm font-black text-slate-700 mb-2">
-                      Pilih Karakter Anak
+                      {getTranslation("profiles.selectAvatar", {}, language)}
                     </label>
                     <AvatarPicker
                       selectedAvatar={newChildAvatar}
@@ -254,7 +254,7 @@ export default function ProfilesPage() {
 
                   <div>
                     <label className="block text-sm font-black text-slate-700 mb-2">
-                      Nama Anak
+                      {getTranslation("profiles.childNameLabel", {}, language)}
                     </label>
                     <input
                       type="text"
@@ -278,7 +278,7 @@ export default function ProfilesPage() {
                       size="md"
                       onClick={() => setIsAddingChild(false)}
                     >
-                      Batal
+                      {getTranslation("app.cancel", {}, language)}
                     </ChildButton>
                     <ChildButton
                       type="submit"
@@ -286,7 +286,7 @@ export default function ProfilesPage() {
                       size="md"
                       disabled={!newChildName.trim()}
                     >
-                      Simpan Profil
+                      {getTranslation("profiles.saveProfile", {}, language)}
                     </ChildButton>
                   </div>
                 </form>
@@ -311,7 +311,7 @@ export default function ProfilesPage() {
               href="/learn"
               className="inline-flex items-center gap-2 text-base font-extrabold text-white bg-amber-500 hover:bg-amber-600 px-6 py-2.5 rounded-2xl shadow transition"
             >
-              <span>Lanjut Belajar ({activeProfile.name})</span>
+              <span>{getTranslation("profiles.continueLearn", { name: activeProfile.name }, language)}</span>
               <span>➔</span>
             </Link>
           )}

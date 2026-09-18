@@ -86,10 +86,10 @@ export function LetterQuizBoard() {
       }
 
       const praises = [
-        `Hebat sekali, ${childName}! Jawabanmu benar!`,
-        `Pintar sekali, ${childName}! Kamu menemukan huruf yang tepat!`,
-        `Wah, luar biasa, ${childName}!`,
-        `Tepat sekali! Hebat!`,
+        getTranslation("games.letters.praise1", { name: childName }, language),
+        getTranslation("games.letters.praise2", { name: childName }, language),
+        getTranslation("games.letters.praise3", { name: childName }, language),
+        getTranslation("games.letters.praise4", {}, language),
       ];
       const randomPraise = praises[Math.floor(Math.random() * praises.length)];
       setTeacherMessage(randomPraise);
@@ -113,9 +113,9 @@ export function LetterQuizBoard() {
       if (soundEnabled) soundFx.playTryAgain(volume);
 
       const encouragements = [
-        `Tidak apa-apa, ${childName}. Coba cari huruf yang lain ya!`,
-        `Hampir benar! Yuk perhatikan baik-baik!`,
-        `Ayo semangat, kamu pasti bisa!`,
+        getTranslation("games.letters.encourage1", { name: childName }, language),
+        getTranslation("games.letters.encourage2", {}, language),
+        getTranslation("games.letters.encourage3", {}, language),
       ];
       const randomEncouragement =
         encouragements[Math.floor(Math.random() * encouragements.length)];
@@ -138,7 +138,7 @@ export function LetterQuizBoard() {
           className="p-2.5 sm:px-4 sm:py-2 bg-amber-100 hover:bg-amber-200 text-amber-900 rounded-2xl transition flex items-center gap-1.5 font-black text-sm"
         >
           <ArrowLeft className="w-5 h-5" />
-          <span className="hidden sm:inline">Pilih Level</span>
+          <span className="hidden sm:inline">{getTranslation("games.letters.chooseLevel", {}, language)}</span>
         </Link>
 
         {/* Progress Bar */}
@@ -166,7 +166,7 @@ export function LetterQuizBoard() {
         <div className="flex flex-col items-center justify-center space-y-3">
           <div className="inline-flex items-center gap-2 bg-amber-200 text-amber-950 font-black text-xs sm:text-sm px-4 py-1.5 rounded-full uppercase tracking-wider shadow-sm">
             <Sparkles className="w-4 h-4 text-amber-600 fill-amber-500" />
-            <span>Soal {currentIndex + 1} dari {questions.length}</span>
+            <span>{getTranslation("games.matching.questionCounter", { current: currentIndex + 1, total: questions.length }, language)}</span>
           </div>
 
           <h2 className="text-xl sm:text-2xl font-black text-amber-950 text-center max-w-lg">
@@ -190,7 +190,7 @@ export function LetterQuizBoard() {
                   {currentQ.targetLetter.letter}
                 </span>
                 <span className="text-xs font-black text-amber-600 uppercase mt-1">
-                  Huruf Besar
+                  {getTranslation("games.letters.uppercaseLabel", {}, language)}
                 </span>
               </>
             ) : (
@@ -199,7 +199,7 @@ export function LetterQuizBoard() {
                   {currentQ.targetLetter.letter}
                 </span>
                 <span className="text-xs font-black text-amber-600 uppercase mt-1">
-                  Cari Huruf Ini
+                  {getTranslation("games.letters.findLetterLabel", {}, language)}
                 </span>
               </>
             )}
@@ -209,7 +209,7 @@ export function LetterQuizBoard() {
         {/* 3 Option Choices Grid */}
         <div className="space-y-2">
           <p className="text-center text-xs sm:text-sm font-extrabold text-amber-800 uppercase tracking-widest">
-            Pilih Salah Satu Jawaban:
+            {getTranslation("games.letters.chooseAnswer", {}, language)}
           </p>
 
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6 pt-2">

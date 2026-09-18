@@ -6,6 +6,7 @@ import { PuzzleArtwork } from "./PuzzleArtwork";
 import { ChildButton } from "@/components/ui/ChildButton";
 import { soundFx } from "@/lib/audio/sound-fx";
 import { ttsService } from "@/lib/tts/tts";
+import { getTranslation } from "@/lib/i18n";
 import { useSettingsStore } from "@/stores/settings-store";
 import { motion, AnimatePresence } from "motion/react";
 import { X, Eye, Volume2 } from "lucide-react";
@@ -17,17 +18,20 @@ interface PuzzleHintModalProps {
 }
 
 export function PuzzleHintModal({ isOpen, puzzle, onClose }: PuzzleHintModalProps) {
-  const { soundEnabled, autoTts, volume } = useSettingsStore();
+  const { language, soundEnabled, autoTts, volume } = useSettingsStore();
+
+  const titleText = puzzle.title[language] || puzzle.title.id;
+  const descText = puzzle.description[language] || puzzle.description.id;
 
   useEffect(() => {
     if (isOpen && autoTts) {
       ttsService.speak({
-        text: `Ini dia gambar aslinya, ${puzzle.title.id}! Coba perhatikan bentuk dan posisinya ya!`,
-        language: "id",
+        text: getTranslation("games.puzzle.hintVoice", { title: titleText }, language),
+        language,
         volume,
       });
     }
-  }, [isOpen, puzzle, autoTts, volume]);
+  }, [isOpen, puzzle, autoTts, volume, language, titleText]);
 
   if (!isOpen) return null;
 
@@ -55,7 +59,7 @@ export function PuzzleHintModal({ isOpen, puzzle, onClose }: PuzzleHintModalProp
           <div className="flex items-center justify-center gap-2">
             <Eye className="w-5 h-5 text-amber-600" />
             <h3 className="text-xl font-black text-amber-950">
-              Contoh Gambar: {puzzle.title.id}
+              {getTranslation("games.puzzle.sampleImage", { title: titleText }, language)}
             </h3>
           </div>
 
@@ -65,7 +69,7 @@ export function PuzzleHintModal({ isOpen, puzzle, onClose }: PuzzleHintModalProp
           </div>
 
           <p className="text-xs sm:text-sm font-bold text-amber-800/80">
-            {puzzle.description.id}
+            {descText}
           </p>
 
           <ChildButton
@@ -77,7 +81,7 @@ export function PuzzleHintModal({ isOpen, puzzle, onClose }: PuzzleHintModalProp
             }}
             className="w-full"
           >
-            Saya Sudah Ingat! 👍
+            {getTranslation("games.puzzle.remembered", {}, language)}
           </ChildButton>
         </motion.div>
       </div>

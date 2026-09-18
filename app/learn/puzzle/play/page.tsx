@@ -26,6 +26,7 @@ import { PuzzleHintModal } from "@/games/puzzle/components/PuzzleHintModal";
 import { PuzzlePiece as PuzzlePieceType } from "@/games/puzzle/types";
 import { soundFx } from "@/lib/audio/sound-fx";
 import { ttsService } from "@/lib/tts/tts";
+import { getTranslation } from "@/lib/i18n";
 import { motion } from "motion/react";
 import { ArrowLeft, Eye, Shuffle, RotateCcw, Sparkles, CheckCircle2 } from "lucide-react";
 import Link from "next/link";
@@ -54,7 +55,7 @@ export default function PuzzlePlayPage() {
   } = usePuzzleGameStore();
 
   const { activeProfile, recordPuzzleResult } = useProfileStore();
-  const { soundEnabled, autoTts, volume } = useSettingsStore();
+  const { language, soundEnabled, autoTts, volume } = useSettingsStore();
 
   const [activeDragPiece, setActiveDragPiece] = useState<PuzzlePieceType | null>(null);
   const [shakingSlotIndex, setShakingSlotIndex] = useState<number | null>(null);
@@ -64,7 +65,7 @@ export default function PuzzlePlayPage() {
   const [isHintModalOpen, setIsHintModalOpen] = useState(false);
 
   const hasRecordedRef = useRef(false);
-  const childName = activeProfile?.name || "Teman";
+  const childName = activeProfile?.name || (language === "id" ? "Teman" : "Friend");
 
   // Configure sensors for touch and mouse
   const mouseSensor = useSensor(MouseSensor, {
@@ -88,15 +89,16 @@ export default function PuzzlePlayPage() {
     }
 
     hasRecordedRef.current = false;
-    const welcomeMsg = `Ayo bantu Ibu Guru menyusun puzzle ${puzzle.title.id} ini ya, ${childName}!`;
+    const titleText = puzzle.title[language] || puzzle.title.id;
+    const welcomeMsg = getTranslation("games.puzzle.teacherWelcomePlay", { title: titleText, name: childName }, language);
     setTeacherMessage(welcomeMsg);
     setTeacherExpression("happy");
 
     if (autoTts) {
-      ttsService.speak({ text: welcomeMsg, language: "id", volume });
+      ttsService.speak({ text: welcomeMsg, language, volume });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [puzzle?.id]);
+  }, [puzzle?.id, language]);
 
   if (!puzzle) return null;
 
@@ -140,7 +142,7 @@ export default function PuzzlePlayPage() {
           // Play celebration and record result once
           if (soundEnabled) soundFx.playCelebration(volume);
           setTeacherExpression("celebrating");
-          setTeacherMessage(`Luar biasa, ${childName}! Kamu berhasil menyusun semua kepingan puzzle!`);
+          setTeacherMessage(getTranslation("games.puzzle.teacherComplete", { name: childName }, language));
 
           if (activeProfile && !hasRecordedRef.current) {
             hasRecordedRef.current = true;
@@ -166,10 +168,10 @@ export default function PuzzlePlayPage() {
 
         setTeacherExpression("celebrating");
         const praises = [
-          "Pintar sekali! Pas di tempatnya!",
-          "Hebat! Lanjutkan kepingan berikutnya!",
-          "Wah, tepat sekali!",
-          "Bagus sekali, sedikit lagi selesai!",
+          getTranslation("games.puzzle.praise1", {}, language),
+          getTranslation("games.puzzle.praise2", {}, language),
+          getTranslation("games.puzzle.praise3", {}, language),
+          getTranslation("games.puzzle.praise4", {}, language),
         ];
         const randomPraise = praises[Math.floor(Math.random() * praises.length)];
         setTeacherMessage(randomPraise);
@@ -178,9 +180,9 @@ export default function PuzzlePlayPage() {
         if (soundEnabled) soundFx.playIncorrect(volume);
         setTeacherExpression("thinking");
         const encMessages = [
-          "Hampir tepat! Coba cari kotak yang cocok ya!",
-          "Yuk coba kepingan ini di kotak yang lain!",
-          "Tidak apa-apa, ayo perhatikan gambarnya lagi!",
+          getTranslation("games.puzzle.encourage1", {}, language),
+          getTranslation("games.puzzle.encourage2", {}, language),
+          getTranslation("games.puzzle.encourage3", {}, language),
         ];
         const randomEnc = encMessages[Math.floor(Math.random() * encMessages.length)];
         setTeacherMessage(randomEnc);
@@ -259,13 +261,13 @@ export default function PuzzlePlayPage() {
             <Link href="/learn/puzzle">
               <ChildButton variant="secondary" size="sm" className="gap-1.5">
                 <ArrowLeft className="w-4 h-4" />
-                <span>Pilih Gambar</span>
+                <span>{getTranslation("games.puzzle.chooseImageBtn", {}, language)}</span>
               </ChildButton>
             </Link>
 
             <div className="flex items-center gap-2 flex-wrap">
               <span className="bg-white/90 text-amber-950 font-black px-3.5 py-1.5 rounded-full text-xs sm:text-sm shadow-sm border border-amber-200">
-                Langkah: <strong className="text-amber-600">{movesCount}</strong>
+                {getTranslation("games.puzzle.movesLabel", {}, language)}: <strong className="text-amber-600">{movesCount}</strong>
               </span>
 
               <span
@@ -278,10 +280,10 @@ export default function PuzzlePlayPage() {
                 }`}
               >
                 {difficulty === "easy"
-                  ? "Mudah (4 Pcs)"
+                  ? getTranslation("games.puzzle.easyBtn", {}, language)
                   : difficulty === "medium"
-                  ? "Sedang (6 Pcs)"
-                  : "Sulit (9 Pcs)"}
+                  ? getTranslation("games.puzzle.medBtn", {}, language)
+                  : getTranslation("games.puzzle.hardBtn", {}, language)}
               </span>
             </div>
           </div>
@@ -318,7 +320,7 @@ export default function PuzzlePlayPage() {
                   className="inline-flex items-center gap-1.5 bg-amber-100 hover:bg-amber-200 text-amber-900 font-extrabold px-3.5 py-2 rounded-2xl text-xs sm:text-sm shadow-sm transition-transform active:scale-95"
                 >
                   <Eye className="w-4 h-4 text-amber-600" />
-                  <span>Intip Gambar 👁️</span>
+                  <span>{getTranslation("games.puzzle.peekImage", {}, language)}</span>
                 </button>
 
                 <button
@@ -329,7 +331,7 @@ export default function PuzzlePlayPage() {
                   className="inline-flex items-center gap-1.5 bg-sky-100 hover:bg-sky-200 text-sky-900 font-extrabold px-3.5 py-2 rounded-2xl text-xs sm:text-sm shadow-sm transition-transform active:scale-95"
                 >
                   <Shuffle className="w-4 h-4 text-sky-600" />
-                  <span>Acak Kepingan 🔄</span>
+                  <span>{getTranslation("games.puzzle.shufflePieces", {}, language)}</span>
                 </button>
 
                 <button
@@ -340,7 +342,7 @@ export default function PuzzlePlayPage() {
                   className="inline-flex items-center gap-1.5 bg-slate-100 hover:bg-slate-200 text-slate-800 font-extrabold px-3.5 py-2 rounded-2xl text-xs sm:text-sm shadow-sm transition-transform active:scale-95"
                 >
                   <RotateCcw className="w-4 h-4 text-slate-600" />
-                  <span>Mulai Ulang 🔁</span>
+                  <span>{getTranslation("games.puzzle.restart", {}, language)}</span>
                 </button>
               </div>
             </div>
@@ -367,7 +369,7 @@ export default function PuzzlePlayPage() {
                   className="w-full gap-2 text-base font-black shadow-lg hover:scale-[1.02] transition-transform"
                 >
                   <CheckCircle2 className="w-5 h-5 stroke-[2.5]" />
-                  <span>Selesai Bermain ✨</span>
+                  <span>{getTranslation("games.puzzle.finishPlay", {}, language)}</span>
                 </ChildButton>
               </div>
             </div>

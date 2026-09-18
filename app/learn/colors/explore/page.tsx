@@ -6,20 +6,17 @@ import { ColorShapeExploreCard } from "@/games/colors/components/ColorShapeExplo
 import { ChildNavbar } from "@/components/navigation/ChildNavbar";
 import { Teacher } from "@/components/teacher/Teacher";
 import { ChildButton } from "@/components/ui/ChildButton";
-import { useProfileStore } from "@/stores/profile-store";
 import { useSettingsStore } from "@/stores/settings-store";
 import { soundFx } from "@/lib/audio/sound-fx";
-import { ArrowLeft, Palette, Shapes, Sparkles } from "lucide-react";
+import { getTranslation } from "@/lib/i18n";
+import { ArrowLeft, Palette, Shapes } from "lucide-react";
 import Link from "next/link";
 
 type TabFilter = "all" | "colors" | "shapes";
 
 export default function ColorsExplorePage() {
-  const { activeProfile } = useProfileStore();
-  const { soundEnabled, volume } = useSettingsStore();
+  const { language, soundEnabled, volume } = useSettingsStore();
   const [activeTab, setActiveTab] = useState<TabFilter>("all");
-
-  const childName = activeProfile?.name || "Teman";
 
   const handleTabChange = (tab: TabFilter) => {
     if (soundEnabled) soundFx.playClick(volume * 0.5);
@@ -36,7 +33,7 @@ export default function ColorsExplorePage() {
           <Link href="/learn/colors">
             <ChildButton variant="secondary" size="sm" className="gap-2">
               <ArrowLeft className="w-4 h-4" />
-              <span>Kembali</span>
+              <span>{getTranslation("app.back", {}, language)}</span>
             </ChildButton>
           </Link>
 
@@ -50,7 +47,7 @@ export default function ColorsExplorePage() {
                   : "text-amber-950 hover:bg-amber-100/50"
               }`}
             >
-              Semua (16)
+              {language === "id" ? "Semua (16)" : "All (16)"}
             </button>
             <button
               onClick={() => handleTabChange("colors")}
@@ -60,7 +57,7 @@ export default function ColorsExplorePage() {
                   : "text-amber-950 hover:bg-amber-100/50"
               }`}
             >
-              Warna Ceria 🎨
+              {getTranslation("games.colors.tabColors", {}, language)}
             </button>
             <button
               onClick={() => handleTabChange("shapes")}
@@ -70,7 +67,7 @@ export default function ColorsExplorePage() {
                   : "text-amber-950 hover:bg-amber-100/50"
               }`}
             >
-              Bentuk Lucu 🔷
+              {getTranslation("games.colors.tabShapes", {}, language)}
             </button>
           </div>
         </div>
@@ -78,7 +75,7 @@ export default function ColorsExplorePage() {
         {/* Teacher Avatar Feedback */}
         <Teacher
           expression="happy"
-          message={`Ayo sentuh warna atau bentuk di bawah ini, ${childName}! Dengarkan suaranya dan temukan benda-benda menarik di sekitarmu!`}
+          message={getTranslation("games.colors.teacherExploreWelcome", {}, language)}
           className="w-full"
         />
 
@@ -88,7 +85,7 @@ export default function ColorsExplorePage() {
             <div className="flex items-center gap-2">
               <Palette className="w-6 h-6 text-amber-500" />
               <h2 className="text-2xl sm:text-3xl font-black text-slate-800 tracking-tight">
-                Mengenal Warna
+                {getTranslation("games.colors.tabColors", {}, language)}
               </h2>
             </div>
 
@@ -106,7 +103,7 @@ export default function ColorsExplorePage() {
             <div className="flex items-center gap-2">
               <Shapes className="w-6 h-6 text-sky-500" />
               <h2 className="text-2xl sm:text-3xl font-black text-slate-800 tracking-tight">
-                Mengenal Bentuk
+                {getTranslation("games.colors.tabShapes", {}, language)}
               </h2>
             </div>
 

@@ -11,6 +11,7 @@ import { ChildButton } from "@/components/ui/ChildButton";
 import { MemoryBoard } from "@/games/memory/components/MemoryBoard";
 import { soundFx } from "@/lib/audio/sound-fx";
 import { ttsService } from "@/lib/tts/tts";
+import { getTranslation } from "@/lib/i18n";
 import { Sparkles, Brain, CheckCircle2, RotateCcw, Home } from "lucide-react";
 import Link from "next/link";
 
@@ -35,12 +36,19 @@ export default function MemoryPlayPage() {
   const { language, soundEnabled, volume } = useSettingsStore();
 
   const hasRecordedRef = useRef(false);
-  const [feedbackMessage, setFeedbackMessage] = useState<string>(
-    "Ketuk dua kartu untuk mencari pasangan gambar yang sama!"
+  const [feedbackMessage, setFeedbackMessage] = useState<string>(() =>
+    getTranslation("games.memory.tapCardPrompt", {}, language)
   );
   const [feedbackSubMessage, setFeedbackSubMessage] = useState<string | undefined>(
     undefined
   );
+
+  // Update initial message when language changes if not yet played
+  useEffect(() => {
+    if (movesCount === 0) {
+      setFeedbackMessage(getTranslation("games.memory.tapCardPrompt", {}, language));
+    }
+  }, [language, movesCount]);
 
   // Redirect back if game is empty AND not completed (avoid race with completion nav)
   useEffect(() => {
@@ -65,17 +73,19 @@ export default function MemoryPlayPage() {
         if (soundEnabled) soundFx.playCorrect(volume);
 
         const cardName = matchedCard.name[language] || matchedCard.name.id;
-        setFeedbackMessage(`Wah, cocok! Pasangan ${cardName} ditemukan! 🎉`);
+        setFeedbackMessage(
+          getTranslation("games.memory.matchedTeacher", { card: cardName }, language)
+        );
         setFeedbackSubMessage(
           isGameDone
-            ? "Luar biasa! Semua pasangan berhasil kamu temukan!"
-            : "Bagus sekali! Ayo cari pasangan lainnya!"
+            ? getTranslation("games.memory.matchedDoneTeacher", {}, language)
+            : getTranslation("games.memory.matchedNextTeacher", {}, language)
         );
 
         // Pronounce matched card safely
         try {
           ttsService.speak({
-            text: `Cocok! ${matchedCard.speechText[language] || matchedCard.speechText.id}`,
+            text: matchedCard.speechText[language] || matchedCard.speechText.id,
             language,
             volume,
           });
@@ -107,8 +117,8 @@ export default function MemoryPlayPage() {
       // onMismatch callback
       () => {
         if (soundEnabled) soundFx.playIncorrect(volume * 0.7);
-        setFeedbackMessage("Belum cocok, ingat-ingat posisinya ya! 🤔");
-        setFeedbackSubMessage("Coba lagi di giliran berikutnya!");
+        setFeedbackMessage(getTranslation("games.memory.notMatchedTeacher", {}, language));
+        setFeedbackSubMessage(getTranslation("games.memory.tryNextTurnTeacher", {}, language));
       }
     );
   };
@@ -154,7 +164,7 @@ export default function MemoryPlayPage() {
             </div>
             <div>
               <span className="text-[10px] sm:text-xs font-black uppercase text-emerald-800 block">
-                Pasangan
+                {getTranslation("games.memory.pairs", {}, language)}
               </span>
               <span className="text-base sm:text-lg font-black text-emerald-950">
                 {matchedPairCount} / {totalPairCount}
@@ -169,7 +179,7 @@ export default function MemoryPlayPage() {
             </div>
             <div>
               <span className="text-[10px] sm:text-xs font-black uppercase text-purple-800 block">
-                Langkah
+                {getTranslation("games.memory.movesLabel", {}, language)}
               </span>
               <span className="text-base sm:text-lg font-black text-purple-950">
                 {movesCount}
@@ -181,10 +191,10 @@ export default function MemoryPlayPage() {
           <button
             onClick={handleRestart}
             className="p-2.5 rounded-2xl bg-amber-100 hover:bg-amber-200 text-amber-900 border border-amber-300 transition cursor-pointer flex items-center gap-1.5 text-xs font-black"
-            title="Mulai Ulang"
+            title={getTranslation("games.memory.restart", {}, language)}
           >
             <RotateCcw className="w-4 h-4" />
-            <span className="hidden sm:inline">Ulangi</span>
+            <span className="hidden sm:inline">{getTranslation("games.memory.restart", {}, language)}</span>
           </button>
         </div>
 
@@ -211,7 +221,7 @@ export default function MemoryPlayPage() {
           <Link href="/learn/memory">
             <ChildButton variant="secondary" size="md" className="gap-2 text-slate-700">
               <Home className="w-4 h-4" />
-              <span>Ganti Tema / Level</span>
+              <span>{getTranslation("games.memory.changeThemeLevel", {}, language)}</span>
             </ChildButton>
           </Link>
 
@@ -223,7 +233,7 @@ export default function MemoryPlayPage() {
             onClick={handleFinishEarly}
             className="w-full sm:w-auto shadow-md"
           >
-            Selesai Bermain ✨
+            {getTranslation("games.memory.finishPlay", {}, language)}
           </ChildButton>
         </div>
       </main>

@@ -51,7 +51,8 @@ export default function SettingsPage() {
 
   const handleTestVoice = () => {
     ttsService.speak({
-      text: "Halo! Selamat datang di Belajar Ceria. Ibu Guru siap menemani kamu belajar dengan gembira!",
+      text: getTranslation("settings.testVoiceSpeech", {}, language),
+      language,
       volume,
     });
   };
@@ -73,7 +74,7 @@ export default function SettingsPage() {
             className="p-2.5 sm:px-4 sm:py-2 bg-amber-100 hover:bg-amber-200 text-amber-900 rounded-2xl transition flex items-center gap-1.5 font-bold text-sm sm:text-base shadow-sm"
           >
             <ArrowLeft className="w-5 h-5" />
-            <span>Kembali</span>
+            <span>{getTranslation("app.back", {}, language)}</span>
           </Link>
 
           <h1 className="text-3xl font-black text-amber-950">
@@ -84,7 +85,7 @@ export default function SettingsPage() {
         {/* Teacher Feedback in Settings */}
         <Teacher
           expression="idle"
-          message="Di sini kamu atau orang tuamu bisa mengatur suara dan bahasa!"
+          message={getTranslation("settings.teacherGuide", {}, language)}
         />
 
         {/* Settings Card */}
@@ -93,10 +94,10 @@ export default function SettingsPage() {
           <div className="flex items-center justify-between gap-4 p-4 bg-pink-50/70 rounded-2xl border-2 border-pink-200">
             <div className="space-y-1">
               <p className="text-base font-black text-amber-950 flex items-center gap-2">
-                👩‍🏫 Suara Ibu Guru
+                {getTranslation("settings.teacherVoice", {}, language)}
               </p>
               <p className="text-xs font-bold text-amber-700">
-                Suara wanita Bahasa Indonesia — ceria dan ramah!
+                {getTranslation("settings.teacherVoiceDesc", {}, language)}
               </p>
             </div>
             <button
@@ -105,7 +106,7 @@ export default function SettingsPage() {
               className="px-5 py-2.5 rounded-2xl bg-pink-400 hover:bg-pink-500 text-white font-black text-sm shadow cursor-pointer transition flex items-center gap-2"
             >
               <Volume2 className="w-5 h-5" />
-              Uji Suara 🔊
+              {getTranslation("settings.testVoice", {}, language)}
             </button>
           </div>
 

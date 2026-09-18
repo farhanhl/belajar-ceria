@@ -8,6 +8,7 @@ import { Volume2, X, ChevronLeft, ChevronRight, Sparkles } from "lucide-react";
 import { ttsService } from "@/lib/tts/tts";
 import { soundFx } from "@/lib/audio/sound-fx";
 import { useSettingsStore } from "@/stores/settings-store";
+import { getTranslation } from "@/lib/i18n";
 
 interface LetterDetailModalProps {
   letter: LetterItem | null;
@@ -78,14 +79,14 @@ export function LetterDetailModal({ letter, onClose, onNavigate }: LetterDetailM
           <div className="flex items-center justify-between">
             <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-100 text-amber-900 font-extrabold text-xs sm:text-sm">
               <Sparkles className="w-4 h-4 text-amber-500 fill-amber-400" />
-              <span>Belajar Huruf</span>
+              <span>{getTranslation("games.letters.title", {}, language)}</span>
             </div>
 
             <button
               type="button"
               onClick={onClose}
               className="p-2 rounded-2xl bg-slate-100 hover:bg-slate-200 text-slate-600 transition cursor-pointer"
-              title="Tutup"
+              title={getTranslation("app.close", {}, language)}
             >
               <X className="w-6 h-6 stroke-[2.5]" />
             </button>
@@ -121,7 +122,7 @@ export function LetterDetailModal({ letter, onClose, onNavigate }: LetterDetailM
             className={`w-full py-4 px-6 rounded-2xl ${letter.color.badge} hover:opacity-95 text-white font-black text-lg sm:text-xl shadow-lg hover:shadow-xl transition flex items-center justify-center gap-3 cursor-pointer active:scale-98`}
           >
             <Volume2 className="w-7 h-7" />
-            <span>Dengarkan Suara ({letter.letter})</span>
+            <span>{getTranslation("games.letters.listenVoice", { letter: letter.letter }, language)}</span>
           </button>
 
           {/* Bottom Navigation: Prev & Next */}
@@ -137,7 +138,7 @@ export function LetterDetailModal({ letter, onClose, onNavigate }: LetterDetailM
               }`}
             >
               <ChevronLeft className="w-5 h-5" />
-              <span>{prevLetter ? `Huruf ${prevLetter.letter}` : "Awal"}</span>
+              <span>{prevLetter ? getTranslation("games.letters.letterNav", { letter: prevLetter.letter }, language) : getTranslation("games.letters.navStart", {}, language)}</span>
             </button>
 
             <span className="text-xs font-bold text-slate-400">
@@ -154,7 +155,7 @@ export function LetterDetailModal({ letter, onClose, onNavigate }: LetterDetailM
                   : "opacity-30 cursor-not-allowed text-slate-400"
               }`}
             >
-              <span>{nextLetter ? `Huruf ${nextLetter.letter}` : "Akhir"}</span>
+              <span>{nextLetter ? getTranslation("games.letters.letterNav", { letter: nextLetter.letter }, language) : getTranslation("games.letters.navEnd", {}, language)}</span>
               <ChevronRight className="w-5 h-5" />
             </button>
           </div>

@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useProfileStore } from "@/stores/profile-store";
 import { useSettingsStore } from "@/stores/settings-store";
@@ -13,20 +14,20 @@ import { MEMORY_THEMES } from "@/games/memory/data/memory-data";
 import { MemoryThemeId } from "@/games/memory/types";
 import { Difficulty } from "@/types/game";
 import { soundFx } from "@/lib/audio/sound-fx";
+import { getTranslation } from "@/lib/i18n";
 import { motion } from "motion/react";
 import { Play, Sparkles, Brain, Star, ArrowLeft } from "lucide-react";
-import Link from "next/link";
 
 export default function MemoryMenuPage() {
   const router = useRouter();
   const { activeProfile } = useProfileStore();
-  const { soundEnabled, volume } = useSettingsStore();
+  const { language, soundEnabled, volume } = useSettingsStore();
   const { startGame } = useMemoryGameStore();
 
   const [selectedTheme, setSelectedTheme] = useState<MemoryThemeId>("animals");
   const [selectedDifficulty, setSelectedDifficulty] = useState<Difficulty>("easy");
 
-  const childName = activeProfile?.name || "Teman";
+  const childName = activeProfile?.name || (language === "id" ? "Teman" : "Friend");
 
   const easyStars = activeProfile?.progress?.memory?.easy?.stars || 0;
   const mediumStars = activeProfile?.progress?.memory?.medium?.stars || 0;
@@ -52,20 +53,19 @@ export default function MemoryMenuPage() {
           <Link href="/learn">
             <ChildButton variant="secondary" size="sm" className="gap-2">
               <ArrowLeft className="w-4 h-4" />
-              <span>Menu Belajar</span>
+              <span>{getTranslation("app.backToLearn", {}, language)}</span>
             </ChildButton>
           </Link>
 
           <div className="inline-flex items-center gap-2 bg-amber-200 text-amber-950 font-black px-4 py-2 rounded-full text-sm shadow-sm">
             <Star className="w-5 h-5 fill-amber-500 text-amber-600" />
-            <span>{numbersStars} Bintang Terkumpul</span>
+            <span>{getTranslation("app.starsCollected", { count: numbersStars }, language)}</span>
           </div>
         </div>
         {/* Teacher Guidance Greeting */}
         <Teacher
           expression="happy"
-          message={`Halo, ${childName}! Ayo kita melatih daya ingat dan konsentrasi dengan membalik kartu ajaib!`}
-          subMessage="Pilih tema bergambar dan tingkat kesulitan di bawah ini ya!"
+          message={getTranslation("games.memory.teacherWelcome", {}, language)}
         />
 
         {/* Section: Pilih Tema Kartu */}
@@ -73,7 +73,7 @@ export default function MemoryMenuPage() {
           <div className="flex items-center gap-2">
             <Sparkles className="w-6 h-6 text-purple-600 fill-purple-400" />
             <h2 className="text-2xl sm:text-3xl font-black text-purple-950 tracking-tight">
-              1. Pilih Tema Bergambar
+              {getTranslation("games.memory.themeTitle", {}, language)}
             </h2>
           </div>
 
@@ -98,29 +98,28 @@ export default function MemoryMenuPage() {
                         ? "bg-gradient-to-br from-purple-50/90 via-white to-pink-50/90"
                         : "bg-white"
                     }
-                    className={`p-4 h-full flex flex-col justify-between transition-all ${isSelected ? "shadow-xl ring-4 ring-purple-200" : "hover:border-purple-300"
-                      }`}
+                    className={`p-4 h-full flex flex-col justify-between transition-all ${
+                      isSelected ? "shadow-xl ring-4 ring-purple-200" : "hover:border-purple-300"
+                    }`}
                   >
                     <div className="space-y-2">
                       <div className="flex items-center justify-between">
                         <span className="text-4xl select-none">{theme.icon}</span>
                         <span
-                          className={`text-[11px] font-black px-2.5 py-0.5 rounded-full text-white ${theme.badgeColor
-                            }`}
+                          className={`text-[11px] font-black px-2.5 py-0.5 rounded-full text-white ${theme.badgeColor}`}
                         >
-                          {theme.cards.length} Kartu
+                          {getTranslation("games.memory.cardsCount", { count: theme.cards.length }, language)}
                         </span>
                       </div>
                       <h3 className="text-lg font-black text-purple-950">
-                        {theme.name.id}
+                        {theme.name[language] || theme.name.id}
                       </h3>
                       <p className="text-xs text-slate-600 font-semibold line-clamp-2">
-                        {theme.description.id}
+                        {theme.description[language] || theme.description.id}
                       </p>
                     </div>
 
                     <div className="pt-3 flex items-center gap-1.5 text-xs font-black text-purple-700">
-                      <span>Contoh:</span>
                       <div className="flex gap-1 text-base">
                         {theme.cards.slice(0, 4).map((c) => (
                           <span key={c.id}>{c.emoji}</span>
@@ -139,7 +138,7 @@ export default function MemoryMenuPage() {
           <div className="flex items-center gap-2">
             <Brain className="w-6 h-6 text-purple-600" />
             <h2 className="text-2xl sm:text-3xl font-black text-purple-950 tracking-tight">
-              2. Pilih Tingkat Kesulitan
+              {getTranslation("games.difficulty.selectDifficulty", {}, language)}
             </h2>
           </div>
 
@@ -151,23 +150,24 @@ export default function MemoryMenuPage() {
                 setSelectedDifficulty("easy");
                 if (soundEnabled) soundFx.playClick(volume * 0.7);
               }}
-              className={`p-4 rounded-3xl border-4 text-left transition-all cursor-pointer flex flex-col justify-between space-y-2 ${selectedDifficulty === "easy"
-                ? "bg-emerald-50 border-emerald-400 ring-4 ring-emerald-200 shadow-lg scale-102"
-                : "bg-white border-slate-200 hover:border-emerald-300"
-                }`}
+              className={`p-4 rounded-3xl border-4 text-left transition-all cursor-pointer flex flex-col justify-between space-y-2 ${
+                selectedDifficulty === "easy"
+                  ? "bg-emerald-50 border-emerald-400 ring-4 ring-emerald-200 shadow-lg scale-102"
+                  : "bg-white border-slate-200 hover:border-emerald-300"
+              }`}
             >
               <div className="flex items-center justify-between w-full">
                 <span className="text-xs font-black uppercase text-emerald-800 bg-emerald-200 px-2.5 py-0.5 rounded-full">
-                  🟢 4 Kartu (2 Pasang)
+                  🟢 {getTranslation("games.difficulty.easy", {}, language)}
                 </span>
                 <span className="text-xs text-emerald-700 font-extrabold flex items-center gap-1">
                   <Star className="w-3.5 h-3.5 fill-amber-400 text-amber-500" /> {easyStars}
                 </span>
               </div>
               <div>
-                <h4 className="text-lg font-black text-emerald-950">Tingkat Mudah</h4>
+                <h4 className="text-lg font-black text-emerald-950">{getTranslation("games.difficulty.easy", {}, language)}</h4>
                 <p className="text-xs text-emerald-800 font-semibold">
-                  Grid 2×2, sangat ramah untuk melatih ingatan balita.
+                  {getTranslation("games.memory.easyDesc", {}, language)}
                 </p>
               </div>
             </button>
@@ -179,23 +179,24 @@ export default function MemoryMenuPage() {
                 setSelectedDifficulty("medium");
                 if (soundEnabled) soundFx.playClick(volume * 0.7);
               }}
-              className={`p-4 rounded-3xl border-4 text-left transition-all cursor-pointer flex flex-col justify-between space-y-2 ${selectedDifficulty === "medium"
-                ? "bg-amber-50 border-amber-400 ring-4 ring-amber-200 shadow-lg scale-102"
-                : "bg-white border-slate-200 hover:border-amber-300"
-                }`}
+              className={`p-4 rounded-3xl border-4 text-left transition-all cursor-pointer flex flex-col justify-between space-y-2 ${
+                selectedDifficulty === "medium"
+                  ? "bg-amber-50 border-amber-400 ring-4 ring-amber-200 shadow-lg scale-102"
+                  : "bg-white border-slate-200 hover:border-amber-300"
+              }`}
             >
               <div className="flex items-center justify-between w-full">
                 <span className="text-xs font-black uppercase text-amber-900 bg-amber-200 px-2.5 py-0.5 rounded-full">
-                  🟡 6 Kartu (3 Pasang)
+                  🟡 {getTranslation("games.difficulty.medium", {}, language)}
                 </span>
                 <span className="text-xs text-amber-800 font-extrabold flex items-center gap-1">
                   <Star className="w-3.5 h-3.5 fill-amber-400 text-amber-500" /> {mediumStars}
                 </span>
               </div>
               <div>
-                <h4 className="text-lg font-black text-amber-950">Tingkat Sedang</h4>
+                <h4 className="text-lg font-black text-amber-950">{getTranslation("games.difficulty.medium", {}, language)}</h4>
                 <p className="text-xs text-amber-800 font-semibold">
-                  Grid 2×3, melatih konsentrasi dan mengingat posisi.
+                  {getTranslation("games.memory.medDesc", {}, language)}
                 </p>
               </div>
             </button>
@@ -207,23 +208,24 @@ export default function MemoryMenuPage() {
                 setSelectedDifficulty("hard");
                 if (soundEnabled) soundFx.playClick(volume * 0.7);
               }}
-              className={`p-4 rounded-3xl border-4 text-left transition-all cursor-pointer flex flex-col justify-between space-y-2 ${selectedDifficulty === "hard"
-                ? "bg-purple-50 border-purple-400 ring-4 ring-purple-200 shadow-lg scale-102"
-                : "bg-white border-slate-200 hover:border-purple-300"
-                }`}
+              className={`p-4 rounded-3xl border-4 text-left transition-all cursor-pointer flex flex-col justify-between space-y-2 ${
+                selectedDifficulty === "hard"
+                  ? "bg-purple-50 border-purple-400 ring-4 ring-purple-200 shadow-lg scale-102"
+                  : "bg-white border-slate-200 hover:border-purple-300"
+              }`}
             >
               <div className="flex items-center justify-between w-full">
                 <span className="text-xs font-black uppercase text-purple-900 bg-purple-200 px-2.5 py-0.5 rounded-full">
-                  🔴 12 Kartu (6 Pasang)
+                  🔴 {getTranslation("games.difficulty.hard", {}, language)}
                 </span>
                 <span className="text-xs text-purple-800 font-extrabold flex items-center gap-1">
                   <Star className="w-3.5 h-3.5 fill-amber-400 text-amber-500" /> {hardStars}
                 </span>
               </div>
               <div>
-                <h4 className="text-lg font-black text-purple-950">Tingkat Tantangan</h4>
+                <h4 className="text-lg font-black text-purple-950">{getTranslation("games.difficulty.hard", {}, language)}</h4>
                 <p className="text-xs text-purple-800 font-semibold">
-                  Grid 3×4, tantangan seru untuk anak TK yang tangkas!
+                  {getTranslation("games.memory.hardDesc", {}, language)}
                 </p>
               </div>
             </button>
@@ -239,12 +241,12 @@ export default function MemoryMenuPage() {
             onClick={handleStartGame}
             className="flex-1"
           >
-            Mulai Bermain 🚀
+            {getTranslation("app.startPlay", {}, language)} 🚀
           </ChildButton>
 
           <Link href="/learn" className="flex-1">
             <ChildButton variant="secondary" size="lg" className="w-full h-full text-slate-700">
-              Kembali ke Menu
+              {getTranslation("app.backToMenu", {}, language)}
             </ChildButton>
           </Link>
         </div>

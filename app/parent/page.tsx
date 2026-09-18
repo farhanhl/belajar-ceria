@@ -396,7 +396,7 @@ export default function ParentPage() {
             className="inline-flex items-center gap-2 font-black text-sm text-indigo-700 hover:text-indigo-900 bg-indigo-50 hover:bg-indigo-100 px-4 py-2.5 rounded-2xl transition"
           >
             <ArrowLeft className="w-4 h-4" />
-            <span>Kembali ke Aplikasi</span>
+            <span>{getTranslation("parent.backToApp", {}, language)}</span>
           </Link>
         </div>
       </header>
@@ -446,19 +446,19 @@ export default function ParentPage() {
             <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4">
               <div className="bg-white p-4 rounded-3xl border-2 border-amber-200 shadow-sm text-center space-y-1">
                 <Star className="w-6 h-6 fill-amber-400 text-amber-500 mx-auto" />
-                <p className="text-xs font-bold text-slate-500">Total Bintang</p>
+                <p className="text-xs font-bold text-slate-500">{getTranslation("parent.totalStars", {}, language)}</p>
                 <p className="text-2xl font-black text-amber-950">{totalStars}</p>
               </div>
 
               <div className="bg-white p-4 rounded-3xl border-2 border-sky-200 shadow-sm text-center space-y-1">
                 <Gamepad2 className="w-6 h-6 text-sky-500 mx-auto" />
-                <p className="text-xs font-bold text-slate-500">Permainan Selesai</p>
+                <p className="text-xs font-bold text-slate-500">{getTranslation("parent.gamesCompleted", {}, language)}</p>
                 <p className="text-2xl font-black text-sky-950">{totalGames}</p>
               </div>
 
               <div className="bg-white p-4 rounded-3xl border-2 border-emerald-200 shadow-sm text-center space-y-1">
                 <Target className="w-6 h-6 text-emerald-500 mx-auto" />
-                <p className="text-xs font-bold text-slate-500">Jawaban Benar</p>
+                <p className="text-xs font-bold text-slate-500">{getTranslation("parent.correctAnswers", {}, language)}</p>
                 <p className="text-2xl font-black text-emerald-950">
                   {totalCorrect} <span className="text-xs text-slate-400">/ {totalQuestions}</span>
                 </p>
@@ -466,19 +466,19 @@ export default function ParentPage() {
 
               <div className="bg-white p-4 rounded-3xl border-2 border-purple-200 shadow-sm text-center space-y-1">
                 <Percent className="w-6 h-6 text-purple-500 mx-auto" />
-                <p className="text-xs font-bold text-slate-500">Akurasi</p>
+                <p className="text-xs font-bold text-slate-500">{getTranslation("parent.accuracy", {}, language)}</p>
                 <p className="text-2xl font-black text-purple-950">{accuracy}%</p>
               </div>
 
               <div className="bg-white p-4 rounded-3xl border-2 border-orange-200 shadow-sm text-center space-y-1">
                 <Trophy className="w-6 h-6 text-orange-500 mx-auto" />
-                <p className="text-xs font-bold text-slate-500">Level</p>
+                <p className="text-xs font-bold text-slate-500">{getTranslation("app.level", {}, language)}</p>
                 <p className="text-2xl font-black text-orange-950">Level {overallLevel}</p>
               </div>
 
               <div className="bg-white p-4 rounded-3xl border-2 border-indigo-200 shadow-sm text-center space-y-1">
                 <Calendar className="w-6 h-6 text-indigo-500 mx-auto" />
-                <p className="text-xs font-bold text-slate-500">Aktivitas</p>
+                <p className="text-xs font-bold text-slate-500">{getTranslation("parent.lastPlayed", {}, language)}</p>
                 <p className="text-xs font-black text-indigo-950 mt-1 truncate" title={lastPlayedFormatted}>
                   {lastPlayedFormatted}
                 </p>
@@ -489,7 +489,7 @@ export default function ParentPage() {
             <div className="bg-white rounded-3xl border-2 border-slate-200 overflow-hidden shadow-sm">
               <div className="p-4 bg-slate-100/70 border-b border-slate-200">
                 <h3 className="text-base font-black text-slate-800">
-                  Rincian Tingkat Kesulitan: Cocokkan & Temukan
+                  {getTranslation("parent.breakdownMatching", {}, language)}
                 </h3>
               </div>
 
@@ -497,18 +497,18 @@ export default function ParentPage() {
                 <table className="w-full text-left text-sm font-bold text-slate-700">
                   <thead className="bg-slate-50 text-xs font-black text-slate-500 uppercase">
                     <tr>
-                      <th className="px-5 py-3">Tingkat</th>
-                      <th className="px-5 py-3">Selesai</th>
-                      <th className="px-5 py-3">Bintang Diraih</th>
-                      <th className="px-5 py-3">Akurasi</th>
+                      <th className="px-5 py-3">{getTranslation("parent.colLevel", {}, language)}</th>
+                      <th className="px-5 py-3">{getTranslation("parent.colCompleted", {}, language)}</th>
+                      <th className="px-5 py-3">{getTranslation("parent.colStars", {}, language)}</th>
+                      <th className="px-5 py-3">{getTranslation("parent.colAccuracy", {}, language)}</th>
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-slate-100">
                     <tr>
                       <td className="px-5 py-3 font-extrabold text-emerald-700 flex items-center gap-2">
-                        <span>🌱</span> Mudah (Identik)
+                        <span>🌱</span> {getTranslation("games.matching.easy", {}, language)}
                       </td>
-                      <td className="px-5 py-3">{easyStats.gamesCompleted} sesi</td>
+                      <td className="px-5 py-3">{getTranslation("parent.sessionsCount", { count: easyStats.gamesCompleted }, language)}</td>
                       <td className="px-5 py-3 text-amber-600 font-extrabold">⭐ {easyStats.stars}</td>
                       <td className="px-5 py-3">
                         {easyStats.questionsAnswered > 0
@@ -518,9 +518,9 @@ export default function ParentPage() {
                     </tr>
                     <tr>
                       <td className="px-5 py-3 font-extrabold text-sky-700 flex items-center gap-2">
-                        <span>⭐</span> Sedang
+                        <span>⭐</span> {getTranslation("games.matching.medium", {}, language)}
                       </td>
-                      <td className="px-5 py-3">{medStats.gamesCompleted} sesi</td>
+                      <td className="px-5 py-3">{getTranslation("parent.sessionsCount", { count: medStats.gamesCompleted }, language)}</td>
                       <td className="px-5 py-3 text-amber-600 font-extrabold">⭐ {medStats.stars}</td>
                       <td className="px-5 py-3">
                         {medStats.questionsAnswered > 0
@@ -530,9 +530,9 @@ export default function ParentPage() {
                     </tr>
                     <tr>
                       <td className="px-5 py-3 font-extrabold text-purple-700 flex items-center gap-2">
-                        <span>👑</span> Sulit
+                        <span>👑</span> {getTranslation("games.matching.hard", {}, language)}
                       </td>
-                      <td className="px-5 py-3">{hardStats.gamesCompleted} sesi</td>
+                      <td className="px-5 py-3">{getTranslation("parent.sessionsCount", { count: hardStats.gamesCompleted }, language)}</td>
                       <td className="px-5 py-3 text-amber-600 font-extrabold">⭐ {hardStats.stars}</td>
                       <td className="px-5 py-3">
                         {hardStats.questionsAnswered > 0
@@ -549,7 +549,7 @@ export default function ParentPage() {
             <div className="bg-white rounded-3xl border-2 border-slate-200 overflow-hidden shadow-sm">
               <div className="p-4 bg-pink-50 border-b border-pink-200">
                 <h3 className="text-base font-black text-pink-950 flex items-center gap-2">
-                  <span>🔤</span> Rincian Tingkat Kesulitan: Belajar Huruf
+                  <span>🔤</span> {getTranslation("parent.breakdownLetters", {}, language)}
                 </h3>
               </div>
 
@@ -557,18 +557,18 @@ export default function ParentPage() {
                 <table className="w-full text-left text-sm font-bold text-slate-700">
                   <thead className="bg-slate-50 text-xs font-black text-slate-500 uppercase">
                     <tr>
-                      <th className="px-5 py-3">Tingkat</th>
-                      <th className="px-5 py-3">Selesai</th>
-                      <th className="px-5 py-3">Bintang Diraih</th>
-                      <th className="px-5 py-3">Akurasi</th>
+                      <th className="px-5 py-3">{getTranslation("parent.colLevel", {}, language)}</th>
+                      <th className="px-5 py-3">{getTranslation("parent.colCompleted", {}, language)}</th>
+                      <th className="px-5 py-3">{getTranslation("parent.colStars", {}, language)}</th>
+                      <th className="px-5 py-3">{getTranslation("parent.colAccuracy", {}, language)}</th>
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-slate-100">
                     <tr>
                       <td className="px-5 py-3 font-extrabold text-emerald-700 flex items-center gap-2">
-                        <span>🌱</span> Mudah (Kenali Huruf)
+                        <span>🌱</span> {getTranslation("games.letters.easyDesc", {}, language)}
                       </td>
-                      <td className="px-5 py-3">{letterEasyStats.gamesCompleted} sesi</td>
+                      <td className="px-5 py-3">{getTranslation("parent.sessionsCount", { count: letterEasyStats.gamesCompleted }, language)}</td>
                       <td className="px-5 py-3 text-amber-600 font-extrabold">⭐ {letterEasyStats.stars}</td>
                       <td className="px-5 py-3">
                         {letterEasyStats.questionsAnswered > 0
@@ -578,9 +578,9 @@ export default function ParentPage() {
                     </tr>
                     <tr>
                       <td className="px-5 py-3 font-extrabold text-sky-700 flex items-center gap-2">
-                        <span>⭐</span> Sedang (Huruf Benda)
+                        <span>⭐</span> {getTranslation("games.letters.medDesc", {}, language)}
                       </td>
-                      <td className="px-5 py-3">{letterMedStats.gamesCompleted} sesi</td>
+                      <td className="px-5 py-3">{getTranslation("parent.sessionsCount", { count: letterMedStats.gamesCompleted }, language)}</td>
                       <td className="px-5 py-3 text-amber-600 font-extrabold">⭐ {letterMedStats.stars}</td>
                       <td className="px-5 py-3">
                         {letterMedStats.questionsAnswered > 0
@@ -590,9 +590,9 @@ export default function ParentPage() {
                     </tr>
                     <tr>
                       <td className="px-5 py-3 font-extrabold text-purple-700 flex items-center gap-2">
-                        <span>👑</span> Sulit (Besar & Kecil)
+                        <span>👑</span> {getTranslation("games.letters.hardDesc", {}, language)}
                       </td>
-                      <td className="px-5 py-3">{letterHardStats.gamesCompleted} sesi</td>
+                      <td className="px-5 py-3">{getTranslation("parent.sessionsCount", { count: letterHardStats.gamesCompleted }, language)}</td>
                       <td className="px-5 py-3 text-amber-600 font-extrabold">⭐ {letterHardStats.stars}</td>
                       <td className="px-5 py-3">
                         {letterHardStats.questionsAnswered > 0
@@ -609,7 +609,7 @@ export default function ParentPage() {
             <div className="bg-white rounded-3xl border-2 border-slate-200 overflow-hidden shadow-sm">
               <div className="p-4 bg-indigo-50 border-b border-indigo-200">
                 <h3 className="text-base font-black text-indigo-950 flex items-center gap-2">
-                  <span>🧩</span> Rincian Tingkat Kesulitan: Puzzle Bergambar
+                  <span>🧩</span> {getTranslation("parent.breakdownPuzzle", {}, language)}
                 </h3>
               </div>
 
@@ -617,18 +617,18 @@ export default function ParentPage() {
                 <table className="w-full text-left text-sm font-bold text-slate-700">
                   <thead className="bg-slate-50 text-xs font-black text-slate-500 uppercase">
                     <tr>
-                      <th className="px-5 py-3">Tingkat</th>
-                      <th className="px-5 py-3">Selesai</th>
-                      <th className="px-5 py-3">Bintang Diraih</th>
-                      <th className="px-5 py-3">Ketepatan</th>
+                      <th className="px-5 py-3">{getTranslation("parent.colLevel", {}, language)}</th>
+                      <th className="px-5 py-3">{getTranslation("parent.colCompleted", {}, language)}</th>
+                      <th className="px-5 py-3">{getTranslation("parent.colStars", {}, language)}</th>
+                      <th className="px-5 py-3">{getTranslation("parent.colPrecision", {}, language)}</th>
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-slate-100">
                     <tr>
                       <td className="px-5 py-3 font-extrabold text-emerald-700 flex items-center gap-2">
-                        <span>🌱</span> Mudah (4 Keping)
+                        <span>🌱</span> {getTranslation("games.puzzle.easyDesc", {}, language)}
                       </td>
-                      <td className="px-5 py-3">{puzzleEasyStats.gamesCompleted} puzzle</td>
+                      <td className="px-5 py-3">{getTranslation("parent.puzzlesCount", { count: puzzleEasyStats.gamesCompleted }, language)}</td>
                       <td className="px-5 py-3 text-amber-600 font-extrabold">⭐ {puzzleEasyStats.stars}</td>
                       <td className="px-5 py-3">
                         {puzzleEasyStats.questionsAnswered > 0
@@ -638,9 +638,9 @@ export default function ParentPage() {
                     </tr>
                     <tr>
                       <td className="px-5 py-3 font-extrabold text-sky-700 flex items-center gap-2">
-                        <span>⭐</span> Sedang (6 Keping)
+                        <span>⭐</span> {getTranslation("games.puzzle.medDesc", {}, language)}
                       </td>
-                      <td className="px-5 py-3">{puzzleMedStats.gamesCompleted} puzzle</td>
+                      <td className="px-5 py-3">{getTranslation("parent.puzzlesCount", { count: puzzleMedStats.gamesCompleted }, language)}</td>
                       <td className="px-5 py-3 text-amber-600 font-extrabold">⭐ {puzzleMedStats.stars}</td>
                       <td className="px-5 py-3">
                         {puzzleMedStats.questionsAnswered > 0
@@ -650,9 +650,9 @@ export default function ParentPage() {
                     </tr>
                     <tr>
                       <td className="px-5 py-3 font-extrabold text-purple-700 flex items-center gap-2">
-                        <span>👑</span> Sulit (9 Keping)
+                        <span>👑</span> {getTranslation("games.puzzle.hardDesc", {}, language)}
                       </td>
-                      <td className="px-5 py-3">{puzzleHardStats.gamesCompleted} puzzle</td>
+                      <td className="px-5 py-3">{getTranslation("parent.puzzlesCount", { count: puzzleHardStats.gamesCompleted }, language)}</td>
                       <td className="px-5 py-3 text-amber-600 font-extrabold">⭐ {puzzleHardStats.stars}</td>
                       <td className="px-5 py-3">
                         {puzzleHardStats.questionsAnswered > 0
@@ -669,7 +669,7 @@ export default function ParentPage() {
             <div className="bg-white rounded-3xl border-2 border-slate-200 overflow-hidden shadow-sm">
               <div className="p-4 bg-amber-50 border-b border-amber-200">
                 <h3 className="text-base font-black text-amber-950 flex items-center gap-2">
-                  <span>🎨</span> Rincian Tingkat Kesulitan: Warna & Bentuk
+                  <span>🎨</span> {getTranslation("parent.breakdownColors", {}, language)}
                 </h3>
               </div>
 
@@ -677,18 +677,18 @@ export default function ParentPage() {
                 <table className="w-full text-left text-sm font-bold text-slate-700">
                   <thead className="bg-slate-50 text-xs font-black text-slate-500 uppercase">
                     <tr>
-                      <th className="px-5 py-3">Tingkat</th>
-                      <th className="px-5 py-3">Selesai</th>
-                      <th className="px-5 py-3">Bintang Diraih</th>
-                      <th className="px-5 py-3">Akurasi</th>
+                      <th className="px-5 py-3">{getTranslation("parent.colLevel", {}, language)}</th>
+                      <th className="px-5 py-3">{getTranslation("parent.colCompleted", {}, language)}</th>
+                      <th className="px-5 py-3">{getTranslation("parent.colStars", {}, language)}</th>
+                      <th className="px-5 py-3">{getTranslation("parent.colAccuracy", {}, language)}</th>
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-slate-100">
                     <tr>
                       <td className="px-5 py-3 font-extrabold text-emerald-700 flex items-center gap-2">
-                        <span>🌱</span> Mudah (1 Atribut)
+                        <span>🌱</span> {getTranslation("games.colors.easyDesc", {}, language)}
                       </td>
-                      <td className="px-5 py-3">{colorsEasyStats.gamesCompleted} sesi</td>
+                      <td className="px-5 py-3">{getTranslation("parent.sessionsCount", { count: colorsEasyStats.gamesCompleted }, language)}</td>
                       <td className="px-5 py-3 text-amber-600 font-extrabold">⭐ {colorsEasyStats.stars}</td>
                       <td className="px-5 py-3">
                         {colorsEasyStats.questionsAnswered > 0
@@ -698,9 +698,9 @@ export default function ParentPage() {
                     </tr>
                     <tr>
                       <td className="px-5 py-3 font-extrabold text-sky-700 flex items-center gap-2">
-                        <span>⭐</span> Sedang (Kombinasi / Siluet)
+                        <span>⭐</span> {getTranslation("games.colors.medDesc", {}, language)}
                       </td>
-                      <td className="px-5 py-3">{colorsMedStats.gamesCompleted} sesi</td>
+                      <td className="px-5 py-3">{getTranslation("parent.sessionsCount", { count: colorsMedStats.gamesCompleted }, language)}</td>
                       <td className="px-5 py-3 text-amber-600 font-extrabold">⭐ {colorsMedStats.stars}</td>
                       <td className="px-5 py-3">
                         {colorsMedStats.questionsAnswered > 0
@@ -710,9 +710,9 @@ export default function ParentPage() {
                     </tr>
                     <tr>
                       <td className="px-5 py-3 font-extrabold text-purple-700 flex items-center gap-2">
-                        <span>👑</span> Sulit (Pengelompokan Keranjang)
+                        <span>👑</span> {getTranslation("games.colors.hardDesc", {}, language)}
                       </td>
-                      <td className="px-5 py-3">{colorsHardStats.gamesCompleted} sesi</td>
+                      <td className="px-5 py-3">{getTranslation("parent.sessionsCount", { count: colorsHardStats.gamesCompleted }, language)}</td>
                       <td className="px-5 py-3 text-amber-600 font-extrabold">⭐ {colorsHardStats.stars}</td>
                       <td className="px-5 py-3">
                         {colorsHardStats.questionsAnswered > 0
@@ -729,7 +729,7 @@ export default function ParentPage() {
             <div className="bg-white rounded-3xl border-2 border-slate-200 overflow-hidden shadow-sm">
               <div className="p-4 bg-yellow-50 border-b border-yellow-200">
                 <h3 className="text-base font-black text-amber-950 flex items-center gap-2">
-                  <span>🔢</span> Rincian Tingkat Kesulitan: Belajar Angka & Berhitung
+                  <span>🔢</span> {getTranslation("parent.breakdownNumbers", {}, language)}
                 </h3>
               </div>
 
@@ -737,18 +737,18 @@ export default function ParentPage() {
                 <table className="w-full text-left text-sm font-bold text-slate-700">
                   <thead className="bg-slate-50 text-xs font-black text-slate-500 uppercase">
                     <tr>
-                      <th className="px-5 py-3">Tingkat</th>
-                      <th className="px-5 py-3">Selesai</th>
-                      <th className="px-5 py-3">Bintang Diraih</th>
-                      <th className="px-5 py-3">Akurasi</th>
+                      <th className="px-5 py-3">{getTranslation("parent.colLevel", {}, language)}</th>
+                      <th className="px-5 py-3">{getTranslation("parent.colCompleted", {}, language)}</th>
+                      <th className="px-5 py-3">{getTranslation("parent.colStars", {}, language)}</th>
+                      <th className="px-5 py-3">{getTranslation("parent.colAccuracy", {}, language)}</th>
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-slate-100">
                     <tr>
                       <td className="px-5 py-3 font-extrabold text-emerald-700 flex items-center gap-2">
-                        <span>🌱</span> Mudah (Rentang 1–5)
+                        <span>🌱</span> {getTranslation("games.numbers.easyDesc", {}, language)}
                       </td>
-                      <td className="px-5 py-3">{numbersEasyStats.gamesCompleted} sesi</td>
+                      <td className="px-5 py-3">{getTranslation("parent.sessionsCount", { count: numbersEasyStats.gamesCompleted }, language)}</td>
                       <td className="px-5 py-3 text-amber-600 font-extrabold">⭐ {numbersEasyStats.stars}</td>
                       <td className="px-5 py-3">
                         {numbersEasyStats.questionsAnswered > 0
@@ -758,9 +758,9 @@ export default function ParentPage() {
                     </tr>
                     <tr>
                       <td className="px-5 py-3 font-extrabold text-sky-700 flex items-center gap-2">
-                        <span>⭐</span> Sedang (Rentang 1–10)
+                        <span>⭐</span> {getTranslation("games.numbers.medDesc", {}, language)}
                       </td>
-                      <td className="px-5 py-3">{numbersMedStats.gamesCompleted} sesi</td>
+                      <td className="px-5 py-3">{getTranslation("parent.sessionsCount", { count: numbersMedStats.gamesCompleted }, language)}</td>
                       <td className="px-5 py-3 text-amber-600 font-extrabold">⭐ {numbersMedStats.stars}</td>
                       <td className="px-5 py-3">
                         {numbersMedStats.questionsAnswered > 0
@@ -770,9 +770,9 @@ export default function ParentPage() {
                     </tr>
                     <tr>
                       <td className="px-5 py-3 font-extrabold text-purple-700 flex items-center gap-2">
-                        <span>👑</span> Sulit (Rentang 1–20)
+                        <span>👑</span> {getTranslation("games.numbers.hardDesc", {}, language)}
                       </td>
-                      <td className="px-5 py-3">{numbersHardStats.gamesCompleted} sesi</td>
+                      <td className="px-5 py-3">{getTranslation("parent.sessionsCount", { count: numbersHardStats.gamesCompleted }, language)}</td>
                       <td className="px-5 py-3 text-amber-600 font-extrabold">⭐ {numbersHardStats.stars}</td>
                       <td className="px-5 py-3">
                         {numbersHardStats.questionsAnswered > 0
@@ -789,7 +789,7 @@ export default function ParentPage() {
             <div className="bg-white rounded-3xl border-2 border-slate-200 overflow-hidden shadow-sm">
               <div className="p-4 bg-purple-50 border-b border-purple-200">
                 <h3 className="text-base font-black text-purple-950 flex items-center gap-2">
-                  <span>🧠</span> Rincian Tingkat Kesulitan: Tebak Memori
+                  <span>🧠</span> {getTranslation("parent.breakdownMemory", {}, language)}
                 </h3>
               </div>
 
@@ -797,18 +797,18 @@ export default function ParentPage() {
                 <table className="w-full text-left text-sm font-bold text-slate-700">
                   <thead className="bg-slate-50 text-xs font-black text-slate-500 uppercase">
                     <tr>
-                      <th className="px-5 py-3">Tingkat</th>
-                      <th className="px-5 py-3">Selesai</th>
-                      <th className="px-5 py-3">Bintang Diraih</th>
-                      <th className="px-5 py-3">Efisiensi Pasangan</th>
+                      <th className="px-5 py-3">{getTranslation("parent.colLevel", {}, language)}</th>
+                      <th className="px-5 py-3">{getTranslation("parent.colCompleted", {}, language)}</th>
+                      <th className="px-5 py-3">{getTranslation("parent.colStars", {}, language)}</th>
+                      <th className="px-5 py-3">{getTranslation("parent.colEfficiency", {}, language)}</th>
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-slate-100">
                     <tr>
                       <td className="px-5 py-3 font-extrabold text-emerald-700 flex items-center gap-2">
-                        <span>🌱</span> Mudah (4 Kartu / 2 Pasang)
+                        <span>🌱</span> {getTranslation("games.memory.easyDesc", {}, language)}
                       </td>
-                      <td className="px-5 py-3">{memoryEasyStats.gamesCompleted} sesi</td>
+                      <td className="px-5 py-3">{getTranslation("parent.sessionsCount", { count: memoryEasyStats.gamesCompleted }, language)}</td>
                       <td className="px-5 py-3 text-amber-600 font-extrabold">⭐ {memoryEasyStats.stars}</td>
                       <td className="px-5 py-3">
                         {memoryEasyStats.questionsAnswered > 0
@@ -818,9 +818,9 @@ export default function ParentPage() {
                     </tr>
                     <tr>
                       <td className="px-5 py-3 font-extrabold text-sky-700 flex items-center gap-2">
-                        <span>⭐</span> Sedang (6 Kartu / 3 Pasang)
+                        <span>⭐</span> {getTranslation("games.memory.medDesc", {}, language)}
                       </td>
-                      <td className="px-5 py-3">{memoryMedStats.gamesCompleted} sesi</td>
+                      <td className="px-5 py-3">{getTranslation("parent.sessionsCount", { count: memoryMedStats.gamesCompleted }, language)}</td>
                       <td className="px-5 py-3 text-amber-600 font-extrabold">⭐ {memoryMedStats.stars}</td>
                       <td className="px-5 py-3">
                         {memoryMedStats.questionsAnswered > 0
@@ -830,9 +830,9 @@ export default function ParentPage() {
                     </tr>
                     <tr>
                       <td className="px-5 py-3 font-extrabold text-purple-700 flex items-center gap-2">
-                        <span>👑</span> Sulit (12 Kartu / 6 Pasang)
+                        <span>👑</span> {getTranslation("games.memory.hardDesc", {}, language)}
                       </td>
-                      <td className="px-5 py-3">{memoryHardStats.gamesCompleted} sesi</td>
+                      <td className="px-5 py-3">{getTranslation("parent.sessionsCount", { count: memoryHardStats.gamesCompleted }, language)}</td>
                       <td className="px-5 py-3 text-amber-600 font-extrabold">⭐ {memoryHardStats.stars}</td>
                       <td className="px-5 py-3">
                         {memoryHardStats.questionsAnswered > 0

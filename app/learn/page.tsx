@@ -97,7 +97,7 @@ export default function DashboardPage() {
         <Teacher
           expression="happy"
           message={getTranslation("dashboard.greeting", { name: childName }, language)}
-          subMessage="Pilih permainan di bawah untuk mulai mengumpulkan bintang!"
+          subMessage={language === "id" ? "Pilih permainan di bawah untuk mulai mengumpulkan bintang!" : "Choose a game below to start collecting stars!"}
         />
 
         {/* Stats Summary Bar */}
@@ -111,9 +111,9 @@ export default function DashboardPage() {
             </div>
             <div>
               <p className="text-xs sm:text-sm font-black uppercase tracking-wider text-amber-900/80">
-                Total Bintang
+                {getTranslation("parent.totalStars", {}, language)}
               </p>
-              <p className="text-2xl sm:text-3xl font-black">{totalStars} Bintang</p>
+              <p className="text-2xl sm:text-3xl font-black">{getTranslation("dashboard.starsCount", { count: totalStars }, language)}</p>
             </div>
           </motion.div>
 
@@ -126,9 +126,9 @@ export default function DashboardPage() {
             </div>
             <div>
               <p className="text-xs sm:text-sm font-black uppercase tracking-wider text-indigo-100">
-                Peringkat Belajar
+                {language === "id" ? "Peringkat Belajar" : "Learning Level"}
               </p>
-              <p className="text-2xl sm:text-3xl font-black">Level {level}</p>
+              <p className="text-2xl sm:text-3xl font-black">{getTranslation("dashboard.levelCount", { level }, language)}</p>
             </div>
           </motion.div>
         </div>
@@ -156,13 +156,13 @@ export default function DashboardPage() {
                 <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
                   <div className="space-y-2 text-center sm:text-left">
                     <div className="inline-flex items-center gap-1.5 bg-amber-400 text-amber-950 font-black text-xs px-3 py-1 rounded-full uppercase tracking-wider shadow-sm">
-                      <Sparkles className="w-3.5 h-3.5 fill-amber-950" /> Permainan Seru
+                      <Sparkles className="w-3.5 h-3.5 fill-amber-950" /> {language === "id" ? "Permainan Seru" : "Fun Game"}
                     </div>
                     <h3 className="text-2xl sm:text-3xl font-black text-amber-950">
                       {getTranslation("games.matching.title", {}, language)}
                     </h3>
                     <p className="text-sm font-bold text-amber-800">
-                      Tarik gambar ke pasangan yang sama dan kumpulkan bintang!
+                      {getTranslation("games.matching.subtitle", {}, language)}
                     </p>
                   </div>
 
@@ -200,13 +200,13 @@ export default function DashboardPage() {
                 <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
                   <div className="space-y-2 text-center sm:text-left">
                     <div className="inline-flex items-center gap-1.5 bg-pink-400 text-white font-black text-xs px-3 py-1 rounded-full uppercase tracking-wider shadow-sm">
-                      <Sparkles className="w-3.5 h-3.5 fill-white" /> Baru & Ceria
+                      <Sparkles className="w-3.5 h-3.5 fill-white" /> {language === "id" ? "Baru & Ceria" : "Fresh & Cheerful"}
                     </div>
                     <h3 className="text-2xl sm:text-3xl font-black text-pink-950">
                       {getTranslation("games.letters.title", {}, language)}
                     </h3>
                     <p className="text-sm font-bold text-pink-800">
-                      Kenali alfabet A sampai Z lewat kartu interaktif dan tebak huruf!
+                      {getTranslation("games.letters.subtitle", {}, language)}
                     </p>
                   </div>
 
@@ -244,13 +244,13 @@ export default function DashboardPage() {
                 <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
                   <div className="space-y-2 text-center sm:text-left">
                     <div className="inline-flex items-center gap-1.5 bg-indigo-500 text-white font-black text-xs px-3 py-1 rounded-full uppercase tracking-wider shadow-sm">
-                      <Sparkles className="w-3.5 h-3.5 fill-white" /> Logika & Visual
+                      <Sparkles className="w-3.5 h-3.5 fill-white" /> {language === "id" ? "Logika & Visual" : "Logic & Visual"}
                     </div>
                     <h3 className="text-2xl sm:text-3xl font-black text-indigo-950">
                       {getTranslation("games.puzzle.title", {}, language)}
                     </h3>
                     <p className="text-sm font-bold text-indigo-800">
-                      Susun kepingan gambar hewan dan kendaraan favoritmu menjadi utuh!
+                      {getTranslation("games.puzzle.subtitle", {}, language)}
                     </p>
                   </div>
 
@@ -288,13 +288,13 @@ export default function DashboardPage() {
                 <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
                   <div className="space-y-2 text-center sm:text-left">
                     <div className="inline-flex items-center gap-1.5 bg-emerald-500 text-white font-black text-xs px-3 py-1 rounded-full uppercase tracking-wider shadow-sm">
-                      <Sparkles className="w-3.5 h-3.5 fill-white" /> Kreatif & Ceria
+                      <Sparkles className="w-3.5 h-3.5 fill-white" /> {language === "id" ? "Kreatif & Ceria" : "Creative & Bright"}
                     </div>
                     <h3 className="text-2xl sm:text-3xl font-black text-emerald-950">
                       {getTranslation("games.colors.title", {}, language)}
                     </h3>
                     <p className="text-sm font-bold text-emerald-800">
-                      Kenali warna-warni indah dan bentuk geometri seru lewat permainan interaktif!
+                      {getTranslation("games.colors.subtitle", {}, language)}
                     </p>
                   </div>
 
@@ -332,13 +332,13 @@ export default function DashboardPage() {
                 <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
                   <div className="space-y-2 text-center sm:text-left">
                     <div className="inline-flex items-center gap-1.5 bg-amber-500 text-white font-black text-xs px-3 py-1 rounded-full uppercase tracking-wider shadow-sm">
-                      <Sparkles className="w-3.5 h-3.5 fill-white" /> Berhitung Ceria
+                      <Sparkles className="w-3.5 h-3.5 fill-white" /> {language === "id" ? "Berhitung Ceria" : "Joyful Math"}
                     </div>
                     <h3 className="text-2xl sm:text-3xl font-black text-amber-950">
                       {getTranslation("games.numbers.title", {}, language)}
                     </h3>
                     <p className="text-sm font-bold text-amber-800">
-                      Belajar mengenal angka, berhitung buah, penjumlahan & pengurangan seru!
+                      {getTranslation("games.numbers.subtitle", {}, language)}
                     </p>
                   </div>
 
@@ -376,13 +376,13 @@ export default function DashboardPage() {
                 <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
                   <div className="space-y-2 text-center sm:text-left">
                     <div className="inline-flex items-center gap-1.5 bg-purple-500 text-white font-black text-xs px-3 py-1 rounded-full uppercase tracking-wider shadow-sm">
-                      <Sparkles className="w-3.5 h-3.5 fill-white" /> Ingatan & Fokus
+                      <Sparkles className="w-3.5 h-3.5 fill-white" /> {language === "id" ? "Ingatan & Fokus" : "Memory & Focus"}
                     </div>
                     <h3 className="text-2xl sm:text-3xl font-black text-purple-950">
                       {getTranslation("games.memory.title", {}, language)}
                     </h3>
                     <p className="text-sm font-bold text-purple-800">
-                      Balik kartu ajaib, ingat letak gambarnya, dan temukan semua pasangannya!
+                      {getTranslation("games.memory.subtitle", {}, language)}
                     </p>
                   </div>
 

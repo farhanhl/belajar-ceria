@@ -6,13 +6,13 @@ import { NumberExploreCard } from "@/games/numbers/components/NumberExploreCard"
 import { ChildNavbar } from "@/components/navigation/ChildNavbar";
 import { Teacher } from "@/components/teacher/Teacher";
 import { ChildButton } from "@/components/ui/ChildButton";
-import { useProfileStore } from "@/stores/profile-store";
+import { useSettingsStore } from "@/stores/settings-store";
+import { getTranslation } from "@/lib/i18n";
 import { ArrowLeft, Binary } from "lucide-react";
 import Link from "next/link";
 
 export default function NumbersExplorePage() {
-  const { activeProfile } = useProfileStore();
-  const childName = activeProfile?.name || "Teman";
+  const { language } = useSettingsStore();
 
   return (
     <div className="min-h-screen flex flex-col justify-between">
@@ -24,20 +24,20 @@ export default function NumbersExplorePage() {
           <Link href="/learn/numbers">
             <ChildButton variant="secondary" size="sm" className="gap-2">
               <ArrowLeft className="w-4 h-4" />
-              <span>Kembali</span>
+              <span>{getTranslation("app.back", {}, language)}</span>
             </ChildButton>
           </Link>
 
           <div className="inline-flex items-center gap-2 bg-amber-200 text-amber-950 font-black px-4 py-1.5 rounded-full text-sm shadow-sm">
             <Binary className="w-4 h-4" />
-            <span>Mengenal Angka 1 sampai 10</span>
+            <span>{getTranslation("games.numbers.exploreMode", {}, language)}</span>
           </div>
         </div>
 
         {/* Teacher Avatar Feedback */}
         <Teacher
           expression="happy"
-          message={`Ayo sentuh angka di bawah ini, ${childName}! Dengarkan cara membacanya dan hitung buah-buahan manisnya bersama Ibu Guru!`}
+          message={getTranslation("games.numbers.teacherExploreWelcome", {}, language)}
           className="w-full"
         />
 

@@ -13,6 +13,7 @@ import { ChildButton } from "@/components/ui/ChildButton";
 import { StarRating } from "@/components/ui/StarRating";
 import { useSettingsStore } from "@/stores/settings-store";
 import { soundFx } from "@/lib/audio/sound-fx";
+import { getTranslation } from "@/lib/i18n";
 
 export interface GameResultStat {
   label: string;
@@ -20,7 +21,7 @@ export interface GameResultStat {
 }
 
 export interface GameResultViewProps {
-  /** Title at top of celebration, defaults to "Yeay! Kamu Hebat!" */
+  /** Title at top of celebration, defaults to localized "Yeay! Kamu Hebat!" */
   title?: string;
   /** Pill badge above title, defaults to "🎉 Permainan Selesai!" */
   badgeText?: string;
@@ -35,7 +36,7 @@ export interface GameResultViewProps {
   stars: number;
   /** Max stars, defaults to 5 */
   maxStars?: number;
-  /** Custom star label below stars, defaults to "Kamu Mendapatkan X Bintang!" */
+  /** Custom star label below stars */
   starsText?: string;
 
   /** Single score badge text, e.g. "5 dari 5 Benar" */
@@ -51,21 +52,21 @@ export interface GameResultViewProps {
 
   /** Replay callback — omit to hide the replay button entirely */
   onPlayAgain?: () => void;
-  /** Label for replay button, defaults to "Main Lagi" */
+  /** Label for replay button */
   playAgainLabel?: string;
   /** Icon for replay button */
   playAgainIcon?: React.ReactNode;
 
   /** Destination URL to choose another level/mode */
   chooseLevelHref?: string;
-  /** Label for level choice button, defaults to "Pilih Level Lain" */
+  /** Label for level choice button */
   chooseLevelLabel?: string;
-  /** Icon for choose level button, defaults to Grid */
+  /** Icon for choose level button */
   chooseLevelIcon?: React.ReactNode;
 
   /** Home route URL, defaults to "/learn" */
   homeHref?: string;
-  /** Label for home link, defaults to "Kembali ke Menu Belajar" */
+  /** Label for home link */
   homeLabel?: string;
 
   /** Sound type to trigger on completion, defaults to "celebration" */
@@ -73,8 +74,8 @@ export interface GameResultViewProps {
 }
 
 export function GameResultView({
-  title = "Yeay! Kamu Hebat!",
-  badgeText = "🎉 Permainan Selesai!",
+  title,
+  badgeText,
   teacherMessage,
   teacherSubMessage,
   teacherExpression = "celebrating",
@@ -86,16 +87,23 @@ export function GameResultView({
   stats,
   customContent,
   onPlayAgain,
-  playAgainLabel = "Main Lagi",
+  playAgainLabel,
   playAgainIcon,
   chooseLevelHref,
-  chooseLevelLabel = "Pilih Level Lain",
+  chooseLevelLabel,
   chooseLevelIcon,
   homeHref = "/learn",
-  homeLabel = "Kembali ke Menu Belajar",
+  homeLabel,
   celebrationSoundType = "celebration",
 }: GameResultViewProps) {
-  const { soundEnabled, volume } = useSettingsStore();
+  const { language, soundEnabled, volume } = useSettingsStore();
+
+  const finalTitle = title ?? getTranslation("result.congratsTitle", {}, language);
+  const finalBadge = badgeText ?? getTranslation("result.gameFinishedBadge", {}, language);
+  const finalStarsText = starsText ?? getTranslation("result.earnedStars", { stars }, language);
+  const finalPlayAgain = playAgainLabel ?? getTranslation("result.playAgain", {}, language);
+  const finalChooseLevel = chooseLevelLabel ?? getTranslation("result.chooseLevel", {}, language);
+  const finalHomeLabel = homeLabel ?? getTranslation("result.backToLearn", {}, language);
 
   useEffect(() => {
     // Play sound FX
@@ -135,10 +143,10 @@ export function GameResultView({
         >
           <div className="inline-flex items-center gap-2 bg-amber-200 text-amber-950 px-4 py-1.5 rounded-full text-sm font-extrabold shadow-sm">
             <Sparkles className="w-4 h-4 text-amber-600 fill-amber-500" />
-            <span>{badgeText}</span>
+            <span>{finalBadge}</span>
           </div>
           <h1 className="text-3xl sm:text-5xl font-black text-amber-950 tracking-tight">
-            {title}
+            {finalTitle}
           </h1>
         </motion.div>
 
@@ -169,7 +177,7 @@ export function GameResultView({
             <div className="flex flex-col items-center justify-center space-y-2">
               <StarRating stars={stars} maxStars={maxStars} size={44} animate />
               <p className="text-base sm:text-lg font-black text-amber-950">
-                {displayedStarsText}
+                {finalStarsText}
               </p>
             </div>
 
@@ -223,7 +231,7 @@ export function GameResultView({
                     icon={playAgainIcon ?? <RotateCcw className="w-5 h-5" />}
                     className="w-full flex-1"
                   >
-                    {playAgainLabel}
+                    {finalPlayAgain}
                   </ChildButton>
 
                   {chooseLevelHref && (
@@ -235,7 +243,7 @@ export function GameResultView({
                         icon={chooseLevelIcon ?? <Grid className="w-5 h-5" />}
                         className="w-full"
                       >
-                        {chooseLevelLabel}
+                        {finalChooseLevel}
                       </ChildButton>
                     </Link>
                   )}
@@ -248,7 +256,7 @@ export function GameResultView({
                       className="inline-flex items-center gap-2 text-sm font-extrabold text-amber-800 hover:text-amber-950 py-1 transition"
                     >
                       <Home className="w-4 h-4" />
-                      <span>{homeLabel}</span>
+                      <span>{finalHomeLabel}</span>
                     </Link>
                   </div>
                 )}
@@ -265,7 +273,7 @@ export function GameResultView({
                       icon={chooseLevelIcon ?? <Grid className="w-5 h-5" />}
                       className="w-full h-full"
                     >
-                      {chooseLevelLabel}
+                      {finalChooseLevel}
                     </ChildButton>
                   </Link>
                 )}
@@ -278,7 +286,7 @@ export function GameResultView({
                       icon={<Home className="w-5 h-5" />}
                       className="w-full h-full"
                     >
-                      {homeLabel}
+                      {finalHomeLabel}
                     </ChildButton>
                   </Link>
                 )}

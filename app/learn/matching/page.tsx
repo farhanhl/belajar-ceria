@@ -80,7 +80,7 @@ export default function MatchingLevelSelectPage() {
             className="p-2.5 sm:px-4 sm:py-2 bg-amber-100 hover:bg-amber-200 text-amber-900 rounded-2xl transition flex items-center gap-1.5 font-bold text-sm sm:text-base shadow-sm"
           >
             <ArrowLeft className="w-5 h-5" />
-            <span>Kembali ke Menu</span>
+            <span>{getTranslation("app.backToMenu", {}, language)}</span>
           </Link>
 
           <h1 className="text-2xl sm:text-3xl font-black text-amber-950">
@@ -91,8 +91,8 @@ export default function MatchingLevelSelectPage() {
         {/* Teacher Guidance */}
         <Teacher
           expression="happy"
-          message="Ayo pilih tingkat permainan yang kamu sukai!"
-          subMessage="Setiap sesi berisi 5 soal mencocokkan gambar yang seru!"
+          message={getTranslation("games.matching.teacherWelcome", {}, language)}
+          subMessage={getTranslation("games.matching.teacherSubWelcome", {}, language)}
         />
 
         {/* Level Cards */}
@@ -133,13 +133,13 @@ export default function MatchingLevelSelectPage() {
                   <div className="w-full bg-slate-50 border border-slate-200 rounded-2xl p-3 text-xs font-black text-slate-700 space-y-1">
                     <div className="flex items-center justify-between">
                       <span className="flex items-center gap-1 text-amber-600">
-                        <Star className="w-4 h-4 fill-amber-400 text-amber-500" /> Bintang:
+                        <Star className="w-4 h-4 fill-amber-400 text-amber-500" /> {getTranslation("app.stars", {}, language)}:
                       </span>
                       <span className="text-sm font-extrabold">{stars}</span>
                     </div>
                     <div className="flex items-center justify-between">
-                      <span className="text-slate-500">Selesai:</span>
-                      <span className="text-sm font-extrabold">{completed} kali</span>
+                      <span className="text-slate-500">{getTranslation("parent.colCompleted", {}, language)}:</span>
+                      <span className="text-sm font-extrabold">{completed}</span>
                     </div>
                   </div>
 
@@ -151,7 +151,7 @@ export default function MatchingLevelSelectPage() {
                       icon={<Play className="w-5 h-5 fill-current" />}
                       className="w-full"
                     >
-                      Mulai
+                      {getTranslation("app.start", {}, language)}
                     </ChildButton>
                   </div>
                 </ChildCard>
