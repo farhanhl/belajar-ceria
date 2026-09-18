@@ -131,10 +131,10 @@ export function GameResultView({
   const displayedStarsText = starsText ?? `Kamu Mendapatkan ${stars} Bintang!`;
 
   return (
-    <div className="min-h-screen flex flex-col justify-between pb-6">
+    <div className="min-h-screen flex flex-col">
       <ChildNavbar showControls={false} />
 
-      <main className="flex-1 max-w-2xl sm:max-w-3xl w-full mx-auto p-4 sm:p-6 flex flex-col items-center justify-center space-y-4 sm:space-y-5">
+      <main className="flex-1 max-w-6xl w-full mx-auto space-y-6 py-8">
         {/* Celebration Header */}
         <motion.div
           initial={{ scale: 0.8, opacity: 0 }}

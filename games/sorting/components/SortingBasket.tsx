@@ -46,19 +46,19 @@ export function SortingBasket({
       }
       transition={{ duration: 0.25 }}
       onClick={onDropOrClick}
-      className={`relative flex-1 min-w-[150px] sm:min-w-[185px] md:min-w-[215px] max-w-[270px] flex flex-col items-center rounded-3xl p-3.5 sm:p-5 border-4 ${
+      className={`relative flex-1 min-w-[140px] sm:min-w-[170px] md:min-w-[195px] max-w-[240px] flex flex-col items-center rounded-3xl p-2.5 sm:p-3.5 border-3 sm:border-4 ${
         category.borderColor
       } bg-gradient-to-b ${category.bgGradient} ${
         isOver
           ? "ring-4 ring-sky-400 ring-offset-2 shadow-2xl brightness-105"
           : isSelectedTarget
           ? "ring-4 ring-amber-400 ring-offset-2 scale-102 shadow-xl"
-          : "shadow-lg hover:shadow-xl cursor-pointer"
+          : "shadow-md hover:shadow-xl cursor-pointer"
       }`}
     >
       {/* Category Icon & Title */}
-      <div className="flex flex-col items-center text-center space-y-1 w-full pointer-events-none">
-        <span className="text-4xl sm:text-5xl filter drop-shadow-md select-none">
+      <div className="flex flex-col items-center text-center space-y-0.5 w-full pointer-events-none">
+        <span className="text-3xl sm:text-4xl filter drop-shadow-md select-none">
           {category.icon}
         </span>
         <h4 className="text-xs sm:text-sm font-black text-slate-800 tracking-tight line-clamp-1">
@@ -68,14 +68,14 @@ export function SortingBasket({
 
       {/* Target Bin Container Area */}
       <div
-        className={`mt-2.5 w-full min-h-[95px] sm:min-h-[115px] rounded-2xl border-2 border-dashed p-2.5 flex flex-wrap items-center justify-center gap-1.5 shadow-inner transition-colors ${
+        className={`mt-2 w-full min-h-[65px] sm:min-h-[80px] rounded-2xl border-2 border-dashed p-1.5 sm:p-2 flex flex-wrap items-center justify-center gap-1.5 shadow-inner transition-colors ${
           isOver
             ? "border-sky-500 bg-sky-50/95"
             : "border-slate-300 bg-white/75 backdrop-blur-sm"
         }`}
       >
         {sortedItems.length === 0 ? (
-          <p className="text-[11px] sm:text-xs font-bold text-slate-600 text-center select-none">
+          <p className="text-[10px] sm:text-xs font-bold text-slate-500 text-center select-none">
             {isOver
               ? language === "en"
                 ? "Drop here! 📥"
@@ -90,10 +90,10 @@ export function SortingBasket({
               {sortedItems.map((item, idx) => (
                 <motion.div
                   key={`${item.id}_${idx}`}
-                  initial={{ scale: 0, opacity: 0, y: -20 }}
+                  initial={{ scale: 0, opacity: 0, y: -15 }}
                   animate={{ scale: 1, opacity: 1, y: 0 }}
                   transition={{ type: "spring", stiffness: 400, damping: 20 }}
-                  className="w-7 h-7 sm:w-8 sm:h-8 rounded-xl bg-white shadow border border-slate-200 flex items-center justify-center text-base sm:text-lg"
+                  className="w-6 h-6 sm:w-7 sm:h-7 rounded-lg bg-white shadow-sm border border-slate-200 flex items-center justify-center text-sm sm:text-base"
                   title={item.name[language] || item.name.id}
                 >
                   {item.emoji}
@@ -105,7 +105,7 @@ export function SortingBasket({
       </div>
 
       {/* Item Count Badge */}
-      <div className="mt-2 inline-flex items-center gap-1 bg-white/90 px-2.5 py-0.5 rounded-full text-[11px] font-extrabold text-slate-700 shadow-sm pointer-events-none">
+      <div className="mt-1.5 inline-flex items-center gap-1 bg-white/90 px-2 py-0.5 rounded-full text-[10px] sm:text-[11px] font-extrabold text-slate-700 shadow-sm pointer-events-none">
         <span>✨</span>
         <span>
           {sortedItems.length} {language === "en" ? "items" : "barang"}

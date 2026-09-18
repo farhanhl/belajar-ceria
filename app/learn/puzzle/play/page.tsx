@@ -252,10 +252,10 @@ export default function PuzzlePlayPage() {
       onDragEnd={handleDragEnd}
       onDragCancel={handleDragCancel}
     >
-      <div className="min-h-screen flex flex-col justify-between">
+      <div className="min-h-screen flex flex-col">
         <ChildNavbar />
 
-        <main className="flex-1 max-w-6xl w-full mx-auto space-y-6 py-8">
+        <main className="flex-1 max-w-6xl w-full mx-auto space-y-3 sm:space-y-4 py-3 sm:py-4 px-3 sm:px-6">
           {/* Top Actions & Info Bar */}
           <div className="flex items-center justify-between gap-2 flex-wrap">
             <Link href="/learn/puzzle">
@@ -291,6 +291,7 @@ export default function PuzzlePlayPage() {
           <Teacher
             expression={teacherExpression}
             message={teacherMessage}
+            size={60}
             className="w-full"
           />
 

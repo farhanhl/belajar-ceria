@@ -5,10 +5,14 @@ export interface LetterItem {
   lowercase: string; // "a"
   wordId: string; // "Apel"
   wordEn: string; // "Apple"
-  iconName: string; // "apple" or custom icon
-  emoji: string; // "🍎"
-  phoneticId: string; // "A... Apel!"
-  phoneticEn: string; // "A for Apple!"
+  iconName?: string;
+  iconNameId?: string;
+  iconNameEn?: string;
+  emoji: string; // fallback
+  emojiId: string; // "🍎"
+  emojiEn: string; // "🍎"
+  phoneticId: string; // "A! A untuk Apel!"
+  phoneticEn: string; // "A! A is for Apple!"
   color: {
     bg: string;
     border: string;

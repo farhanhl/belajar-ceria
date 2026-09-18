@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { ALPHABET_DATA } from "@/games/letters/data/alphabet-data";
+import { ALPHABET_DATA, getLetterWord, getLetterEmoji, getLetterPhonetic } from "@/games/letters/data/alphabet-data";
 import { generateLetterQuestions, calculateLetterStars } from "@/games/letters/lib/letter-quiz-engine";
 
 describe("Alphabet Data", () => {
@@ -13,14 +13,33 @@ describe("Alphabet Data", () => {
     ]);
   });
 
-  it("should have complete vocabulary, phonetic, and color details for each letter", () => {
+  it("should have valid vocabulary that starts with the corresponding letter in both Indonesian and English", () => {
     for (const item of ALPHABET_DATA) {
       expect(item.letter).toBeTruthy();
       expect(item.lowercase).toBe(item.letter.toLowerCase());
+
+      // Indonesian word must start with the letter
       expect(item.wordId).toBeTruthy();
+      expect(item.wordId.toUpperCase().startsWith(item.letter)).toBe(true);
+
+      // English word must start with the letter
       expect(item.wordEn).toBeTruthy();
-      expect(item.emoji).toBeTruthy();
+      expect(item.wordEn.toUpperCase().startsWith(item.letter)).toBe(true);
+
+      // Emojis and phonetics
+      expect(item.emojiId).toBeTruthy();
+      expect(item.emojiEn).toBeTruthy();
       expect(item.phoneticId).toContain(item.letter);
+      expect(item.phoneticEn).toContain(item.letter);
+
+      // Helper getters
+      expect(getLetterWord(item, "id")).toBe(item.wordId);
+      expect(getLetterWord(item, "en")).toBe(item.wordEn);
+      expect(getLetterEmoji(item, "id")).toBe(item.emojiId);
+      expect(getLetterEmoji(item, "en")).toBe(item.emojiEn);
+      expect(getLetterPhonetic(item, "id")).toBe(item.phoneticId);
+      expect(getLetterPhonetic(item, "en")).toBe(item.phoneticEn);
+
       expect(item.color.bg).toBeTruthy();
       expect(item.color.border).toBeTruthy();
     }

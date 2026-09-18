@@ -39,15 +39,25 @@ export default function MatchingResultPage() {
     celebrationMessage = getTranslation("result.messageGood", { name: childName }, language);
   }
 
+  const teacherSubMessage =
+    language === "id"
+      ? `Kamu berhasil menjawab ${correctCount} dari 5 soal dengan benar!`
+      : `You correctly answered ${correctCount} out of 5 questions!`;
+
+  const scoreBadge =
+    language === "id"
+      ? `${correctCount} dari 5 Benar`
+      : `${correctCount} of 5 Correct`;
+
   return (
     <GameResultView
-      title="Yeay! Kamu Hebat!"
-      badgeText="🎉 Permainan Selesai!"
+      title={getTranslation("result.congratsTitle", {}, language)}
+      badgeText={getTranslation("result.gameFinishedBadge", {}, language)}
       teacherMessage={celebrationMessage}
-      teacherSubMessage={`Kamu berhasil menjawab ${correctCount} dari 5 soal dengan benar!`}
+      teacherSubMessage={teacherSubMessage}
       teacherExpression="celebrating"
       stars={starsEarned}
-      scoreBadgeText={`${correctCount} dari 5 Benar`}
+      scoreBadgeText={scoreBadge}
       onPlayAgain={handlePlayAgain}
       playAgainLabel={getTranslation("result.playAgain", {}, language)}
       playAgainIcon={<RotateCcw className="w-5 h-5" />}
@@ -55,7 +65,7 @@ export default function MatchingResultPage() {
       chooseLevelLabel={getTranslation("result.chooseLevel", {}, language)}
       chooseLevelIcon={<Layers className="w-5 h-5" />}
       homeHref="/learn"
-      homeLabel="Kembali ke Halaman Utama"
+      homeLabel={getTranslation("result.backToLearn", {}, language)}
       celebrationSoundType="victory"
     />
   );

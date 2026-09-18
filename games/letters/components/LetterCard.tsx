@@ -2,6 +2,7 @@
 
 import React from "react";
 import { LetterItem } from "../types";
+import { getLetterWord, getLetterEmoji } from "../data/alphabet-data";
 import { motion } from "motion/react";
 import { soundFx } from "@/lib/audio/sound-fx";
 import { useSettingsStore } from "@/stores/settings-store";
@@ -21,7 +22,8 @@ export function LetterCard({ item, onClick }: LetterCardProps) {
     onClick(item);
   };
 
-  const word = language === "id" ? item.wordId : item.wordEn;
+  const word = getLetterWord(item, language);
+  const emoji = getLetterEmoji(item, language);
 
   return (
     <motion.button
@@ -43,7 +45,7 @@ export function LetterCard({ item, onClick }: LetterCardProps) {
 
       {/* Emoji Illustration */}
       <span className="text-3xl sm:text-4xl my-1 group-hover:scale-110 transition-transform">
-        {item.emoji}
+        {emoji}
       </span>
 
       {/* Word Label */}

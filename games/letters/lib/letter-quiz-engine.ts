@@ -1,5 +1,5 @@
 import { GameDifficulty } from "@/types/game";
-import { ALPHABET_DATA } from "../data/alphabet-data";
+import { ALPHABET_DATA, getLetterWord, getLetterEmoji } from "../data/alphabet-data";
 import { LetterItem, LetterQuestion, LetterOption } from "../types";
 
 function shuffleArray<T>(array: T[]): T[] {
@@ -49,11 +49,12 @@ export function generateLetterQuestions(
       ]);
     } else if (difficulty === "medium") {
       // Level 2: Huruf Awal Benda / Kata
-      const word = lang === "id" ? target.wordId : target.wordEn;
+      const word = getLetterWord(target, lang);
+      const emoji = getLetterEmoji(target, lang);
       promptText =
         lang === "id"
-          ? `Huruf awal untuk "${word}" ${target.emoji} adalah...`
-          : `The first letter for "${word}" ${target.emoji} is...`;
+          ? `Huruf awal untuk "${word}" ${emoji} adalah...`
+          : `The first letter for "${word}" ${emoji} is...`;
       speechText =
         lang === "id"
           ? `Huruf awal untuk ${word} adalah apa ya?`
@@ -64,13 +65,13 @@ export function generateLetterQuestions(
           id: target.letter,
           letter: target.letter,
           label: target.letter,
-          emoji: target.emoji,
+          emoji: emoji,
         },
         ...distractors.map((d) => ({
           id: d.letter,
           letter: d.letter,
           label: d.letter,
-          emoji: d.emoji,
+          emoji: getLetterEmoji(d, lang),
         })),
       ]);
     } else {

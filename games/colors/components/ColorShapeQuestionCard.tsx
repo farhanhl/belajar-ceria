@@ -24,7 +24,7 @@ export function ColorShapeQuestionCard({
   onSelectOption,
   onAssignToBasket,
 }: ColorShapeQuestionCardProps) {
-  const { soundEnabled, volume } = useSettingsStore();
+  const { soundEnabled, volume, language } = useSettingsStore();
   const [activeSelectedItem, setActiveSelectedItem] = useState<string | null>(null);
 
   // Render Sorting Basket Mode (Hard)
@@ -60,7 +60,7 @@ export function ColorShapeQuestionCard({
               >
                 <div className="flex items-center justify-between">
                   <span className="font-black text-sm sm:text-base text-slate-800">
-                    {basket.title.id}
+                    {basket.title[language] || basket.title.id}
                   </span>
                   {basket.colorHex && (
                     <div
@@ -85,14 +85,21 @@ export function ColorShapeQuestionCard({
                     ))
                   ) : (
                     <span className="text-xs font-bold text-slate-400">
-                      {activeSelectedItem ? "👉 Taruh di sini" : "Wadah Kosong"}
+                      {activeSelectedItem
+                        ? language === "en"
+                          ? "👉 Place here"
+                          : "👉 Taruh di sini"
+                        : language === "en"
+                        ? "Empty Box"
+                        : "Wadah Kosong"}
                     </span>
                   )}
                 </div>
 
                 <div className="text-center">
                   <span className="text-[11px] font-extrabold text-slate-500">
-                    {assignedHere?.length || 0} Benda Terkumpul
+                    {assignedHere?.length || 0}{" "}
+                    {language === "en" ? "Items Collected" : "Benda Terkumpul"}
                   </span>
                 </div>
               </motion.div>
@@ -104,7 +111,11 @@ export function ColorShapeQuestionCard({
         <div className="bg-amber-100/70 rounded-3xl p-4 sm:p-5 border-2 border-amber-200 shadow-inner text-center space-y-3">
           <p className="text-xs sm:text-sm font-black text-amber-950 uppercase tracking-wider">
             {unassignedItems.length > 0
-              ? "Pilih benda di bawah, lalu sentuh wadah yang cocok:"
+              ? language === "en"
+                ? "Select an item below, then tap the matching box:"
+                : "Pilih benda di bawah, lalu sentuh wadah yang cocok:"
+              : language === "en"
+              ? "🎉 All items organized successfully!"
               : "🎉 Semua benda berhasil dikelompokkan!"}
           </p>
 

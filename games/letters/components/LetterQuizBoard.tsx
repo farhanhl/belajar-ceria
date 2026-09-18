@@ -10,6 +10,7 @@ import { TeacherExpression } from "@/components/teacher/TeacherAvatar";
 import { ProgressBar } from "@/components/ui/ProgressBar";
 import { soundFx } from "@/lib/audio/sound-fx";
 import { getTranslation } from "@/lib/i18n";
+import { getLetterWord, getLetterEmoji } from "../data/alphabet-data";
 import { motion, AnimatePresence } from "motion/react";
 import { Star, ArrowLeft, Sparkles, Check, HelpCircle } from "lucide-react";
 import Link from "next/link";
@@ -130,14 +131,14 @@ export function LetterQuizBoard() {
   };
 
   return (
-    <div className="w-full max-w-4xl mx-auto space-y-6 select-none">
+    <div className="w-full space-y-3 sm:space-y-4 select-none">
       {/* Top Bar */}
-      <div className="flex items-center justify-between gap-4 bg-white/90 backdrop-blur rounded-3xl p-4 border-2 border-amber-200 shadow-md">
+      <div className="flex items-center justify-between gap-3 bg-white/90 backdrop-blur rounded-2xl sm:rounded-3xl p-2.5 sm:p-3.5 border-2 border-amber-200 shadow-md">
         <Link
           href="/learn/letters"
-          className="p-2.5 sm:px-4 sm:py-2 bg-amber-100 hover:bg-amber-200 text-amber-900 rounded-2xl transition flex items-center gap-1.5 font-black text-sm"
+          className="p-2 sm:p-2.5 bg-amber-100 hover:bg-amber-200 text-amber-900 rounded-2xl transition flex items-center gap-1.5 font-black text-xs sm:text-sm"
         >
-          <ArrowLeft className="w-5 h-5" />
+          <ArrowLeft className="w-4 h-4 sm:w-5 sm:h-5" />
           <span className="hidden sm:inline">{getTranslation("games.letters.chooseLevel", {}, language)}</span>
         </Link>
 
@@ -147,8 +148,8 @@ export function LetterQuizBoard() {
         </div>
 
         {/* Live Stars Count */}
-        <div className="flex items-center gap-1.5 bg-amber-500 text-white px-3.5 py-2 rounded-2xl font-black shadow">
-          <Star className="w-5 h-5 fill-white" />
+        <div className="flex items-center gap-1 bg-amber-500 text-white px-3 py-1.5 rounded-2xl font-black text-sm sm:text-base shadow">
+          <Star className="w-4 h-4 sm:w-5 sm:h-5 fill-white" />
           <span>{correctCount}</span>
         </div>
       </div>
@@ -157,48 +158,49 @@ export function LetterQuizBoard() {
       <Teacher
         expression={teacherExpression}
         message={teacherMessage}
+        size={60}
         className="w-full"
       />
 
       {/* Question Card Arena */}
-      <div className="bg-gradient-to-b from-amber-50 via-white to-orange-50/60 rounded-3xl border-4 border-amber-300 p-6 sm:p-10 shadow-xl space-y-8">
+      <div className="bg-gradient-to-b from-amber-50 via-white to-orange-50/60 rounded-3xl border-4 border-amber-300 p-4 sm:p-6 shadow-xl space-y-4 sm:space-y-5">
         {/* Target Clue Display */}
-        <div className="flex flex-col items-center justify-center space-y-3">
-          <div className="inline-flex items-center gap-2 bg-amber-200 text-amber-950 font-black text-xs sm:text-sm px-4 py-1.5 rounded-full uppercase tracking-wider shadow-sm">
-            <Sparkles className="w-4 h-4 text-amber-600 fill-amber-500" />
+        <div className="flex flex-col items-center justify-center space-y-2">
+          <div className="inline-flex items-center gap-1.5 bg-amber-200 text-amber-950 font-black text-[11px] sm:text-xs px-3 py-0.5 rounded-full uppercase tracking-wider shadow-sm">
+            <Sparkles className="w-3.5 h-3.5 text-amber-600 fill-amber-500" />
             <span>{getTranslation("games.matching.questionCounter", { current: currentIndex + 1, total: questions.length }, language)}</span>
           </div>
 
-          <h2 className="text-xl sm:text-2xl font-black text-amber-950 text-center max-w-lg">
+          <h2 className="text-base sm:text-xl font-black text-amber-950 text-center max-w-lg">
             {currentQ.promptText}
           </h2>
 
           {/* Clue Visual Illustration / Target */}
-          <div className="p-6 rounded-3xl bg-white border-4 border-amber-300 shadow-lg flex flex-col items-center justify-center min-w-[140px] min-h-[140px]">
+          <div className="p-3 sm:p-4 rounded-2xl sm:rounded-3xl bg-white border-4 border-amber-300 shadow-md flex flex-col items-center justify-center min-w-[110px] min-h-[110px]">
             {currentQ.type === "word_match" ? (
               <>
-                <span className="text-6xl sm:text-7xl animate-pulse">
-                  {currentQ.targetLetter.emoji}
+                <span className="text-4xl sm:text-5xl animate-pulse">
+                  {getLetterEmoji(currentQ.targetLetter, language)}
                 </span>
-                <span className="mt-2 text-base sm:text-lg font-black text-amber-950">
-                  {language === "id" ? currentQ.targetLetter.wordId : currentQ.targetLetter.wordEn}
+                <span className="mt-1 text-sm sm:text-base font-black text-amber-950">
+                  {getLetterWord(currentQ.targetLetter, language)}
                 </span>
               </>
             ) : currentQ.type === "case_match" ? (
               <>
-                <span className="text-6xl sm:text-7xl font-black text-amber-900">
+                <span className="text-4xl sm:text-5xl font-black text-amber-900">
                   {currentQ.targetLetter.letter}
                 </span>
-                <span className="text-xs font-black text-amber-600 uppercase mt-1">
+                <span className="text-[10px] sm:text-xs font-black text-amber-600 uppercase mt-0.5">
                   {getTranslation("games.letters.uppercaseLabel", {}, language)}
                 </span>
               </>
             ) : (
               <>
-                <span className="text-6xl sm:text-7xl font-black text-amber-900">
+                <span className="text-4xl sm:text-5xl font-black text-amber-900">
                   {currentQ.targetLetter.letter}
                 </span>
-                <span className="text-xs font-black text-amber-600 uppercase mt-1">
+                <span className="text-[10px] sm:text-xs font-black text-amber-600 uppercase mt-0.5">
                   {getTranslation("games.letters.findLetterLabel", {}, language)}
                 </span>
               </>
@@ -207,12 +209,12 @@ export function LetterQuizBoard() {
         </div>
 
         {/* 3 Option Choices Grid */}
-        <div className="space-y-2">
-          <p className="text-center text-xs sm:text-sm font-extrabold text-amber-800 uppercase tracking-widest">
+        <div className="space-y-1.5">
+          <p className="text-center text-[11px] sm:text-xs font-extrabold text-amber-800 uppercase tracking-widest">
             {getTranslation("games.letters.chooseAnswer", {}, language)}
           </p>
 
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6 pt-2">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4 pt-1">
             {currentQ.options.map((option) => {
               const isSelected = selectedOptionId === option.id;
               let borderClass = "border-amber-300";
@@ -237,15 +239,15 @@ export function LetterQuizBoard() {
                   whileTap={isAnswering ? {} : { scale: 0.95 }}
                   onClick={() => handleSelectOption(option.id)}
                   disabled={isAnswering}
-                  className={`relative p-5 sm:p-7 rounded-3xl border-4 ${borderClass} ${bgClass} ${ringClass} shadow-xl flex flex-col items-center justify-center transition-all cursor-pointer min-h-[110px] sm:min-h-[140px]`}
+                  className={`relative p-3 sm:p-5 rounded-2xl sm:rounded-3xl border-4 ${borderClass} ${bgClass} ${ringClass} shadow-lg flex flex-col items-center justify-center transition-all cursor-pointer min-h-[80px] sm:min-h-[105px]`}
                 >
-                  <span className="text-4xl sm:text-5xl font-black text-slate-800">
+                  <span className="text-3xl sm:text-4xl font-black text-slate-800">
                     {option.label}
                   </span>
 
                   {isSelected && isSuccess === true && (
                     <div className="absolute top-2 right-2 bg-emerald-500 text-white rounded-full p-1 shadow">
-                      <Check className="w-4 h-4 stroke-[3]" />
+                      <Check className="w-3.5 h-3.5 stroke-[3]" />
                     </div>
                   )}
                 </motion.button>

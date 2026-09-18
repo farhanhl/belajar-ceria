@@ -91,6 +91,11 @@ export const id = {
       incorrectFeedback3: "Ayo perhatikan baik-baik bentuk dan gambarnya!",
       idleHint1: "Masih mencari? Coba lihat gambar yang bentuk dan warnanya sama.",
       idleHint2: "Ayo semangat, kamu pasti bisa menemukannya!",
+      findMatchBadge: "Cari Pasangan",
+      dropHint: "Tarik atau Ketuk ke Sini",
+      dropRelease: "Lepaskan di sini!",
+      matchSuccess: "Cocok!",
+      chooseLevel: "Pilih Level",
     },
     letters: {
       title: "Belajar Huruf",

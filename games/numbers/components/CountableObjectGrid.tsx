@@ -25,7 +25,7 @@ export function CountableObjectGrid({
   onToggleCount,
   size = "md",
 }: CountableObjectGridProps) {
-  const { soundEnabled, volume } = useSettingsStore();
+  const { soundEnabled, volume, language } = useSettingsStore();
 
   const handleItemClick = (index: number) => {
     if (soundEnabled) {
@@ -40,6 +40,9 @@ export function CountableObjectGrid({
       : size === "lg"
       ? "w-16 h-16 sm:w-20 sm:h-20 text-4xl sm:text-5xl"
       : "w-12 h-12 sm:w-16 sm:h-16 text-3xl sm:text-4xl";
+
+  const objName = object.name[language] || object.name.id;
+  const tooltip = language === "en" ? `Tap to count ${objName}` : `Sentuh untuk membilang ${objName}`;
 
   return (
     <div className="flex flex-wrap gap-2.5 sm:gap-3.5 items-center justify-center p-3 rounded-2xl bg-white/80 border border-amber-200/80 shadow-inner">
@@ -60,7 +63,7 @@ export function CountableObjectGrid({
                 ? "bg-amber-100 border-2 border-amber-400 ring-2 ring-amber-300"
                 : "bg-white hover:bg-amber-50 border-2 border-amber-200 hover:border-amber-300"
             }`}
-            title={`Sentuh untuk membilang ${object.name.id}`}
+            title={tooltip}
           >
             {/* Object Emoji */}
             <span className={isSubtractionCrossed ? "line-through grayscale" : ""}>

@@ -5,7 +5,9 @@ export interface MatchingItem {
   id: string;
   pairId: string;
   iconName: string; // Key corresponding to GameIcons
-  label: string; // e.g. "Kucing", "Apel"
+  label: string; // fallback
+  labelId: string; // e.g. "Kucing", "Apel"
+  labelEn: string; // e.g. "Cat", "Apple"
   category: "animals" | "fruits" | "vehicles" | "objects";
 }
 

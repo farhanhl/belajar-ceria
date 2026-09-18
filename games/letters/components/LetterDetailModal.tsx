@@ -2,7 +2,7 @@
 
 import React, { useEffect } from "react";
 import { LetterItem } from "../types";
-import { ALPHABET_DATA } from "../data/alphabet-data";
+import { ALPHABET_DATA, getLetterWord, getLetterEmoji, getLetterPhonetic } from "../data/alphabet-data";
 import { motion, AnimatePresence } from "motion/react";
 import { Volume2, X, ChevronLeft, ChevronRight, Sparkles } from "lucide-react";
 import { ttsService } from "@/lib/tts/tts";
@@ -23,18 +23,15 @@ export function LetterDetailModal({ letter, onClose, onNavigate }: LetterDetailM
   const prevLetter = currentIndex > 0 ? ALPHABET_DATA[currentIndex - 1] : null;
   const nextLetter = currentIndex < ALPHABET_DATA.length - 1 ? ALPHABET_DATA[currentIndex + 1] : null;
 
-  const phoneticText = letter
-    ? language === "id"
-      ? letter.phoneticId
-      : letter.phoneticEn
-    : "";
-
-  const word = letter ? (language === "id" ? letter.wordId : letter.wordEn) : "";
+  const phoneticText = letter ? getLetterPhonetic(letter, language) : "";
+  const word = letter ? getLetterWord(letter, language) : "";
+  const emoji = letter ? getLetterEmoji(letter, language) : "";
 
   const playVoice = () => {
     if (!letter) return;
     ttsService.speak({
       text: phoneticText,
+      language,
       volume,
     });
   };
@@ -106,7 +103,7 @@ export function LetterDetailModal({ letter, onClose, onNavigate }: LetterDetailM
 
             {/* Giant Illustration Emoji */}
             <div className="text-7xl sm:text-8xl animate-bounce" style={{ animationDuration: "2s" }}>
-              {letter.emoji}
+              {emoji}
             </div>
 
             {/* Vocabulary Word */}

@@ -56,10 +56,10 @@ export default function ColoringPlayPage() {
   const progressPercent = Math.min(100, Math.round((coloredCount / picture.totalRegions) * 100));
 
   return (
-    <div className="min-h-screen flex flex-col justify-between pb-6">
+    <div className="min-h-screen flex flex-col">
       <ChildNavbar showControls={false} />
 
-      <main className="flex-1 max-w-4xl w-full mx-auto p-3 sm:p-6 flex flex-col items-center justify-between space-y-4">
+      <main className="flex-1 max-w-6xl w-full mx-auto space-y-3 sm:space-y-4 py-3 sm:py-4 px-3 sm:px-6">
         {/* Top Tools Bar */}
         <div className="w-full">
           <ColoringToolsBar onFinish={handleFinish} />
@@ -90,19 +90,22 @@ export default function ColoringPlayPage() {
           </div>
         </div>
 
-        {/* Interactive Coloring Canvas */}
-        <motion.div
-          initial={{ scale: 0.95, opacity: 0 }}
-          animate={{ scale: 1, opacity: 1 }}
-          transition={{ duration: 0.3 }}
-          className="w-full flex justify-center py-1"
-        >
-          <ColoringCanvas pictureId={picture.id} />
-        </motion.div>
+        {/* Interactive Coloring Studio: Canvas and Crayons Side-by-Side */}
+        <div className="w-full flex flex-col md:flex-row items-center justify-center gap-4 sm:gap-6 pt-1">
+          {/* Canvas on Left/Center */}
+          <motion.div
+            initial={{ scale: 0.95, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            transition={{ duration: 0.3 }}
+            className="w-full max-w-[360px] sm:max-w-[400px] flex items-center justify-center shrink-0"
+          >
+            <ColoringCanvas pictureId={picture.id} />
+          </motion.div>
 
-        {/* Bottom Color Palette Bar */}
-        <div className="w-full">
-          <ColorPaletteBar />
+          {/* Crayon Palette Box on Right */}
+          <div className="w-full max-w-[360px] sm:max-w-[360px] flex items-center justify-center shrink-0">
+            <ColorPaletteBar />
+          </div>
         </div>
       </main>
     </div>

@@ -151,22 +151,22 @@ export default function MemoryPlayPage() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col justify-between pb-8">
+    <div className="min-h-screen flex flex-col">
       <ChildNavbar />
 
-      <main className="flex-1 max-w-6xl w-full mx-auto py-8 flex flex-col items-center justify-between space-y-6">
+      <main className="flex-1 max-w-6xl w-full mx-auto space-y-3 sm:space-y-4 py-3 sm:py-4 px-3 sm:px-6 flex flex-col justify-between">
         {/* Top Stats Bar */}
-        <div className="w-full flex items-center justify-between gap-3 bg-white/95 rounded-3xl p-3 sm:p-4 shadow-lg border-2 border-purple-200">
+        <div className="w-full flex items-center justify-between gap-3 bg-white/95 rounded-2xl sm:rounded-3xl p-2.5 sm:p-3 shadow-md border-2 border-purple-200">
           {/* Matched Pairs Counter */}
           <div className="flex items-center gap-2">
-            <div className="w-10 h-10 rounded-2xl bg-emerald-100 border border-emerald-300 flex items-center justify-center text-emerald-800">
-              <CheckCircle2 className="w-6 h-6 stroke-[2.5]" />
+            <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-xl sm:rounded-2xl bg-emerald-100 border border-emerald-300 flex items-center justify-center text-emerald-800">
+              <CheckCircle2 className="w-5 h-5 sm:w-6 sm:h-6 stroke-[2.5]" />
             </div>
             <div>
               <span className="text-[10px] sm:text-xs font-black uppercase text-emerald-800 block">
                 {getTranslation("games.memory.pairs", {}, language)}
               </span>
-              <span className="text-base sm:text-lg font-black text-emerald-950">
+              <span className="text-sm sm:text-lg font-black text-emerald-950">
                 {matchedPairCount} / {totalPairCount}
               </span>
             </div>
@@ -174,14 +174,14 @@ export default function MemoryPlayPage() {
 
           {/* Moves Counter */}
           <div className="flex items-center gap-2">
-            <div className="w-10 h-10 rounded-2xl bg-purple-100 border border-purple-300 flex items-center justify-center text-purple-800">
-              <Brain className="w-6 h-6" />
+            <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-xl sm:rounded-2xl bg-purple-100 border border-purple-300 flex items-center justify-center text-purple-800">
+              <Brain className="w-5 h-5 sm:w-6 sm:h-6" />
             </div>
             <div>
               <span className="text-[10px] sm:text-xs font-black uppercase text-purple-800 block">
                 {getTranslation("games.memory.movesLabel", {}, language)}
               </span>
-              <span className="text-base sm:text-lg font-black text-purple-950">
+              <span className="text-sm sm:text-lg font-black text-purple-950">
                 {movesCount}
               </span>
             </div>
@@ -190,7 +190,7 @@ export default function MemoryPlayPage() {
           {/* Restart Button */}
           <button
             onClick={handleRestart}
-            className="p-2.5 rounded-2xl bg-amber-100 hover:bg-amber-200 text-amber-900 border border-amber-300 transition cursor-pointer flex items-center gap-1.5 text-xs font-black"
+            className="p-2 sm:p-2.5 rounded-xl sm:rounded-2xl bg-amber-100 hover:bg-amber-200 text-amber-900 border border-amber-300 transition cursor-pointer flex items-center gap-1.5 text-xs font-black"
             title={getTranslation("games.memory.restart", {}, language)}
           >
             <RotateCcw className="w-4 h-4" />
@@ -203,6 +203,7 @@ export default function MemoryPlayPage() {
           expression="happy"
           message={feedbackMessage}
           subMessage={feedbackSubMessage}
+          size={60}
           className="w-full"
         />
 

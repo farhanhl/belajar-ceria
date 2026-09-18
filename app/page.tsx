@@ -8,10 +8,8 @@ import { Teacher } from "@/components/teacher/Teacher";
 import { AvatarPicker } from "@/components/profile/AvatarPicker";
 import { ChildButton } from "@/components/ui/ChildButton";
 import { ChildCard } from "@/components/ui/ChildCard";
-import { Sparkles, ArrowRight } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import { getTranslation } from "@/lib/i18n";
-
-import Image from "next/image";
 
 export default function HomePage() {
   const router = useRouter();
@@ -66,26 +64,8 @@ export default function HomePage() {
 
   // First time onboarding view
   return (
-    <main className="min-h-screen flex flex-col items-center justify-center p-4 sm:p-8">
-      <div className="w-full max-w-xl space-y-6">
-        {/* Brand Header with Logo in Rounded Frame */}
-        <div className="text-center flex flex-col items-center space-y-3">
-          <div className="inline-flex items-center justify-center p-3 sm:p-4 rounded-3xl bg-white/95 border-4 border-amber-300 shadow-xl hover:scale-105 transition-transform shrink-0">
-            <Image
-              src="/logo.png"
-              alt="Belajar Ceria"
-              width={220}
-              height={220}
-              className="w-40 h-40 sm:w-52 sm:h-52 object-contain"
-              priority
-            />
-          </div>
-          <div className="inline-flex items-center gap-2 bg-amber-200/90 text-amber-950 px-4 py-1.5 rounded-full text-sm font-extrabold shadow-sm">
-            <Sparkles className="w-4 h-4 text-amber-600 fill-amber-500" />
-            {getTranslation("app.tagline", {}, language)}
-          </div>
-        </div>
-
+    <div className="min-h-screen flex flex-col">
+      <main className="flex-1 max-w-6xl w-full mx-auto space-y-6 py-8">
         {/* Teacher Welcome Message */}
         <Teacher
           expression="happy"
@@ -93,7 +73,7 @@ export default function HomePage() {
         />
 
         {/* Create Profile Card */}
-        <ChildCard borderColor="border-amber-300" className="space-y-6 bg-white/95">
+        <ChildCard borderColor="border-amber-300" className="space-y-6 bg-white/95 shadow-xl w-full">
           <div className="text-center space-y-1">
             <h2 className="text-2xl sm:text-3xl font-black text-amber-950">
               {getTranslation("onboarding.title", {}, language)}
@@ -113,7 +93,7 @@ export default function HomePage() {
             </div>
 
             {/* Child Name Input */}
-            <div className="space-y-2">
+            <div className="max-w-md mx-auto w-full space-y-2">
               <input
                 type="text"
                 value={name}
@@ -123,7 +103,7 @@ export default function HomePage() {
                 }}
                 placeholder={getTranslation("onboarding.namePlaceholder", {}, language)}
                 maxLength={25}
-                className="w-full text-center text-xl sm:text-2xl font-black px-6 py-4 rounded-3xl border-4 border-amber-300 bg-amber-50/50 focus:bg-white focus:border-amber-500 focus:outline-none placeholder:text-amber-300 transition-all shadow-inner"
+                className="w-full text-center text-xl sm:text-2xl font-black px-6 py-3.5 rounded-3xl border-4 border-amber-300 bg-amber-50/50 focus:bg-white focus:border-amber-500 focus:outline-none placeholder:text-amber-300 transition-all shadow-inner"
                 autoFocus
               />
               {error && (
@@ -139,14 +119,14 @@ export default function HomePage() {
                 size="xl"
                 icon={<ArrowRight className="w-7 h-7 stroke-[3]" />}
                 disabled={isSubmitting || !name.trim()}
-                className="w-full sm:w-auto"
+                className="w-full sm:w-auto min-w-[260px]"
               >
                 {getTranslation("onboarding.startButton", {}, language)}
               </ChildButton>
             </div>
           </form>
         </ChildCard>
-      </div>
-    </main>
+      </main>
+    </div>
   );
 }

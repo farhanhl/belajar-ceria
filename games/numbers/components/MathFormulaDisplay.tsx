@@ -4,6 +4,7 @@ import React from "react";
 import { NumberQuestion } from "../types";
 import { CountableObjectGrid } from "./CountableObjectGrid";
 import { Plus, Minus, Equal, HelpCircle } from "lucide-react";
+import { useSettingsStore } from "@/stores/settings-store";
 
 interface MathFormulaDisplayProps {
   question: NumberQuestion;
@@ -20,8 +21,11 @@ export function MathFormulaDisplay({
   selectedAnswer,
   isAnswered,
 }: MathFormulaDisplayProps) {
+  const { language } = useSettingsStore();
+
   // Counting Mode
   if (question.mode === "counting" || !question.secondCount) {
+    const objName = language === "en" ? question.object.name.en : question.object.name.id;
     return (
       <div className="flex flex-col items-center justify-center space-y-4">
         <CountableObjectGrid
@@ -33,7 +37,9 @@ export function MathFormulaDisplay({
         />
 
         <p className="text-xs sm:text-sm font-bold text-amber-900/80 bg-amber-100/60 px-4 py-1.5 rounded-full">
-          💡 Sentuh setiap {question.object.name.id} untuk membantu menghitung!
+          {language === "en"
+            ? `💡 Tap each ${objName} to help count!`
+            : `💡 Sentuh setiap ${objName} untuk membantu menghitung!`}
         </p>
       </div>
     );
@@ -100,8 +106,12 @@ export function MathFormulaDisplay({
 
       <p className="text-xs sm:text-sm font-bold text-amber-900/80 bg-amber-100/60 px-4 py-1.5 rounded-full text-center">
         {isAddition
-          ? `💡 Sentuh buah untuk menjumlahkan: ${question.firstCount} + ${question.secondCount}`
-          : `💡 Kurangkan ${question.secondCount} dari ${question.firstCount} ${question.object.name.id}`}
+          ? language === "en"
+            ? `💡 Tap items to add: ${question.firstCount} + ${question.secondCount}`
+            : `💡 Sentuh buah untuk menjumlahkan: ${question.firstCount} + ${question.secondCount}`
+          : language === "en"
+            ? `💡 Subtract ${question.secondCount} from ${question.firstCount} ${question.object.pluralName.en}`
+            : `💡 Kurangkan ${question.secondCount} dari ${question.firstCount} ${question.object.name.id}`}
       </p>
     </div>
   );

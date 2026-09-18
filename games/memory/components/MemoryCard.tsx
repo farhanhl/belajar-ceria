@@ -4,6 +4,7 @@ import React from "react";
 import { motion } from "motion/react";
 import { MemoryCardInstance } from "../types";
 import { Sparkles, Check } from "lucide-react";
+import { useSettingsStore } from "@/stores/settings-store";
 
 interface MemoryCardProps {
   card: MemoryCardInstance;
@@ -12,6 +13,8 @@ interface MemoryCardProps {
 }
 
 export function MemoryCard({ card, onFlip, disabled }: MemoryCardProps) {
+  const { language } = useSettingsStore();
+
   const handleClick = () => {
     if (!card.isFlipped && !card.isMatched && !disabled) {
       onFlip(card.instanceId);
@@ -40,7 +43,7 @@ export function MemoryCard({ card, onFlip, disabled }: MemoryCardProps) {
               <Sparkles className="w-6 h-6 sm:w-7 sm:h-7 text-amber-200 fill-amber-300" />
             </motion.div>
             <span className="text-[10px] sm:text-xs font-black uppercase tracking-wider text-purple-100 mt-1">
-              Buka
+              {language === "en" ? "Flip" : "Buka"}
             </span>
           </div>
         </div>
@@ -84,7 +87,7 @@ export function MemoryCard({ card, onFlip, disabled }: MemoryCardProps) {
                 : "bg-amber-100 text-amber-950"
             }`}
           >
-            {card.name.id}
+            {card.name[language] || card.name.id}
           </div>
         </div>
       </motion.div>

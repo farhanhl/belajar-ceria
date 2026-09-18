@@ -24,6 +24,7 @@ import { ProgressBar } from "@/components/ui/ProgressBar";
 import { soundFx } from "@/lib/audio/sound-fx";
 import { getTranslation } from "@/lib/i18n";
 import { MatchingItem } from "@/types/game";
+import { getMatchingItemLabel } from "../data/items";
 import { motion, AnimatePresence } from "motion/react";
 import { Star, ArrowLeft } from "lucide-react";
 import Link from "next/link";
@@ -178,15 +179,17 @@ export function MatchingBoard() {
   };
 
   return (
-    <div className="w-full max-w-4xl mx-auto space-y-6">
+    <div className="w-full space-y-3 sm:space-y-4">
       {/* Top Bar: Back, Progress & Stars */}
-      <div className="flex items-center justify-between gap-4 bg-white/80 backdrop-blur rounded-3xl p-4 border-2 border-amber-200 shadow-md">
+      <div className="flex items-center justify-between gap-3 bg-white/80 backdrop-blur rounded-2xl sm:rounded-3xl p-2.5 sm:p-3.5 border-2 border-amber-200 shadow-md">
         <Link
           href="/learn/matching"
-          className="p-2.5 bg-amber-100 hover:bg-amber-200 text-amber-900 rounded-2xl transition flex items-center gap-1 font-bold text-sm"
+          className="p-2 sm:p-2.5 bg-amber-100 hover:bg-amber-200 text-amber-900 rounded-2xl transition flex items-center gap-1 font-bold text-xs sm:text-sm"
         >
-          <ArrowLeft className="w-5 h-5" />
-          <span className="hidden sm:inline">Pilih Level</span>
+          <ArrowLeft className="w-4 h-4 sm:w-5 sm:h-5" />
+          <span className="hidden sm:inline">
+            {getTranslation("games.matching.chooseLevel", {}, language)}
+          </span>
         </Link>
 
         {/* Progress */}
@@ -195,8 +198,8 @@ export function MatchingBoard() {
         </div>
 
         {/* Live Stars Count */}
-        <div className="flex items-center gap-1.5 bg-amber-500 text-white px-3.5 py-2 rounded-2xl font-black shadow">
-          <Star className="w-5 h-5 fill-white" />
+        <div className="flex items-center gap-1 bg-amber-500 text-white px-3 py-1.5 rounded-2xl font-black text-sm sm:text-base shadow">
+          <Star className="w-4 h-4 sm:w-5 sm:h-5 fill-white" />
           <span>{correctCount}</span>
         </div>
       </div>
@@ -205,6 +208,7 @@ export function MatchingBoard() {
       <Teacher
         expression={teacherExpression}
         message={teacherMessage}
+        size={60}
         className="w-full"
       />
 
@@ -215,7 +219,7 @@ export function MatchingBoard() {
         onDragEnd={handleDragEnd}
         onDragCancel={handleDragCancel}
       >
-        <div className="bg-gradient-to-b from-amber-50 to-orange-50/50 rounded-3xl border-4 border-amber-300 p-6 sm:p-10 shadow-xl space-y-8">
+        <div className="bg-gradient-to-b from-amber-50 to-orange-50/50 rounded-3xl border-4 border-amber-300 p-4 sm:p-6 shadow-xl space-y-4 sm:space-y-5">
           {/* Target Matching Zone */}
           <MatchingTarget
             targetItem={currentQ.targetItem}
@@ -224,14 +228,14 @@ export function MatchingBoard() {
           />
 
           {/* Options Tray */}
-          <div className="space-y-3">
+          <div className="space-y-2 sm:space-y-3">
             <div className="text-center">
-              <span className="text-xs sm:text-sm font-extrabold text-amber-800 uppercase tracking-widest bg-amber-200/80 px-4 py-1 rounded-full">
+              <span className="text-[11px] sm:text-xs font-extrabold text-amber-800 uppercase tracking-widest bg-amber-200/80 px-3.5 py-0.5 rounded-full">
                 {getTranslation("games.matching.tapOrDrag", {}, language)}
               </span>
             </div>
 
-            <div className="flex flex-wrap items-center justify-center gap-4 sm:gap-6 pt-2">
+            <div className="flex flex-wrap items-center justify-center gap-3 sm:gap-5 pt-1">
               <AnimatePresence>
                 {currentQ.options.map((option) => (
                   <MatchingCard
@@ -251,10 +255,10 @@ export function MatchingBoard() {
         {/* Drag Overlay to smoothly follow cursor/finger */}
         <DragOverlay dropAnimation={{ duration: 200, easing: "cubic-bezier(0.18, 0.67, 0.6, 1.22)" }}>
           {activeDragItem ? (
-            <div className="p-3 sm:p-5 rounded-3xl border-4 border-amber-400 bg-white shadow-2xl flex flex-col items-center justify-center scale-110 rotate-3 cursor-grabbing select-none min-w-[90px] sm:min-w-[120px] min-h-[90px] sm:min-h-[120px] ring-4 ring-amber-300">
-              <GameIcon name={activeDragItem.iconName} className="w-16 h-16 sm:w-20 sm:h-20" />
-              <span className="mt-1 sm:mt-2 text-xs sm:text-sm font-black text-slate-700 tracking-wide">
-                {activeDragItem.label}
+            <div className="p-2.5 sm:p-3.5 rounded-2xl sm:rounded-3xl border-4 border-amber-400 bg-white shadow-2xl flex flex-col items-center justify-center scale-110 rotate-3 cursor-grabbing select-none min-w-[85px] sm:min-w-[110px] min-h-[85px] sm:min-h-[110px] ring-4 ring-amber-300">
+              <GameIcon name={activeDragItem.iconName} className="w-12 h-12 sm:w-16 sm:h-16" />
+              <span className="mt-1 text-xs sm:text-sm font-black text-slate-700 tracking-wide">
+                {getMatchingItemLabel(activeDragItem, language)}
               </span>
             </div>
           ) : null}

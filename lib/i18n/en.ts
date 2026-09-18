@@ -91,6 +91,11 @@ export const en = {
       incorrectFeedback3: "Take a close look at the shape and colors!",
       idleHint1: "Still looking? Look for the picture with the same shape and color.",
       idleHint2: "Keep going, you can definitely find it!",
+      findMatchBadge: "Match Me",
+      dropHint: "Drag or Tap Here",
+      dropRelease: "Drop Here!",
+      matchSuccess: "Matched!",
+      chooseLevel: "Choose Level",
     },
     letters: {
       title: "Learn Letters",

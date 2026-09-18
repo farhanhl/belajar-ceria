@@ -6,6 +6,7 @@ import { useLetterGameStore } from "@/stores/letter-game-store";
 import { useProfileStore } from "@/stores/profile-store";
 import { useSettingsStore } from "@/stores/settings-store";
 import { GameResultView } from "@/components/game/GameResultView";
+import { getTranslation } from "@/lib/i18n";
 import { soundFx } from "@/lib/audio/sound-fx";
 import { Grid, RotateCcw } from "lucide-react";
 
@@ -15,7 +16,7 @@ export default function LetterResultPage() {
   const { activeProfile } = useProfileStore();
   const { language, soundEnabled, volume } = useSettingsStore();
 
-  const childName = activeProfile?.name || "Teman";
+  const childName = activeProfile?.name || (language === "id" ? "Teman" : "Friend");
 
   useEffect(() => {
     if (!lastResult) {
@@ -29,11 +30,20 @@ export default function LetterResultPage() {
   const total = lastResult.totalQuestions || 5;
   const stars = lastResult.starsEarned;
 
-  let message = `Luar biasa, ${childName}! Kamu menjawab semua soal tebak huruf dengan sempurna!`;
+  let message =
+    language === "id"
+      ? `Luar biasa, ${childName}! Kamu menjawab semua soal tebak huruf dengan sempurna!`
+      : `Outstanding, ${childName}! You answered all letter quiz questions perfectly!`;
   if (stars < 5 && stars >= 3) {
-    message = `Bagus sekali, ${childName}! Kamu sudah belajar huruf dengan sangat pintar!`;
+    message =
+      language === "id"
+        ? `Bagus sekali, ${childName}! Kamu sudah belajar huruf dengan sangat pintar!`
+        : `Awesome job, ${childName}! You are learning the alphabet wonderfully!`;
   } else if (stars < 3) {
-    message = `Hebat, ${childName}! Terus berlatih agar semakin hafal huruf-hurufnya ya!`;
+    message =
+      language === "id"
+        ? `Hebat, ${childName}! Terus berlatih agar semakin hafal huruf-hurufnya ya!`
+        : `Good effort, ${childName}! Keep practicing the letters and words!`;
   }
 
   const handlePlayAgain = () => {
@@ -42,22 +52,27 @@ export default function LetterResultPage() {
     router.push("/learn/letters/play");
   };
 
+  const scoreBadge =
+    language === "id"
+      ? `${correct} dari ${total} Benar`
+      : `${correct} of ${total} Correct`;
+
   return (
     <GameResultView
-      title="Yeay! Kamu Hebat!"
-      badgeText="🎉 Sesi Belajar Selesai!"
+      title={getTranslation("result.congratsTitle", {}, language)}
+      badgeText={getTranslation("result.gameFinishedBadge", {}, language)}
       teacherMessage={message}
       teacherExpression="celebrating"
       stars={stars}
-      scoreBadgeText={`${correct} dari ${total} Benar`}
+      scoreBadgeText={scoreBadge}
       onPlayAgain={handlePlayAgain}
-      playAgainLabel="Main Lagi"
+      playAgainLabel={getTranslation("result.playAgain", {}, language)}
       playAgainIcon={<RotateCcw className="w-5 h-5" />}
       chooseLevelHref="/learn/letters"
-      chooseLevelLabel="Pilih Level Lain"
+      chooseLevelLabel={getTranslation("result.chooseLevel", {}, language)}
       chooseLevelIcon={<Grid className="w-5 h-5" />}
       homeHref="/learn"
-      homeLabel="Kembali ke Halaman Utama"
+      homeLabel={getTranslation("result.backToLearn", {}, language)}
     />
   );
 }

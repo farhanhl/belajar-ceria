@@ -31,12 +31,16 @@ export function ColorShapeExploreCard(props: ColorCardProps | ShapeCardProps) {
     setIsPlaying(true);
     const textToSpeak =
       props.type === "color"
-        ? `Warna ${props.item.name.id}. ${props.item.realWorldExamples[0]?.description.id || ""}`
-        : `Bentuk ${props.item.name.id}. ${props.item.description.id}`;
+        ? language === "en"
+          ? `Color ${props.item.name.en}. ${props.item.realWorldExamples[0]?.description.en || ""}`
+          : `Warna ${props.item.name.id}. ${props.item.realWorldExamples[0]?.description.id || ""}`
+        : language === "en"
+          ? `Shape ${props.item.name.en}. ${props.item.description.en}`
+          : `Bentuk ${props.item.name.id}. ${props.item.description.id}`;
 
     ttsService.speak({
       text: textToSpeak,
-      language: "id",
+      language: language === "en" ? "en" : "id",
       volume,
       onEnd: () => setIsPlaying(false),
     });
@@ -65,17 +69,17 @@ export function ColorShapeExploreCard(props: ColorCardProps | ShapeCardProps) {
 
           <div className="text-center">
             <h3 className="text-xl sm:text-2xl font-black text-slate-800">
-              {color.name.id}
+              {language === "en" ? color.name.en : color.name.id}
             </h3>
             <p className="text-xs font-extrabold text-slate-500">
-              ({color.name.en})
+              ({language === "en" ? color.name.id : color.name.en})
             </p>
           </div>
 
           {/* Real world examples */}
           <div className="space-y-1.5 pt-1">
             <p className="text-[11px] font-black uppercase text-amber-900/70 tracking-wider">
-              Contoh Benda:
+              {language === "en" ? "Examples:" : "Contoh Benda:"}
             </p>
             <div className="flex flex-wrap gap-1.5">
               {color.realWorldExamples.map((ex) => (
@@ -84,7 +88,7 @@ export function ColorShapeExploreCard(props: ColorCardProps | ShapeCardProps) {
                   className="inline-flex items-center gap-1 bg-amber-50 text-amber-950 text-xs font-extrabold px-2.5 py-1 rounded-xl border border-amber-200"
                 >
                   <span>{ex.emoji}</span>
-                  <span>{ex.name.id}</span>
+                  <span>{ex.name[language] || ex.name.id}</span>
                 </span>
               ))}
             </div>
@@ -103,7 +107,7 @@ export function ColorShapeExploreCard(props: ColorCardProps | ShapeCardProps) {
           }`}
         >
           <Volume2 className="w-4 h-4" />
-          <span>Dengarkan Suara</span>
+          <span>{language === "en" ? "Listen Voice" : "Dengarkan Suara"}</span>
         </button>
       </motion.div>
     );
@@ -131,21 +135,21 @@ export function ColorShapeExploreCard(props: ColorCardProps | ShapeCardProps) {
 
         <div className="text-center">
           <h3 className="text-xl sm:text-2xl font-black text-slate-800">
-            {shape.name.id}
+            {language === "en" ? shape.name.en : shape.name.id}
           </h3>
           <p className="text-xs font-extrabold text-slate-500">
-            ({shape.name.en})
+            ({language === "en" ? shape.name.id : shape.name.en})
           </p>
         </div>
 
         <p className="text-xs text-slate-600 font-bold line-clamp-2">
-          {shape.description.id}
+          {shape.description[language] || shape.description.id}
         </p>
 
         {/* Real world examples */}
         <div className="space-y-1.5 pt-1">
           <p className="text-[11px] font-black uppercase text-sky-900/70 tracking-wider">
-            Contoh Benda:
+            {language === "en" ? "Examples:" : "Contoh Benda:"}
           </p>
           <div className="flex flex-wrap gap-1.5">
             {shape.realWorldExamples.map((ex) => (
@@ -154,7 +158,7 @@ export function ColorShapeExploreCard(props: ColorCardProps | ShapeCardProps) {
                 className="inline-flex items-center gap-1 bg-sky-50 text-sky-950 text-xs font-extrabold px-2.5 py-1 rounded-xl border border-sky-200"
               >
                 <span>{ex.emoji}</span>
-                <span>{ex.name.id}</span>
+                <span>{ex.name[language] || ex.name.id}</span>
               </span>
             ))}
           </div>
@@ -173,7 +177,7 @@ export function ColorShapeExploreCard(props: ColorCardProps | ShapeCardProps) {
         }`}
       >
         <Volume2 className="w-4 h-4" />
-        <span>Dengarkan Suara</span>
+        <span>{language === "en" ? "Listen Voice" : "Dengarkan Suara"}</span>
       </button>
     </motion.div>
   );

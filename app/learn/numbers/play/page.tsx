@@ -36,7 +36,7 @@ export default function NumbersPlayPage() {
   } = useNumbersGameStore();
 
   const { activeProfile, recordNumbersResult } = useProfileStore();
-  const { soundEnabled, autoTts, volume } = useSettingsStore();
+  const { language, soundEnabled, autoTts, volume } = useSettingsStore();
 
   const [teacherExpression, setTeacherExpression] = useState<TeacherExpression>("idle");
   const [teacherMessage, setTeacherMessage] = useState<string>("");
@@ -136,22 +136,22 @@ export default function NumbersPlayPage() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col justify-between">
+    <div className="min-h-screen flex flex-col">
       <ChildNavbar />
 
-      <main className="flex-1 max-w-6xl w-full mx-auto space-y-6 py-8">
+      <main className="flex-1 max-w-6xl w-full mx-auto space-y-3 sm:space-y-4 py-3 sm:py-4 px-3 sm:px-6">
         {/* Top Header & Progress */}
         <div className="flex items-center justify-between gap-2 flex-wrap">
           <Link href="/learn/numbers">
             <ChildButton variant="secondary" size="sm" className="gap-1.5">
               <ArrowLeft className="w-4 h-4" />
-              <span>Pilih Mode</span>
+              <span>{language === "id" ? "Pilih Mode" : "Choose Mode"}</span>
             </ChildButton>
           </Link>
 
           <div className="flex items-center gap-2">
             <span className="bg-white/90 text-amber-950 font-black px-3.5 py-1.5 rounded-full text-xs sm:text-sm shadow-sm border border-amber-200">
-              Soal: <strong className="text-amber-600">{currentQuestionIndex + 1}</strong> / {questions.length}
+              {language === "id" ? "Soal:" : "Question:"} <strong className="text-amber-600">{currentQuestionIndex + 1}</strong> / {questions.length}
             </span>
 
             <span
@@ -163,12 +163,12 @@ export default function NumbersPlayPage() {
                 }`}
             >
               {mode === "addition"
-                ? "Penjumlahan ➕"
+                ? (language === "id" ? "Penjumlahan ➕" : "Addition ➕")
                 : mode === "subtraction"
-                  ? "Pengurangan ➖"
+                  ? (language === "id" ? "Pengurangan ➖" : "Subtraction ➖")
                   : mode === "counting"
-                    ? "Membilang 🍉"
-                    : "Gabungan 🔀"}
+                    ? (language === "id" ? "Membilang 🍉" : "Counting 🍉")
+                    : (language === "id" ? "Gabungan 🔀" : "Mixed 🔀")}
             </span>
           </div>
         </div>
@@ -177,6 +177,7 @@ export default function NumbersPlayPage() {
         <Teacher
           expression={teacherExpression}
           message={teacherMessage}
+          size={60}
           className="w-full"
         />
 
@@ -184,15 +185,15 @@ export default function NumbersPlayPage() {
         <div className="flex justify-center">
           <button
             onClick={handleSpeakPrompt}
-            className="inline-flex items-center gap-2 bg-amber-100 hover:bg-amber-200 text-amber-900 font-extrabold px-4 py-2 rounded-full text-xs sm:text-sm shadow-sm transition-transform active:scale-95 cursor-pointer"
+            className="inline-flex items-center gap-2 bg-amber-100 hover:bg-amber-200 text-amber-900 font-extrabold px-3.5 py-1.5 rounded-full text-xs sm:text-sm shadow-sm transition-transform active:scale-95 cursor-pointer"
           >
             <Volume2 className="w-4 h-4 text-amber-600" />
-            <span>Dengarkan Soal 🔊</span>
+            <span>{language === "id" ? "Dengarkan Soal 🔊" : "Listen Question 🔊"}</span>
           </button>
         </div>
 
         {/* Interactive Formula / Objects Area */}
-        <div className="bg-white/95 rounded-3xl p-5 sm:p-8 shadow-xl border-2 border-amber-200">
+        <div className="bg-white/95 rounded-3xl p-4 sm:p-6 shadow-xl border-2 border-amber-200">
           <MathFormulaDisplay
             question={currentQ}
             countedIndices={countedIndices}
@@ -202,9 +203,9 @@ export default function NumbersPlayPage() {
           />
 
           {/* Number Answer Choices Grid */}
-          <div className="pt-6 border-t border-amber-100 mt-6 space-y-3">
+          <div className="pt-4 border-t border-amber-100 mt-4 space-y-2">
             <p className="text-xs sm:text-sm font-black text-amber-950 text-center uppercase tracking-wider">
-              Pilih Angka Jawaban yang Tepat:
+              {language === "id" ? "Pilih Angka Jawaban yang Tepat:" : "Choose the Correct Number:"}
             </p>
 
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4 max-w-lg mx-auto">

@@ -70,7 +70,7 @@ export function SortingGameBoard() {
   useEffect(() => {
     if (activeItem && autoTts && typeof window !== "undefined" && "speechSynthesis" in window) {
       window.speechSynthesis.cancel();
-      const text = activeItem.speechText[language] || activeItem.name.id;
+      const text = activeItem.speechText[language] || (language === "en" ? activeItem.name.en : activeItem.name.id);
       const utterance = new SpeechSynthesisUtterance(text);
       utterance.lang = language === "en" ? "en-US" : "id-ID";
       utterance.rate = 0.9;
@@ -159,10 +159,10 @@ export function SortingGameBoard() {
       onDragEnd={handleDragEnd}
       onDragCancel={handleDragCancel}
     >
-      <div className="w-full max-w-5xl mx-auto flex flex-col items-center space-y-6 select-none">
-        {/* Target Baskets / Containers Row with generous gap and spacing */}
-        <div className="w-full px-2 sm:px-4">
-          <div className="flex flex-wrap items-stretch justify-center gap-6 sm:gap-8 md:gap-10 lg:gap-12 w-full py-2">
+      <div className="w-full flex flex-col items-center space-y-3 sm:space-y-3.5 select-none">
+        {/* Target Baskets / Containers Row */}
+        <div className="w-full px-1 sm:px-2">
+          <div className="flex flex-wrap items-stretch justify-center gap-3 sm:gap-6 md:gap-8 w-full py-1">
             {activeCategories.map((category) => (
               <SortingBasket
                 key={category.id}
@@ -177,76 +177,52 @@ export function SortingGameBoard() {
           </div>
         </div>
 
-        {/* Guide Banner / Interactive Feedback */}
-        <div className="w-full max-w-xl mx-auto">
-          <div className="bg-white/90 backdrop-blur-md rounded-2xl p-3 sm:p-4 border-2 border-amber-300 shadow-md text-center flex items-center justify-between gap-3">
-            <div className="flex items-center gap-2">
-              <span className="text-2xl">
-                {feedbackState.type === "success"
-                  ? "🌟"
-                  : feedbackState.type === "wrong"
-                  ? "💡"
-                  : "✋"}
+        {/* Compact Remaining Items Shelf */}
+        <div className="w-full bg-amber-100/75 backdrop-blur-sm rounded-3xl p-3 sm:p-4 border-3 border-amber-300 shadow-md">
+          <div className="flex items-center justify-between mb-2 px-1.5">
+            <h3 className="text-xs sm:text-sm font-black text-amber-950 flex items-center gap-1.5">
+              <span>📦</span>
+              <span>
+                {language === "en"
+                  ? `Items to Organize (${remainingItems.length} left)`
+                  : `Barang untuk Dirapikan (Sisa ${remainingItems.length})`}
               </span>
-              <p className="text-xs sm:text-sm font-extrabold text-amber-950">
-                {feedbackState.message
-                  ? feedbackState.message[language] || feedbackState.message.id
-                  : activeItem
-                  ? language === "en"
-                    ? `Drag "${activeItem.name.en}" into the right box!`
-                    : `Tarik "${activeItem.name.id}" ke wadah yang sesuai!`
-                  : language === "en"
-                  ? "All items organized!"
-                  : "Semua barang sudah rapi!"}
-              </p>
-            </div>
+            </h3>
 
-            {activeItem && (
-              <button
-                type="button"
-                onClick={() => setShowHint(!showHint)}
-                className="inline-flex items-center gap-1 px-3 py-1 rounded-xl bg-amber-100 hover:bg-amber-200 text-amber-900 text-xs font-black transition cursor-pointer"
-              >
-                <HelpCircle className="w-3.5 h-3.5" />
-                <span>{language === "en" ? "Hint" : "Bantuan"}</span>
-              </button>
-            )}
+            <div className="flex items-center gap-2">
+              {activeItem && (
+                <button
+                  type="button"
+                  onClick={() => setShowHint(!showHint)}
+                  className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-amber-200/80 hover:bg-amber-300 text-amber-950 text-[11px] font-black transition cursor-pointer shadow-xs"
+                >
+                  <HelpCircle className="w-3 h-3" />
+                  <span>{language === "en" ? "Hint" : "Petunjuk"}</span>
+                </button>
+              )}
+              <span className="hidden sm:inline-flex text-[11px] font-bold text-amber-800 items-center gap-1">
+                <Move className="w-3 h-3" />
+                <span>{language === "en" ? "Drag into box above" : "Tarik ke kotak di atas"}</span>
+              </span>
+            </div>
           </div>
 
           {/* Hint text popover */}
           <AnimatePresence>
             {showHint && activeItem && (
               <motion.div
-                initial={{ opacity: 0, y: -10 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -10 }}
-                className="mt-2 bg-amber-100/90 text-amber-950 text-xs font-extrabold p-2.5 rounded-xl border border-amber-300 text-center"
+                initial={{ opacity: 0, height: 0 }}
+                animate={{ opacity: 1, height: "auto" }}
+                exit={{ opacity: 0, height: 0 }}
+                className="mb-2 bg-white/90 text-amber-950 text-xs font-extrabold p-2 rounded-xl border border-amber-300 text-center shadow-xs overflow-hidden"
               >
                 💬 {activeItem.hint[language] || activeItem.hint.id}
               </motion.div>
             )}
           </AnimatePresence>
-        </div>
-
-        {/* Remaining Items Shelf */}
-        <div className="w-full bg-amber-100/70 backdrop-blur-sm rounded-3xl p-4 sm:p-6 border-3 border-amber-300 shadow-lg">
-          <div className="flex items-center justify-between mb-3 px-2">
-            <h3 className="text-xs sm:text-sm font-black text-amber-950 flex items-center gap-1.5">
-              <span>📦</span>
-              <span>
-                {language === "en"
-                  ? `Items to Organize (${remainingItems.length} left)`
-                  : `Barang yang Perlu Dirapikan (Sisa ${remainingItems.length})`}
-              </span>
-            </h3>
-            <span className="text-xs font-bold text-amber-800 flex items-center gap-1">
-              <Move className="w-3.5 h-3.5" />
-              <span>{language === "en" ? "Drag item into box above" : "Tarik & jatuhkan ke wadah di atas"}</span>
-            </span>
-          </div>
 
           {/* Items Grid / Row */}
-          <div className="flex flex-wrap items-center justify-center gap-3 sm:gap-4 min-h-[140px]">
+          <div className="flex flex-wrap items-center justify-center gap-2.5 sm:gap-3.5 min-h-[115px] sm:min-h-[130px] py-1">
             <AnimatePresence>
               {remainingItems.map((item) => (
                 <SortingItemCard
