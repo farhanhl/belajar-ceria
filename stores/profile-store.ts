@@ -12,6 +12,7 @@ import {
   recordColorsGameResult as recordColorsGameResultStorage,
   recordNumbersGameResult as recordNumbersGameResultStorage,
   recordMemoryGameResult as recordMemoryGameResultStorage,
+  recordColoringGameResult as recordColoringGameResultStorage,
   deleteProfile as deleteProfileStorage,
 } from "@/lib/storage/profile-storage";
 import { isStorageAvailable } from "@/lib/storage/storage";
@@ -66,6 +67,15 @@ interface ProfileState {
     totalPairs: number;
     matchedPairs: number;
     movesCount: number;
+    starsEarned: number;
+    completedAt: string;
+  }) => boolean;
+  recordColoringResult: (result: {
+    profileId: string;
+    difficulty: import("@/types/game").Difficulty;
+    totalQuestions: number;
+    correctAnswers: number;
+    incorrectAnswers: number;
     starsEarned: number;
     completedAt: string;
   }) => boolean;
@@ -155,6 +165,16 @@ export const useProfileStore = create<ProfileState>((set, get) => ({
 
   recordMemoryResult: (result) => {
     const success = recordMemoryGameResultStorage(result);
+    if (success) {
+      const profiles = getProfiles();
+      const activeProfile = getActiveProfile();
+      set({ profiles, activeProfile });
+    }
+    return success;
+  },
+
+  recordColoringResult: (result) => {
+    const success = recordColoringGameResultStorage(result);
     if (success) {
       const profiles = getProfiles();
       const activeProfile = getActiveProfile();

@@ -138,6 +138,19 @@ export default function PuzzleSelectPage() {
           <button
             onClick={() => {
               if (soundEnabled) soundFx.playClick(volume);
+              setSelectedTheme("muslimah");
+            }}
+            className={`px-4 py-2 rounded-2xl font-extrabold text-xs sm:text-sm whitespace-nowrap cursor-pointer transition-all ${
+              selectedTheme === "muslimah"
+                ? "bg-amber-400 text-amber-950 shadow-md scale-102 ring-2 ring-amber-500/50"
+                : "bg-white/80 text-amber-900 hover:bg-white shadow-sm hover:scale-102"
+            }`}
+          >
+            {getTranslation("games.puzzle.themeMuslimah", {}, language)}
+          </button>
+          <button
+            onClick={() => {
+              if (soundEnabled) soundFx.playClick(volume);
               setSelectedTheme("animals");
             }}
             className={`px-4 py-2 rounded-2xl font-extrabold text-xs sm:text-sm whitespace-nowrap cursor-pointer transition-all ${
@@ -160,6 +173,32 @@ export default function PuzzleSelectPage() {
             }`}
           >
             {getTranslation("games.puzzle.themeVehicles", {}, language)}
+          </button>
+          <button
+            onClick={() => {
+              if (soundEnabled) soundFx.playClick(volume);
+              setSelectedTheme("nature");
+            }}
+            className={`px-4 py-2 rounded-2xl font-extrabold text-xs sm:text-sm whitespace-nowrap cursor-pointer transition-all ${
+              selectedTheme === "nature"
+                ? "bg-amber-400 text-amber-950 shadow-md scale-102 ring-2 ring-amber-500/50"
+                : "bg-white/80 text-amber-900 hover:bg-white shadow-sm hover:scale-102"
+            }`}
+          >
+            {getTranslation("games.puzzle.themeNature", {}, language)}
+          </button>
+          <button
+            onClick={() => {
+              if (soundEnabled) soundFx.playClick(volume);
+              setSelectedTheme("space");
+            }}
+            className={`px-4 py-2 rounded-2xl font-extrabold text-xs sm:text-sm whitespace-nowrap cursor-pointer transition-all ${
+              selectedTheme === "space"
+                ? "bg-amber-400 text-amber-950 shadow-md scale-102 ring-2 ring-amber-500/50"
+                : "bg-white/80 text-amber-900 hover:bg-white shadow-sm hover:scale-102"
+            }`}
+          >
+            {getTranslation("games.puzzle.themeSpace", {}, language)}
           </button>
         </div>
 

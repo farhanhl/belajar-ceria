@@ -178,8 +178,44 @@ class SoundEffects {
     }
   }
 
+  /**
+   * Bubbly pop sound for coloring tap & crayon pick
+   */
+  playPop(volume: number = 0.8) {
+    const ctx = this.getContext();
+    if (!ctx) return;
+
+    try {
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+
+      osc.type = "sine";
+      osc.frequency.setValueAtTime(500, ctx.currentTime);
+      osc.frequency.exponentialRampToValueAtTime(1000, ctx.currentTime + 0.06);
+
+      gain.gain.setValueAtTime(volume * 0.35, ctx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.06);
+
+      osc.connect(gain);
+      gain.connect(ctx.destination);
+
+      osc.start();
+      osc.stop(ctx.currentTime + 0.06);
+    } catch {
+      // Audio failed silently
+    }
+  }
+
+  playSuccess(volume: number = 0.8) {
+    this.playVictory(volume);
+  }
+
   playCelebration(volume: number = 0.8) {
     this.playVictory(volume);
+  }
+
+  playWrong(volume: number = 0.8) {
+    this.playTryAgain(volume);
   }
 
   /**

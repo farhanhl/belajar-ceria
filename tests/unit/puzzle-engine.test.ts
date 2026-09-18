@@ -101,8 +101,8 @@ describe("Puzzle Engine & Grid Slicing", () => {
     expect(calculatePuzzleStars("easy", 0, 0, 4, 0)).toBe(1);
   });
 
-  it("verifies the puzzle catalog contains 8 complete child-friendly artworks", () => {
-    expect(PUZZLE_CATALOG.length).toBe(8);
+  it("verifies the puzzle catalog contains complete child-friendly artworks", () => {
+    expect(PUZZLE_CATALOG.length).toBe(20);
 
     PUZZLE_CATALOG.forEach((item) => {
       expect(item.id).toBeTruthy();
@@ -110,7 +110,7 @@ describe("Puzzle Engine & Grid Slicing", () => {
       expect(item.title.en).toBeTruthy();
       expect(item.description.id).toBeTruthy();
       expect(item.artworkId).toBeTruthy();
-      expect(["animals", "vehicles", "nature"]).toContain(item.theme);
+      expect(["muslimah", "animals", "vehicles", "nature", "space"]).toContain(item.theme);
     });
 
     const found = getPuzzleById("elephant");

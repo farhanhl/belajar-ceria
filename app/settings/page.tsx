@@ -5,7 +5,7 @@ import { useSettingsStore } from "@/stores/settings-store";
 import { ChildNavbar } from "@/components/navigation/ChildNavbar";
 import { ChildCard } from "@/components/ui/ChildCard";
 import { Teacher } from "@/components/teacher/Teacher";
-import { Volume2, VolumeX, Mic, Globe, ArrowLeft, Check } from "lucide-react";
+import { Volume2, VolumeX, Mic, Globe, ArrowLeft, Check, Music, Music2 } from "lucide-react";
 import { getTranslation } from "@/lib/i18n";
 import { Language } from "@/types/settings";
 import Link from "next/link";
@@ -16,12 +16,16 @@ export default function SettingsPage() {
   const {
     language,
     soundEnabled,
+    musicEnabled,
     autoTts,
     volume,
+    musicVolume,
     setLanguage,
     setSoundEnabled,
+    setMusicEnabled,
     setAutoTts,
     setVolume,
+    setMusicVolume,
   } = useSettingsStore();
 
   const [savedMessage, setSavedMessage] = useState("");
@@ -30,6 +34,13 @@ export default function SettingsPage() {
     const next = !soundEnabled;
     setSoundEnabled(next);
     if (next) soundFx.playClick(volume);
+    triggerSaveFeedback();
+  };
+
+  const handleToggleMusic = () => {
+    const next = !musicEnabled;
+    setMusicEnabled(next);
+    if (soundEnabled) soundFx.playClick(volume);
     triggerSaveFeedback();
   };
 
@@ -47,6 +58,11 @@ export default function SettingsPage() {
   const handleVolumeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const val = parseFloat(e.target.value);
     setVolume(val);
+  };
+
+  const handleMusicVolumeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const val = parseFloat(e.target.value);
+    setMusicVolume(val);
   };
 
   const handleTestVoice = () => {
@@ -110,7 +126,59 @@ export default function SettingsPage() {
             </button>
           </div>
 
-          {/* Sound Toggle */}
+          {/* Music (Backsound) Toggle */}
+          <div className="flex items-center justify-between gap-4 p-3 bg-purple-50/70 rounded-2xl border border-purple-200">
+            <div className="flex items-center gap-3">
+              <div className="p-3 bg-purple-200 text-purple-900 rounded-2xl">
+                {musicEnabled ? <Music2 className="w-6 h-6 animate-pulse" /> : <Music className="w-6 h-6 opacity-40" />}
+              </div>
+              <div>
+                <p className="text-lg font-black text-amber-950">
+                  {getTranslation("settings.music", {}, language)}
+                </p>
+                <p className="text-xs sm:text-sm font-bold text-amber-700">
+                  {getTranslation("settings.musicDesc", {}, language)}
+                </p>
+              </div>
+            </div>
+
+            <button
+              type="button"
+              onClick={handleToggleMusic}
+              className={`px-5 py-2.5 rounded-2xl font-black text-sm transition cursor-pointer shadow ${
+                musicEnabled
+                  ? "bg-purple-500 text-white hover:bg-purple-600"
+                  : "bg-slate-300 text-slate-700 hover:bg-slate-400"
+              }`}
+            >
+              {musicEnabled ? "ON" : "OFF"}
+            </button>
+          </div>
+
+          {/* Music Volume Slider */}
+          {musicEnabled && (
+            <div className="space-y-2 p-3 bg-purple-50/40 rounded-2xl border border-purple-200">
+              <div className="flex items-center justify-between">
+                <span className="text-base font-black text-amber-950">
+                  {getTranslation("settings.musicVolume", {}, language)}
+                </span>
+                <span className="text-sm font-black text-purple-800">
+                  {Math.round(musicVolume * 100)}%
+                </span>
+              </div>
+              <input
+                type="range"
+                min="0"
+                max="1"
+                step="0.05"
+                value={musicVolume}
+                onChange={handleMusicVolumeChange}
+                className="w-full accent-purple-500 h-3 bg-purple-200 rounded-lg cursor-pointer"
+              />
+            </div>
+          )}
+
+          {/* Sound FX Toggle */}
           <div className="flex items-center justify-between gap-4 p-3 bg-amber-50/50 rounded-2xl border border-amber-200">
             <div className="flex items-center gap-3">
               <div className="p-3 bg-amber-200 text-amber-900 rounded-2xl">
@@ -129,16 +197,17 @@ export default function SettingsPage() {
             <button
               type="button"
               onClick={handleToggleSound}
-              className={`px-5 py-2.5 rounded-2xl font-black text-sm transition cursor-pointer shadow ${soundEnabled
+              className={`px-5 py-2.5 rounded-2xl font-black text-sm transition cursor-pointer shadow ${
+                soundEnabled
                   ? "bg-emerald-500 text-white hover:bg-emerald-600"
                   : "bg-slate-300 text-slate-700 hover:bg-slate-400"
-                }`}
+              }`}
             >
               {soundEnabled ? "ON" : "OFF"}
             </button>
           </div>
 
-          {/* Volume Slider */}
+          {/* Sound FX Volume Slider */}
           <div className="space-y-2 p-3 bg-amber-50/50 rounded-2xl border border-amber-200">
             <div className="flex items-center justify-between">
               <span className="text-base font-black text-amber-950">

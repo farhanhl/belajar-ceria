@@ -49,4 +49,20 @@ export const GAMES_CATALOG: GameDefinition[] = [
     available: true,
     levels: ["easy", "medium", "hard"],
   },
+  {
+    id: "coloring",
+    titleKey: "games.coloring.title",
+    descriptionKey: "games.coloring.subtitle",
+    icon: "palette",
+    available: true,
+    levels: ["easy", "medium", "hard"],
+  },
+  {
+    id: "sorting",
+    titleKey: "games.sorting.title",
+    descriptionKey: "games.sorting.subtitle",
+    icon: "boxes",
+    available: true,
+    levels: ["easy", "medium", "hard"],
+  },
 ];

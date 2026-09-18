@@ -2,9 +2,13 @@ import { Difficulty } from "@/types/game";
 
 export type PuzzleDifficulty = Difficulty; // 'easy' | 'medium' | 'hard'
 
-export type PuzzleTheme = "animals" | "vehicles" | "nature";
+export type PuzzleTheme = "muslimah" | "animals" | "vehicles" | "nature" | "space";
 
 export type PuzzleArtworkId =
+  | "muslimah_quran"
+  | "muslimah_mosque"
+  | "muslimah_garden"
+  | "muslimah_sharing"
   | "elephant"
   | "cat"
   | "rabbit"
@@ -12,7 +16,15 @@ export type PuzzleArtworkId =
   | "airplane"
   | "firetruck"
   | "train"
-  | "boat";
+  | "boat"
+  | "panda"
+  | "dinosaur"
+  | "rocket"
+  | "astronaut"
+  | "submarine"
+  | "helicopter"
+  | "sunflower"
+  | "rainbow_castle";
 
 export interface PuzzleItem {
   id: string;

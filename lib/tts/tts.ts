@@ -1,4 +1,5 @@
 import { Language } from "@/types/settings";
+import { bgm } from "@/lib/audio/bgm";
 
 export interface SpeakOptions {
   text: string;
@@ -193,6 +194,7 @@ class TtsService {
 
     utterance.onstart = () => {
       this.isSpeakingState = true;
+      bgm.duck(Math.max(1500, options.text.length * 90));
       if (options.onStart) options.onStart();
     };
 

@@ -5,8 +5,9 @@ import Link from "next/link";
 import { useProfileStore } from "@/stores/profile-store";
 import { useSettingsStore } from "@/stores/settings-store";
 import { ChildAvatar } from "@/components/profile/ChildAvatar";
-import { Star, Trophy, Settings, Users } from "lucide-react";
+import { Star, Trophy, Settings, Users, Music2, Music } from "lucide-react";
 import { getTranslation } from "@/lib/i18n";
+import { soundFx } from "@/lib/audio/sound-fx";
 import Image from "next/image";
 
 interface ChildNavbarProps {
@@ -15,7 +16,13 @@ interface ChildNavbarProps {
 
 export function ChildNavbar({ showControls = true }: ChildNavbarProps) {
   const { activeProfile } = useProfileStore();
-  const { language } = useSettingsStore();
+  const { language, musicEnabled, setMusicEnabled, soundEnabled, volume } = useSettingsStore();
+
+  const handleToggleMusic = () => {
+    const next = !musicEnabled;
+    setMusicEnabled(next);
+    if (soundEnabled) soundFx.playClick(volume);
+  };
 
   // Calculate total stars across all games
   const matchingStars = activeProfile
@@ -129,6 +136,25 @@ export function ChildNavbar({ showControls = true }: ChildNavbarProps) {
 
           {showControls && (
             <div className="flex items-center gap-1.5 sm:gap-2">
+              {/* BGM Toggle Button */}
+              <button
+                type="button"
+                onClick={handleToggleMusic}
+                className={`p-2 sm:p-2.5 rounded-2xl transition-all shadow-sm flex items-center justify-center cursor-pointer ${
+                  musicEnabled
+                    ? "bg-purple-100 hover:bg-purple-200 text-purple-800 ring-2 ring-purple-300/60"
+                    : "bg-slate-100 hover:bg-slate-200 text-slate-400"
+                }`}
+                title={musicEnabled ? getTranslation("navbar.musicOn", {}, language) : getTranslation("navbar.musicOff", {}, language)}
+                aria-label={musicEnabled ? getTranslation("navbar.musicOn", {}, language) : getTranslation("navbar.musicOff", {}, language)}
+              >
+                {musicEnabled ? (
+                  <Music2 className="w-5 h-5 sm:w-6 sm:h-6 animate-bounce" />
+                ) : (
+                  <Music className="w-5 h-5 sm:w-6 sm:h-6" />
+                )}
+              </button>
+
               <Link
                 href="/profiles"
                 className="p-2 sm:p-2.5 bg-sky-100 hover:bg-sky-200 text-sky-800 rounded-2xl transition-all shadow-sm flex items-center justify-center"

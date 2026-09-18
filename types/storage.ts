@@ -73,6 +73,28 @@ export const ProfileProgressSchema = z.object({
       medium: GameProgressSchema.parse({}),
       hard: GameProgressSchema.parse({}),
     })),
+  coloring: z
+    .object({
+      easy: GameProgressSchema,
+      medium: GameProgressSchema,
+      hard: GameProgressSchema,
+    })
+    .default(() => ({
+      easy: GameProgressSchema.parse({}),
+      medium: GameProgressSchema.parse({}),
+      hard: GameProgressSchema.parse({}),
+    })),
+  sorting: z
+    .object({
+      easy: GameProgressSchema,
+      medium: GameProgressSchema,
+      hard: GameProgressSchema,
+    })
+    .default(() => ({
+      easy: GameProgressSchema.parse({}),
+      medium: GameProgressSchema.parse({}),
+      hard: GameProgressSchema.parse({}),
+    })),
 });
 
 export const ChildProfileSchema = z.object({
@@ -87,8 +109,10 @@ export const ChildProfileSchema = z.object({
 export const AppSettingsSchema = z.object({
   language: z.enum(["id", "en"]).default("id"),
   soundEnabled: z.boolean().default(true),
+  musicEnabled: z.boolean().default(true),
   autoTts: z.boolean().default(true),
   volume: z.number().min(0).max(1).default(0.8),
+  musicVolume: z.number().min(0).max(1).default(0.5),
 });
 
 export const AppDataSchema = z.object({

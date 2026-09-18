@@ -134,18 +134,18 @@ export function GameResultView({
     <div className="min-h-screen flex flex-col justify-between pb-6">
       <ChildNavbar showControls={false} />
 
-      <main className="flex-1 max-w-xl w-full mx-auto p-4 sm:p-8 flex flex-col items-center justify-center space-y-6">
+      <main className="flex-1 max-w-2xl sm:max-w-3xl w-full mx-auto p-4 sm:p-6 flex flex-col items-center justify-center space-y-4 sm:space-y-5">
         {/* Celebration Header */}
         <motion.div
           initial={{ scale: 0.8, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
-          className="text-center space-y-2"
+          className="text-center space-y-1.5"
         >
-          <div className="inline-flex items-center gap-2 bg-amber-200 text-amber-950 px-4 py-1.5 rounded-full text-sm font-extrabold shadow-sm">
+          <div className="inline-flex items-center gap-1.5 bg-amber-200 text-amber-950 px-3.5 py-1 rounded-full text-xs sm:text-sm font-extrabold shadow-sm">
             <Sparkles className="w-4 h-4 text-amber-600 fill-amber-500" />
             <span>{finalBadge}</span>
           </div>
-          <h1 className="text-3xl sm:text-5xl font-black text-amber-950 tracking-tight">
+          <h1 className="text-2xl sm:text-4xl font-black text-amber-950 tracking-tight">
             {finalTitle}
           </h1>
         </motion.div>
@@ -155,6 +155,7 @@ export function GameResultView({
           expression={teacherExpression}
           message={teacherMessage}
           subMessage={teacherSubMessage}
+          size={80}
           className="w-full"
         />
 
@@ -168,15 +169,15 @@ export function GameResultView({
           <ChildCard
             borderColor="border-amber-400"
             bgGradient="bg-gradient-to-b from-white via-amber-50/40 to-orange-50/70"
-            className="text-center space-y-6 bg-white/95 shadow-2xl p-6 sm:p-8"
+            className="text-center space-y-4 sm:space-y-5 bg-white/95 shadow-xl p-4 sm:p-6"
           >
             {/* Custom Content Slot (e.g. Puzzle image) */}
             {customContent && <div className="w-full">{customContent}</div>}
 
             {/* Stars Display */}
-            <div className="flex flex-col items-center justify-center space-y-2">
-              <StarRating stars={stars} maxStars={maxStars} size={44} animate />
-              <p className="text-base sm:text-lg font-black text-amber-950">
+            <div className="flex flex-col items-center justify-center space-y-1.5">
+              <StarRating stars={stars} maxStars={maxStars} size={40} animate />
+              <p className="text-sm sm:text-base font-black text-amber-950">
                 {finalStarsText}
               </p>
             </div>
@@ -194,13 +195,12 @@ export function GameResultView({
             {/* Multi-Stat Grid */}
             {stats && stats.length > 0 && (
               <div
-                className={`grid gap-2 sm:gap-3 pt-1 ${
-                  stats.length === 2
+                className={`grid gap-2 sm:gap-3 pt-1 ${stats.length === 2
                     ? "grid-cols-2"
                     : stats.length === 3
-                    ? "grid-cols-3"
-                    : "grid-cols-2 sm:grid-cols-4"
-                }`}
+                      ? "grid-cols-3"
+                      : "grid-cols-2 sm:grid-cols-4"
+                  }`}
               >
                 {stats.map((item, idx) => (
                   <div
@@ -218,80 +218,36 @@ export function GameResultView({
               </div>
             )}
 
-            {/* Action Buttons */}
-            {onPlayAgain ? (
-              // Full 3-button layout: replay + choose level + home link
-              <>
-                <div className="flex flex-col sm:flex-row items-center justify-center gap-3 pt-3 border-t border-amber-100">
+            {/* Action Buttons: 2 proportional side-by-side buttons */}
+            <div className="flex flex-col sm:flex-row items-stretch justify-center gap-3 sm:gap-4 pt-4 border-t-2 border-amber-100/80 w-full">
+              {chooseLevelHref && (
+                <Link href={chooseLevelHref} className="flex-1 w-full">
+                  <ChildButton
+                    type="button"
+                    variant="secondary"
+                    size="lg"
+                    icon={chooseLevelIcon ?? <Grid className="w-5 h-5" />}
+                    className="w-full h-full text-sm sm:text-base font-black shadow-md hover:shadow-lg transition-all justify-center py-3.5"
+                  >
+                    {finalChooseLevel}
+                  </ChildButton>
+                </Link>
+              )}
+
+              {homeHref && (
+                <Link href={homeHref} className="flex-1 w-full">
                   <ChildButton
                     type="button"
                     variant="primary"
                     size="lg"
-                    onClick={onPlayAgain}
-                    icon={playAgainIcon ?? <RotateCcw className="w-5 h-5" />}
-                    className="w-full flex-1"
+                    icon={<Home className="w-5 h-5" />}
+                    className="w-full h-full text-sm sm:text-base font-black shadow-md hover:shadow-lg transition-all justify-center py-3.5"
                   >
-                    {finalPlayAgain}
+                    {finalHomeLabel}
                   </ChildButton>
-
-                  {chooseLevelHref && (
-                    <Link href={chooseLevelHref} className="w-full flex-1">
-                      <ChildButton
-                        type="button"
-                        variant="secondary"
-                        size="lg"
-                        icon={chooseLevelIcon ?? <Grid className="w-5 h-5" />}
-                        className="w-full"
-                      >
-                        {finalChooseLevel}
-                      </ChildButton>
-                    </Link>
-                  )}
-                </div>
-
-                {homeHref && (
-                  <div className="pt-2 border-t border-slate-100">
-                    <Link
-                      href={homeHref}
-                      className="inline-flex items-center gap-2 text-sm font-extrabold text-amber-800 hover:text-amber-950 py-1 transition"
-                    >
-                      <Home className="w-4 h-4" />
-                      <span>{finalHomeLabel}</span>
-                    </Link>
-                  </div>
-                )}
-              </>
-            ) : (
-              // 2-button layout: choose level + home, equal width side-by-side
-              <div className="flex flex-row items-stretch justify-center gap-3 pt-3 border-t border-amber-100">
-                {chooseLevelHref && (
-                  <Link href={chooseLevelHref} className="flex-1">
-                    <ChildButton
-                      type="button"
-                      variant="secondary"
-                      size="lg"
-                      icon={chooseLevelIcon ?? <Grid className="w-5 h-5" />}
-                      className="w-full h-full"
-                    >
-                      {finalChooseLevel}
-                    </ChildButton>
-                  </Link>
-                )}
-                {homeHref && (
-                  <Link href={homeHref} className="flex-1">
-                    <ChildButton
-                      type="button"
-                      variant="primary"
-                      size="lg"
-                      icon={<Home className="w-5 h-5" />}
-                      className="w-full h-full"
-                    >
-                      {finalHomeLabel}
-                    </ChildButton>
-                  </Link>
-                )}
-              </div>
-            )}
+                </Link>
+              )}
+            </div>
           </ChildCard>
         </motion.div>
       </main>

@@ -44,6 +44,18 @@ export interface MemoryProgress {
   hard: GameProgress;
 }
 
+export interface ColoringProgress {
+  easy: GameProgress;
+  medium: GameProgress;
+  hard: GameProgress;
+}
+
+export interface SortingProgress {
+  easy: GameProgress;
+  medium: GameProgress;
+  hard: GameProgress;
+}
+
 export interface ProfileProgress {
   matching: MatchingProgress;
   letters: LettersProgress;
@@ -51,6 +63,8 @@ export interface ProfileProgress {
   colors: ColorsProgress;
   numbers: NumbersProgress;
   memory: MemoryProgress;
+  coloring: ColoringProgress;
+  sorting: SortingProgress;
 }
 
 export interface ChildProfile {
@@ -102,6 +116,16 @@ export function createInitialProfileProgress(): ProfileProgress {
       hard: createInitialGameProgress(),
     },
     memory: {
+      easy: createInitialGameProgress(),
+      medium: createInitialGameProgress(),
+      hard: createInitialGameProgress(),
+    },
+    coloring: {
+      easy: createInitialGameProgress(),
+      medium: createInitialGameProgress(),
+      hard: createInitialGameProgress(),
+    },
+    sorting: {
       easy: createInitialGameProgress(),
       medium: createInitialGameProgress(),
       hard: createInitialGameProgress(),

@@ -255,13 +255,55 @@ export default function ParentPage() {
     lastPlayedAt: null,
   };
 
+  // Calculate stats for coloring game
+  const coloringEasyStats = selectedChild?.progress?.coloring?.easy || {
+    stars: 0,
+    gamesCompleted: 0,
+    questionsAnswered: 0,
+    correctAnswers: 0,
+    incorrectAnswers: 0,
+    currentLevel: 1,
+    lastPlayedAt: null,
+  };
+
+  // Calculate stats for sorting game
+  const sortingEasyStats = selectedChild?.progress?.sorting?.easy || {
+    stars: 0,
+    gamesCompleted: 0,
+    questionsAnswered: 0,
+    correctAnswers: 0,
+    incorrectAnswers: 0,
+    currentLevel: 1,
+    lastPlayedAt: null,
+  };
+  const sortingMedStats = selectedChild?.progress?.sorting?.medium || {
+    stars: 0,
+    gamesCompleted: 0,
+    questionsAnswered: 0,
+    correctAnswers: 0,
+    incorrectAnswers: 0,
+    currentLevel: 2,
+    lastPlayedAt: null,
+  };
+  const sortingHardStats = selectedChild?.progress?.sorting?.hard || {
+    stars: 0,
+    gamesCompleted: 0,
+    questionsAnswered: 0,
+    correctAnswers: 0,
+    incorrectAnswers: 0,
+    currentLevel: 3,
+    lastPlayedAt: null,
+  };
+
   const matchingStars = easyStats.stars + medStats.stars + hardStats.stars;
   const lettersStars = letterEasyStats.stars + letterMedStats.stars + letterHardStats.stars;
   const puzzleStars = puzzleEasyStats.stars + puzzleMedStats.stars + puzzleHardStats.stars;
   const colorsStars = colorsEasyStats.stars + colorsMedStats.stars + colorsHardStats.stars;
   const numbersStars = numbersEasyStats.stars + numbersMedStats.stars + numbersHardStats.stars;
   const memoryStars = memoryEasyStats.stars + memoryMedStats.stars + memoryHardStats.stars;
-  const totalStars = matchingStars + lettersStars + puzzleStars + colorsStars + numbersStars + memoryStars;
+  const coloringStars = coloringEasyStats.stars;
+  const sortingStars = sortingEasyStats.stars + sortingMedStats.stars + sortingHardStats.stars;
+  const totalStars = matchingStars + lettersStars + puzzleStars + colorsStars + numbersStars + memoryStars + coloringStars + sortingStars;
 
   const totalGames =
     easyStats.gamesCompleted +
@@ -281,7 +323,11 @@ export default function ParentPage() {
     numbersHardStats.gamesCompleted +
     memoryEasyStats.gamesCompleted +
     memoryMedStats.gamesCompleted +
-    memoryHardStats.gamesCompleted;
+    memoryHardStats.gamesCompleted +
+    coloringEasyStats.gamesCompleted +
+    sortingEasyStats.gamesCompleted +
+    sortingMedStats.gamesCompleted +
+    sortingHardStats.gamesCompleted;
 
   const totalQuestions =
     easyStats.questionsAnswered +
@@ -301,7 +347,11 @@ export default function ParentPage() {
     numbersHardStats.questionsAnswered +
     memoryEasyStats.questionsAnswered +
     memoryMedStats.questionsAnswered +
-    memoryHardStats.questionsAnswered;
+    memoryHardStats.questionsAnswered +
+    coloringEasyStats.questionsAnswered +
+    sortingEasyStats.questionsAnswered +
+    sortingMedStats.questionsAnswered +
+    sortingHardStats.questionsAnswered;
 
   const totalCorrect =
     easyStats.correctAnswers +
@@ -321,7 +371,11 @@ export default function ParentPage() {
     numbersHardStats.correctAnswers +
     memoryEasyStats.correctAnswers +
     memoryMedStats.correctAnswers +
-    memoryHardStats.correctAnswers;
+    memoryHardStats.correctAnswers +
+    coloringEasyStats.correctAnswers +
+    sortingEasyStats.correctAnswers +
+    sortingMedStats.correctAnswers +
+    sortingHardStats.correctAnswers;
 
   const accuracy = totalQuestions > 0 ? ((totalCorrect / totalQuestions) * 100).toFixed(1) : "0.0";
   const overallLevel = Math.max(
@@ -837,6 +891,96 @@ export default function ParentPage() {
                       <td className="px-5 py-3">
                         {memoryHardStats.questionsAnswered > 0
                           ? `${Math.round((memoryHardStats.correctAnswers / (memoryHardStats.correctAnswers + memoryHardStats.incorrectAnswers)) * 100)}%`
+                          : "-"}
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            {/* Difficulty Breakdown Table - Coloring Game */}
+            <div className="bg-white rounded-3xl p-6 border-2 border-slate-200 shadow-sm">
+              <h3 className="text-lg font-black text-slate-900 mb-4 flex items-center gap-2">
+                <span>🎨</span> {getTranslation("parent.breakdownColoring", {}, language)}
+              </h3>
+              <div className="overflow-x-auto">
+                <table className="w-full text-left text-sm font-bold text-slate-600">
+                  <thead className="bg-slate-100 text-slate-800 uppercase text-xs">
+                    <tr>
+                      <th className="px-5 py-3 rounded-l-2xl">{getTranslation("parent.levelCol", {}, language)}</th>
+                      <th className="px-5 py-3">{getTranslation("parent.completedCol", {}, language)}</th>
+                      <th className="px-5 py-3">{getTranslation("parent.starsCol", {}, language)}</th>
+                      <th className="px-5 py-3 rounded-r-2xl">{getTranslation("parent.accuracyCol", {}, language)}</th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-slate-100">
+                    <tr>
+                      <td className="px-5 py-3 font-extrabold text-pink-600 flex items-center gap-2">
+                        <span>🎨</span> {getTranslation("games.coloring.name", {}, language)}
+                      </td>
+                      <td className="px-5 py-3">{getTranslation("parent.sessionsCount", { count: coloringEasyStats.gamesCompleted }, language)}</td>
+                      <td className="px-5 py-3 text-amber-600 font-extrabold">⭐ {coloringEasyStats.stars}</td>
+                      <td className="px-5 py-3">
+                        {coloringEasyStats.questionsAnswered > 0
+                          ? `${Math.round((coloringEasyStats.correctAnswers / (coloringEasyStats.correctAnswers + coloringEasyStats.incorrectAnswers)) * 100)}%`
+                          : "-"}
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            {/* Difficulty Breakdown Table - Sorting Game */}
+            <div className="bg-white rounded-3xl p-6 border-2 border-slate-200 shadow-sm">
+              <h3 className="text-lg font-black text-slate-900 mb-4 flex items-center gap-2">
+                <span>📦</span> {getTranslation("parent.breakdownSorting", {}, language)}
+              </h3>
+              <div className="overflow-x-auto">
+                <table className="w-full text-left text-sm font-bold text-slate-600">
+                  <thead className="bg-slate-100 text-slate-800 uppercase text-xs">
+                    <tr>
+                      <th className="px-5 py-3 rounded-l-2xl">{getTranslation("parent.levelCol", {}, language)}</th>
+                      <th className="px-5 py-3">{getTranslation("parent.completedCol", {}, language)}</th>
+                      <th className="px-5 py-3">{getTranslation("parent.starsCol", {}, language)}</th>
+                      <th className="px-5 py-3 rounded-r-2xl">{getTranslation("parent.accuracyCol", {}, language)}</th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-slate-100">
+                    <tr>
+                      <td className="px-5 py-3 font-extrabold text-emerald-600 flex items-center gap-2">
+                        <span>🌱</span> {getTranslation("games.sorting.easyDesc", {}, language)}
+                      </td>
+                      <td className="px-5 py-3">{getTranslation("parent.sessionsCount", { count: sortingEasyStats.gamesCompleted }, language)}</td>
+                      <td className="px-5 py-3 text-amber-600 font-extrabold">⭐ {sortingEasyStats.stars}</td>
+                      <td className="px-5 py-3">
+                        {sortingEasyStats.questionsAnswered > 0
+                          ? `${Math.round((sortingEasyStats.correctAnswers / (sortingEasyStats.correctAnswers + sortingEasyStats.incorrectAnswers)) * 100)}%`
+                          : "-"}
+                      </td>
+                    </tr>
+                    <tr>
+                      <td className="px-5 py-3 font-extrabold text-amber-600 flex items-center gap-2">
+                        <span>⭐</span> {getTranslation("games.sorting.medDesc", {}, language)}
+                      </td>
+                      <td className="px-5 py-3">{getTranslation("parent.sessionsCount", { count: sortingMedStats.gamesCompleted }, language)}</td>
+                      <td className="px-5 py-3 text-amber-600 font-extrabold">⭐ {sortingMedStats.stars}</td>
+                      <td className="px-5 py-3">
+                        {sortingMedStats.questionsAnswered > 0
+                          ? `${Math.round((sortingMedStats.correctAnswers / (sortingMedStats.correctAnswers + sortingMedStats.incorrectAnswers)) * 100)}%`
+                          : "-"}
+                      </td>
+                    </tr>
+                    <tr>
+                      <td className="px-5 py-3 font-extrabold text-purple-600 flex items-center gap-2">
+                        <span>👑</span> {getTranslation("games.sorting.hardDesc", {}, language)}
+                      </td>
+                      <td className="px-5 py-3">{getTranslation("parent.sessionsCount", { count: sortingHardStats.gamesCompleted }, language)}</td>
+                      <td className="px-5 py-3 text-amber-600 font-extrabold">⭐ {sortingHardStats.stars}</td>
+                      <td className="px-5 py-3">
+                        {sortingHardStats.questionsAnswered > 0
+                          ? `${Math.round((sortingHardStats.correctAnswers / (sortingHardStats.correctAnswers + sortingHardStats.incorrectAnswers)) * 100)}%`
                           : "-"}
                       </td>
                     </tr>

@@ -25,7 +25,7 @@ export function Teacher({
   subMessage,
   showSpeaker = true,
   autoSpeak = true,
-  size = 100,
+  size = 85,
   className = "",
   onSpeechEnd,
 }: TeacherProps) {
@@ -65,7 +65,7 @@ export function Teacher({
   }, [message, autoTts, autoSpeak, language]);
 
   return (
-    <div className={`flex flex-col sm:flex-row items-center gap-4 ${className}`}>
+    <div className={`flex flex-row items-center gap-3 sm:gap-4 w-full ${className}`}>
       {/* Teacher Character Avatar */}
       <motion.div
         animate={{
@@ -88,18 +88,18 @@ export function Teacher({
       </motion.div>
 
       {/* Speech Bubble */}
-      <div className="relative flex-1 bg-white border-4 border-amber-300 rounded-3xl p-4 sm:p-5 shadow-lg max-w-xl text-center sm:text-left">
+      <div className="relative flex-1 w-full bg-white border-3 sm:border-4 border-amber-300 rounded-2xl sm:rounded-3xl p-3 sm:p-4 md:p-5 shadow-md sm:shadow-lg text-left">
         {/* Pointer arrow for bubble */}
-        <div className="hidden sm:block absolute -left-3.5 top-1/2 -translate-y-1/2 w-0 h-0 border-t-8 border-t-transparent border-b-8 border-b-transparent border-r-[14px] border-r-amber-300" />
-        <div className="hidden sm:block absolute -left-2 top-1/2 -translate-y-1/2 w-0 h-0 border-t-6 border-t-transparent border-b-6 border-b-transparent border-r-[11px] border-r-white z-10" />
+        <div className="block absolute -left-3 top-1/2 -translate-y-1/2 w-0 h-0 border-t-6 sm:border-t-8 border-t-transparent border-b-6 sm:border-b-8 border-b-transparent border-r-[10px] sm:border-r-[14px] border-r-amber-300" />
+        <div className="block absolute -left-1.5 sm:-left-2 top-1/2 -translate-y-1/2 w-0 h-0 border-t-5 sm:border-t-6 border-t-transparent border-b-5 sm:border-b-6 border-b-transparent border-r-[8px] sm:border-r-[11px] border-r-white z-10" />
 
-        <div className="flex items-center justify-between gap-3">
-          <div className="space-y-1">
-            <p className="text-xl sm:text-2xl font-extrabold text-amber-900 leading-snug tracking-wide">
+        <div className="flex items-center justify-between gap-2.5 sm:gap-4">
+          <div className="space-y-0.5 sm:space-y-1 flex-1">
+            <p className="text-xs sm:text-base md:text-lg font-extrabold text-amber-900 leading-snug tracking-wide">
               {message}
             </p>
             {subMessage && (
-              <p className="text-sm sm:text-base font-semibold text-amber-700">
+              <p className="text-[11px] sm:text-xs md:text-sm font-semibold text-amber-700">
                 {subMessage}
               </p>
             )}
@@ -111,7 +111,7 @@ export function Teacher({
               whileHover={{ scale: 1.15 }}
               whileTap={{ scale: 0.9 }}
               onClick={handleSpeak}
-              className={`shrink-0 p-3 sm:p-3.5 rounded-2xl shadow-md transition-all flex items-center justify-center ${
+              className={`shrink-0 p-2 sm:p-2.5 rounded-xl sm:rounded-2xl shadow transition-all flex items-center justify-center cursor-pointer ${
                 isSpeaking
                   ? "bg-amber-500 text-white animate-pulse"
                   : "bg-amber-100 hover:bg-amber-200 text-amber-800"
@@ -119,7 +119,7 @@ export function Teacher({
               title="Ulangi Suara"
               aria-label="Ulangi Suara"
             >
-              <Volume2 className={`w-6 h-6 sm:w-7 sm:h-7 ${isSpeaking ? "animate-bounce" : ""}`} />
+              <Volume2 className={`w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6 ${isSpeaking ? "animate-bounce" : ""}`} />
             </motion.button>
           )}
         </div>

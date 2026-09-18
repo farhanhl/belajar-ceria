@@ -65,7 +65,17 @@ export default function DashboardPage() {
     (activeProfile.progress?.memory?.medium?.stars || 0) +
     (activeProfile.progress?.memory?.hard?.stars || 0);
 
-  const totalStars = matchingStars + lettersStars + puzzleStars + colorsStars + numbersStars + memoryStars;
+  const coloringStars =
+    (activeProfile.progress?.coloring?.easy?.stars || 0) +
+    (activeProfile.progress?.coloring?.medium?.stars || 0) +
+    (activeProfile.progress?.coloring?.hard?.stars || 0);
+
+  const sortingStars =
+    (activeProfile.progress?.sorting?.easy?.stars || 0) +
+    (activeProfile.progress?.sorting?.medium?.stars || 0) +
+    (activeProfile.progress?.sorting?.hard?.stars || 0);
+
+  const totalStars = matchingStars + lettersStars + puzzleStars + colorsStars + numbersStars + memoryStars + coloringStars + sortingStars;
 
   const level = Math.max(
     activeProfile.progress?.matching?.easy?.currentLevel || 1,
@@ -85,7 +95,13 @@ export default function DashboardPage() {
     activeProfile.progress?.numbers?.hard?.currentLevel || 1,
     activeProfile.progress?.memory?.easy?.currentLevel || 1,
     activeProfile.progress?.memory?.medium?.currentLevel || 1,
-    activeProfile.progress?.memory?.hard?.currentLevel || 1
+    activeProfile.progress?.memory?.hard?.currentLevel || 1,
+    activeProfile.progress?.coloring?.easy?.currentLevel || 1,
+    activeProfile.progress?.coloring?.medium?.currentLevel || 1,
+    activeProfile.progress?.coloring?.hard?.currentLevel || 1,
+    activeProfile.progress?.sorting?.easy?.currentLevel || 1,
+    activeProfile.progress?.sorting?.medium?.currentLevel || 1,
+    activeProfile.progress?.sorting?.hard?.currentLevel || 1
   );
 
   return (
@@ -399,6 +415,96 @@ export default function DashboardPage() {
                       size="md"
                       icon={<Play className="w-5 h-5 fill-white" />}
                       className="w-full sm:w-auto"
+                    >
+                      {getTranslation("dashboard.startPlay", {}, language)}
+                    </ChildButton>
+                  </Link>
+                </div>
+              </ChildCard>
+            </motion.div>
+
+            {/* Game 7: Mewarnai */}
+            <motion.div
+              whileHover={{ scale: 1.03, y: -4 }}
+              whileTap={{ scale: 0.98 }}
+            >
+              <ChildCard
+                borderColor="border-pink-400"
+                bgGradient="bg-gradient-to-br from-pink-100 via-rose-50 to-amber-50"
+                className="h-full flex flex-col justify-between p-6 sm:p-8 hover:shadow-2xl transition-all group"
+              >
+                <div className="flex items-start justify-between gap-4">
+                  <div className="space-y-2">
+                    <div className="inline-flex items-center gap-1.5 bg-pink-500 text-white px-3 py-1 rounded-full text-xs font-black shadow-sm">
+                      <Star className="w-3.5 h-3.5 fill-white" />
+                      <span>{coloringStars} {language === "id" ? "Bintang" : "Stars"}</span>
+                    </div>
+                    <h3 className="text-2xl sm:text-3xl font-black text-pink-950">
+                      {getTranslation("games.coloring.title", {}, language)}
+                    </h3>
+                    <p className="text-sm font-bold text-pink-800">
+                      {getTranslation("games.coloring.subtitle", {}, language)}
+                    </p>
+                  </div>
+
+                  {/* Decorative Palette Visual */}
+                  <div className="relative w-24 h-24 sm:w-28 sm:h-28 bg-pink-200 rounded-3xl border-4 border-pink-400 flex items-center justify-center shadow-inner group-hover:rotate-6 transition-transform shrink-0">
+                    <span className="text-4xl sm:text-5xl select-none font-black text-pink-700">🎨</span>
+                  </div>
+                </div>
+
+                <div className="pt-4">
+                  <Link href="/learn/coloring">
+                    <ChildButton
+                      variant="pink"
+                      size="md"
+                      icon={<Play className="w-5 h-5 fill-white" />}
+                      className="w-full sm:w-auto font-black"
+                    >
+                      {getTranslation("dashboard.startPlay", {}, language)}
+                    </ChildButton>
+                  </Link>
+                </div>
+              </ChildCard>
+            </motion.div>
+
+            {/* Game 8: Pilah & Rapikan */}
+            <motion.div
+              whileHover={{ scale: 1.03, y: -4 }}
+              whileTap={{ scale: 0.98 }}
+            >
+              <ChildCard
+                borderColor="border-emerald-400"
+                bgGradient="bg-gradient-to-br from-emerald-100 via-teal-50 to-amber-50"
+                className="h-full flex flex-col justify-between p-6 sm:p-8 hover:shadow-2xl transition-all group"
+              >
+                <div className="flex items-start justify-between gap-4">
+                  <div className="space-y-2">
+                    <div className="inline-flex items-center gap-1.5 bg-emerald-600 text-white px-3 py-1 rounded-full text-xs font-black shadow-sm">
+                      <Star className="w-3.5 h-3.5 fill-white" />
+                      <span>{sortingStars} {language === "id" ? "Bintang" : "Stars"}</span>
+                    </div>
+                    <h3 className="text-2xl sm:text-3xl font-black text-emerald-950">
+                      {getTranslation("games.sorting.title", {}, language)}
+                    </h3>
+                    <p className="text-sm font-bold text-emerald-800">
+                      {getTranslation("games.sorting.subtitle", {}, language)}
+                    </p>
+                  </div>
+
+                  {/* Decorative Boxes Visual */}
+                  <div className="relative w-24 h-24 sm:w-28 sm:h-28 bg-emerald-200 rounded-3xl border-4 border-emerald-400 flex items-center justify-center shadow-inner group-hover:rotate-6 transition-transform shrink-0">
+                    <span className="text-4xl sm:text-5xl select-none font-black text-emerald-700">📦</span>
+                  </div>
+                </div>
+
+                <div className="pt-4">
+                  <Link href="/learn/sorting">
+                    <ChildButton
+                      variant="success"
+                      size="md"
+                      icon={<Play className="w-5 h-5 fill-white" />}
+                      className="w-full sm:w-auto font-black"
                     >
                       {getTranslation("dashboard.startPlay", {}, language)}
                     </ChildButton>

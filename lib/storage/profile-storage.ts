@@ -363,6 +363,104 @@ export function recordMemoryGameResult(result: {
 }
 
 /**
+ * Update coloring game progress for a specific profile (isolation guaranteed)
+ */
+export function recordColoringGameResult(result: {
+  profileId: string;
+  difficulty: Difficulty;
+  totalQuestions: number;
+  correctAnswers: number;
+  incorrectAnswers: number;
+  starsEarned: number;
+  completedAt: string;
+}): boolean {
+  const data = loadAppData();
+  const profileIndex = data.profiles.findIndex((p) => p.id === result.profileId);
+  if (profileIndex === -1) return false;
+
+  const profile = data.profiles[profileIndex];
+  if (!profile.progress.coloring) {
+    profile.progress.coloring = {
+      easy: createInitialGameProgress(),
+      medium: createInitialGameProgress(),
+      hard: createInitialGameProgress(),
+    };
+  }
+
+  const diff = result.difficulty || "easy";
+  const currentProgress: GameProgress =
+    profile.progress.coloring[diff] || createInitialGameProgress();
+
+  const updatedProgress: GameProgress = {
+    currentLevel: Math.max(
+      currentProgress.currentLevel,
+      diff === "easy" ? 1 : diff === "medium" ? 2 : 3
+    ),
+    stars: currentProgress.stars + result.starsEarned,
+    gamesCompleted: currentProgress.gamesCompleted + 1,
+    questionsAnswered: currentProgress.questionsAnswered + result.totalQuestions,
+    correctAnswers: currentProgress.correctAnswers + result.correctAnswers,
+    incorrectAnswers: currentProgress.incorrectAnswers + result.incorrectAnswers,
+    lastPlayedAt: result.completedAt,
+  };
+
+  profile.progress.coloring[diff] = updatedProgress;
+  profile.updatedAt = new Date().toISOString();
+
+  data.profiles[profileIndex] = profile;
+  return saveAppData(data);
+}
+
+/**
+ * Update sorting & tidying up game progress for a specific profile (isolation guaranteed)
+ */
+export function recordSortingGameResult(result: {
+  profileId: string;
+  difficulty: Difficulty;
+  totalQuestions: number;
+  correctAnswers: number;
+  incorrectAnswers: number;
+  starsEarned: number;
+  completedAt: string;
+}): boolean {
+  const data = loadAppData();
+  const profileIndex = data.profiles.findIndex((p) => p.id === result.profileId);
+  if (profileIndex === -1) return false;
+
+  const profile = data.profiles[profileIndex];
+  if (!profile.progress.sorting) {
+    profile.progress.sorting = {
+      easy: createInitialGameProgress(),
+      medium: createInitialGameProgress(),
+      hard: createInitialGameProgress(),
+    };
+  }
+
+  const diff = result.difficulty || "easy";
+  const currentProgress: GameProgress =
+    profile.progress.sorting[diff] || createInitialGameProgress();
+
+  const updatedProgress: GameProgress = {
+    currentLevel: Math.max(
+      currentProgress.currentLevel,
+      diff === "easy" ? 1 : diff === "medium" ? 2 : 3
+    ),
+    stars: currentProgress.stars + result.starsEarned,
+    gamesCompleted: currentProgress.gamesCompleted + 1,
+    questionsAnswered: currentProgress.questionsAnswered + result.totalQuestions,
+    correctAnswers: currentProgress.correctAnswers + result.correctAnswers,
+    incorrectAnswers: currentProgress.incorrectAnswers + result.incorrectAnswers,
+    lastPlayedAt: result.completedAt,
+  };
+
+  profile.progress.sorting[diff] = updatedProgress;
+  profile.updatedAt = new Date().toISOString();
+
+  data.profiles[profileIndex] = profile;
+  return saveAppData(data);
+}
+
+/**
  * Delete a profile
  */
 export function deleteProfile(profileId: string): boolean {

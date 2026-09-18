@@ -4,7 +4,7 @@ export function AppFooter() {
   return (
     <footer className="w-full py-4 px-4 text-center select-none relative z-20">
       <p className="inline-flex items-center justify-center gap-1.5 text-xs sm:text-sm font-bold text-slate-600 bg-white/70 backdrop-blur-sm px-4 py-1.5 rounded-full border border-amber-200/80 shadow-xs">
-        <span>developed with</span>
+        <span>Developed with</span>
         <span className="text-rose-500 animate-pulse inline-block">❤️</span>
         <span>by</span>
         <a
