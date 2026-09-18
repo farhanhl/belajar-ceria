@@ -162,33 +162,44 @@ export function PlayfulBackground() {
         </svg>
       </div>
 
-      {/* Gentle Green Playful Hills at the Bottom */}
-      <div className="absolute bottom-0 left-0 right-0 h-28 sm:h-36 opacity-70 pointer-events-none">
-        <svg viewBox="0 0 1440 200" className="w-full h-full preserve-3d" fill="none">
-          {/* Back soft hill */}
+      {/* Gentle Green & Golden Hills / Sand at the Bottom spanning 100% width */}
+      <div className="absolute bottom-0 left-0 right-0 w-full h-28 sm:h-36 opacity-75 pointer-events-none">
+        <svg
+          viewBox="0 0 1440 200"
+          preserveAspectRatio="none"
+          className="w-full h-full block"
+          fill="none"
+        >
+          {/* Back warm golden sand layer */}
           <path
-            d="M0,120 Q360,40 720,100 T1440,60 L1440,200 L0,200 Z"
-            fill="#86EFAC"
-            opacity="0.5"
-          />
-          {/* Front cute hill */}
-          <path
-            d="M0,140 Q420,70 900,130 T1440,110 L1440,200 L0,200 Z"
-            fill="#4ADE80"
+            d="M0,105 Q360,30 720,95 T1440,55 L1440,200 L0,200 Z"
+            fill="#FDE68A"
             opacity="0.6"
           />
+          {/* Mid soft hill layer */}
+          <path
+            d="M0,125 Q420,55 900,115 T1440,80 L1440,200 L0,200 Z"
+            fill="#86EFAC"
+            opacity="0.65"
+          />
+          {/* Front vibrant hill layer */}
+          <path
+            d="M0,145 Q380,85 820,135 T1440,110 L1440,200 L0,200 Z"
+            fill="#4ADE80"
+            opacity="0.75"
+          />
           {/* Little cute flowers on hills */}
-          <circle cx="180" cy="150" r="5" fill="#F43F5E" />
-          <circle cx="180" cy="150" r="2.5" fill="#FEF08A" />
+          <circle cx="180" cy="160" r="5" fill="#F43F5E" />
+          <circle cx="180" cy="160" r="2.5" fill="#FEF08A" />
 
-          <circle cx="560" cy="135" r="5" fill="#FB923C" />
-          <circle cx="560" cy="135" r="2.5" fill="#FEF08A" />
+          <circle cx="560" cy="148" r="5" fill="#FB923C" />
+          <circle cx="560" cy="148" r="2.5" fill="#FEF08A" />
 
-          <circle cx="980" cy="145" r="5" fill="#38BDF8" />
-          <circle cx="980" cy="145" r="2.5" fill="#FEF08A" />
+          <circle cx="980" cy="155" r="5" fill="#38BDF8" />
+          <circle cx="980" cy="155" r="2.5" fill="#FEF08A" />
 
-          <circle cx="1300" cy="130" r="5" fill="#EC4899" />
-          <circle cx="1300" cy="130" r="2.5" fill="#FEF08A" />
+          <circle cx="1300" cy="140" r="5" fill="#EC4899" />
+          <circle cx="1300" cy="140" r="2.5" fill="#FEF08A" />
         </svg>
       </div>
     </div>

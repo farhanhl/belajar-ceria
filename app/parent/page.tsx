@@ -110,15 +110,257 @@ export default function ParentPage() {
     lastPlayedAt: null,
   };
 
-  const totalStars = easyStats.stars + medStats.stars + hardStats.stars;
-  const totalGames = easyStats.gamesCompleted + medStats.gamesCompleted + hardStats.gamesCompleted;
-  const totalQuestions = easyStats.questionsAnswered + medStats.questionsAnswered + hardStats.questionsAnswered;
-  const totalCorrect = easyStats.correctAnswers + medStats.correctAnswers + hardStats.correctAnswers;
-  const accuracy = totalQuestions > 0 ? ((totalCorrect / totalQuestions) * 100).toFixed(1) : "0.0";
-  const overallLevel = Math.max(easyStats.currentLevel, medStats.currentLevel, hardStats.currentLevel);
+  // Calculate stats for letter game
+  const letterEasyStats = selectedChild?.progress?.letters?.easy || {
+    stars: 0,
+    gamesCompleted: 0,
+    questionsAnswered: 0,
+    correctAnswers: 0,
+    incorrectAnswers: 0,
+    currentLevel: 1,
+    lastPlayedAt: null,
+  };
+  const letterMedStats = selectedChild?.progress?.letters?.medium || {
+    stars: 0,
+    gamesCompleted: 0,
+    questionsAnswered: 0,
+    correctAnswers: 0,
+    incorrectAnswers: 0,
+    currentLevel: 1,
+    lastPlayedAt: null,
+  };
+  const letterHardStats = selectedChild?.progress?.letters?.hard || {
+    stars: 0,
+    gamesCompleted: 0,
+    questionsAnswered: 0,
+    correctAnswers: 0,
+    incorrectAnswers: 0,
+    currentLevel: 1,
+    lastPlayedAt: null,
+  };
 
-  // Find latest played date
-  const playedDates = [easyStats.lastPlayedAt, medStats.lastPlayedAt, hardStats.lastPlayedAt].filter(Boolean) as string[];
+  // Calculate stats for puzzle game
+  const puzzleEasyStats = selectedChild?.progress?.puzzle?.easy || {
+    stars: 0,
+    gamesCompleted: 0,
+    questionsAnswered: 0,
+    correctAnswers: 0,
+    incorrectAnswers: 0,
+    currentLevel: 1,
+    lastPlayedAt: null,
+  };
+  const puzzleMedStats = selectedChild?.progress?.puzzle?.medium || {
+    stars: 0,
+    gamesCompleted: 0,
+    questionsAnswered: 0,
+    correctAnswers: 0,
+    incorrectAnswers: 0,
+    currentLevel: 1,
+    lastPlayedAt: null,
+  };
+  const puzzleHardStats = selectedChild?.progress?.puzzle?.hard || {
+    stars: 0,
+    gamesCompleted: 0,
+    questionsAnswered: 0,
+    correctAnswers: 0,
+    incorrectAnswers: 0,
+    currentLevel: 1,
+    lastPlayedAt: null,
+  };
+
+  // Calculate stats for colors game
+  const colorsEasyStats = selectedChild?.progress?.colors?.easy || {
+    stars: 0,
+    gamesCompleted: 0,
+    questionsAnswered: 0,
+    correctAnswers: 0,
+    incorrectAnswers: 0,
+    currentLevel: 1,
+    lastPlayedAt: null,
+  };
+  const colorsMedStats = selectedChild?.progress?.colors?.medium || {
+    stars: 0,
+    gamesCompleted: 0,
+    questionsAnswered: 0,
+    correctAnswers: 0,
+    incorrectAnswers: 0,
+    currentLevel: 1,
+    lastPlayedAt: null,
+  };
+  const colorsHardStats = selectedChild?.progress?.colors?.hard || {
+    stars: 0,
+    gamesCompleted: 0,
+    questionsAnswered: 0,
+    correctAnswers: 0,
+    incorrectAnswers: 0,
+    currentLevel: 1,
+    lastPlayedAt: null,
+  };
+
+  // Calculate stats for numbers game
+  const numbersEasyStats = selectedChild?.progress?.numbers?.easy || {
+    stars: 0,
+    gamesCompleted: 0,
+    questionsAnswered: 0,
+    correctAnswers: 0,
+    incorrectAnswers: 0,
+    currentLevel: 1,
+    lastPlayedAt: null,
+  };
+  const numbersMedStats = selectedChild?.progress?.numbers?.medium || {
+    stars: 0,
+    gamesCompleted: 0,
+    questionsAnswered: 0,
+    correctAnswers: 0,
+    incorrectAnswers: 0,
+    currentLevel: 1,
+    lastPlayedAt: null,
+  };
+  const numbersHardStats = selectedChild?.progress?.numbers?.hard || {
+    stars: 0,
+    gamesCompleted: 0,
+    questionsAnswered: 0,
+    correctAnswers: 0,
+    incorrectAnswers: 0,
+    currentLevel: 1,
+    lastPlayedAt: null,
+  };
+
+  // Calculate stats for memory game
+  const memoryEasyStats = selectedChild?.progress?.memory?.easy || {
+    stars: 0,
+    gamesCompleted: 0,
+    questionsAnswered: 0,
+    correctAnswers: 0,
+    incorrectAnswers: 0,
+    currentLevel: 1,
+    lastPlayedAt: null,
+  };
+  const memoryMedStats = selectedChild?.progress?.memory?.medium || {
+    stars: 0,
+    gamesCompleted: 0,
+    questionsAnswered: 0,
+    correctAnswers: 0,
+    incorrectAnswers: 0,
+    currentLevel: 1,
+    lastPlayedAt: null,
+  };
+  const memoryHardStats = selectedChild?.progress?.memory?.hard || {
+    stars: 0,
+    gamesCompleted: 0,
+    questionsAnswered: 0,
+    correctAnswers: 0,
+    incorrectAnswers: 0,
+    currentLevel: 1,
+    lastPlayedAt: null,
+  };
+
+  const matchingStars = easyStats.stars + medStats.stars + hardStats.stars;
+  const lettersStars = letterEasyStats.stars + letterMedStats.stars + letterHardStats.stars;
+  const puzzleStars = puzzleEasyStats.stars + puzzleMedStats.stars + puzzleHardStats.stars;
+  const colorsStars = colorsEasyStats.stars + colorsMedStats.stars + colorsHardStats.stars;
+  const numbersStars = numbersEasyStats.stars + numbersMedStats.stars + numbersHardStats.stars;
+  const memoryStars = memoryEasyStats.stars + memoryMedStats.stars + memoryHardStats.stars;
+  const totalStars = matchingStars + lettersStars + puzzleStars + colorsStars + numbersStars + memoryStars;
+
+  const totalGames =
+    easyStats.gamesCompleted +
+    medStats.gamesCompleted +
+    hardStats.gamesCompleted +
+    letterEasyStats.gamesCompleted +
+    letterMedStats.gamesCompleted +
+    letterHardStats.gamesCompleted +
+    puzzleEasyStats.gamesCompleted +
+    puzzleMedStats.gamesCompleted +
+    puzzleHardStats.gamesCompleted +
+    colorsEasyStats.gamesCompleted +
+    colorsMedStats.gamesCompleted +
+    colorsHardStats.gamesCompleted +
+    numbersEasyStats.gamesCompleted +
+    numbersMedStats.gamesCompleted +
+    numbersHardStats.gamesCompleted +
+    memoryEasyStats.gamesCompleted +
+    memoryMedStats.gamesCompleted +
+    memoryHardStats.gamesCompleted;
+
+  const totalQuestions =
+    easyStats.questionsAnswered +
+    medStats.questionsAnswered +
+    hardStats.questionsAnswered +
+    letterEasyStats.questionsAnswered +
+    letterMedStats.questionsAnswered +
+    letterHardStats.questionsAnswered +
+    puzzleEasyStats.questionsAnswered +
+    puzzleMedStats.questionsAnswered +
+    puzzleHardStats.questionsAnswered +
+    colorsEasyStats.questionsAnswered +
+    colorsMedStats.questionsAnswered +
+    colorsHardStats.questionsAnswered +
+    numbersEasyStats.questionsAnswered +
+    numbersMedStats.questionsAnswered +
+    numbersHardStats.questionsAnswered +
+    memoryEasyStats.questionsAnswered +
+    memoryMedStats.questionsAnswered +
+    memoryHardStats.questionsAnswered;
+
+  const totalCorrect =
+    easyStats.correctAnswers +
+    medStats.correctAnswers +
+    hardStats.correctAnswers +
+    letterEasyStats.correctAnswers +
+    letterMedStats.correctAnswers +
+    letterHardStats.correctAnswers +
+    puzzleEasyStats.correctAnswers +
+    puzzleMedStats.correctAnswers +
+    puzzleHardStats.correctAnswers +
+    colorsEasyStats.correctAnswers +
+    colorsMedStats.correctAnswers +
+    colorsHardStats.correctAnswers +
+    numbersEasyStats.correctAnswers +
+    numbersMedStats.correctAnswers +
+    numbersHardStats.correctAnswers +
+    memoryEasyStats.correctAnswers +
+    memoryMedStats.correctAnswers +
+    memoryHardStats.correctAnswers;
+
+  const accuracy = totalQuestions > 0 ? ((totalCorrect / totalQuestions) * 100).toFixed(1) : "0.0";
+  const overallLevel = Math.max(
+    easyStats.currentLevel,
+    medStats.currentLevel,
+    hardStats.currentLevel,
+    letterEasyStats.currentLevel,
+    letterMedStats.currentLevel,
+    letterHardStats.currentLevel,
+    puzzleEasyStats.currentLevel,
+    puzzleMedStats.currentLevel,
+    puzzleHardStats.currentLevel,
+    colorsEasyStats.currentLevel,
+    colorsMedStats.currentLevel,
+    colorsHardStats.currentLevel,
+    numbersEasyStats.currentLevel,
+    numbersMedStats.currentLevel,
+    numbersHardStats.currentLevel
+  );
+
+  // Find latest played date across all games
+  const playedDates = [
+    easyStats.lastPlayedAt,
+    medStats.lastPlayedAt,
+    hardStats.lastPlayedAt,
+    letterEasyStats.lastPlayedAt,
+    letterMedStats.lastPlayedAt,
+    letterHardStats.lastPlayedAt,
+    puzzleEasyStats.lastPlayedAt,
+    puzzleMedStats.lastPlayedAt,
+    puzzleHardStats.lastPlayedAt,
+    colorsEasyStats.lastPlayedAt,
+    colorsMedStats.lastPlayedAt,
+    colorsHardStats.lastPlayedAt,
+    numbersEasyStats.lastPlayedAt,
+    numbersMedStats.lastPlayedAt,
+    numbersHardStats.lastPlayedAt,
+  ].filter(Boolean) as string[];
+
   const lastPlayedFormatted =
     playedDates.length > 0
       ? new Date(Math.max(...playedDates.map((d) => new Date(d).getTime()))).toLocaleDateString("id-ID", {
@@ -243,11 +485,11 @@ export default function ParentPage() {
               </div>
             </div>
 
-            {/* Difficulty Breakdown Table */}
+            {/* Difficulty Breakdown Table - Matching Game */}
             <div className="bg-white rounded-3xl border-2 border-slate-200 overflow-hidden shadow-sm">
               <div className="p-4 bg-slate-100/70 border-b border-slate-200">
                 <h3 className="text-base font-black text-slate-800">
-                  Rincian Tingkat Kesulitan (Cocokkan & Temukan)
+                  Rincian Tingkat Kesulitan: Cocokkan & Temukan
                 </h3>
               </div>
 
@@ -295,6 +537,306 @@ export default function ParentPage() {
                       <td className="px-5 py-3">
                         {hardStats.questionsAnswered > 0
                           ? `${Math.round((hardStats.correctAnswers / hardStats.questionsAnswered) * 100)}%`
+                          : "-"}
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            {/* Difficulty Breakdown Table - Letters Game */}
+            <div className="bg-white rounded-3xl border-2 border-slate-200 overflow-hidden shadow-sm">
+              <div className="p-4 bg-pink-50 border-b border-pink-200">
+                <h3 className="text-base font-black text-pink-950 flex items-center gap-2">
+                  <span>🔤</span> Rincian Tingkat Kesulitan: Belajar Huruf
+                </h3>
+              </div>
+
+              <div className="overflow-x-auto">
+                <table className="w-full text-left text-sm font-bold text-slate-700">
+                  <thead className="bg-slate-50 text-xs font-black text-slate-500 uppercase">
+                    <tr>
+                      <th className="px-5 py-3">Tingkat</th>
+                      <th className="px-5 py-3">Selesai</th>
+                      <th className="px-5 py-3">Bintang Diraih</th>
+                      <th className="px-5 py-3">Akurasi</th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-slate-100">
+                    <tr>
+                      <td className="px-5 py-3 font-extrabold text-emerald-700 flex items-center gap-2">
+                        <span>🌱</span> Mudah (Kenali Huruf)
+                      </td>
+                      <td className="px-5 py-3">{letterEasyStats.gamesCompleted} sesi</td>
+                      <td className="px-5 py-3 text-amber-600 font-extrabold">⭐ {letterEasyStats.stars}</td>
+                      <td className="px-5 py-3">
+                        {letterEasyStats.questionsAnswered > 0
+                          ? `${Math.round((letterEasyStats.correctAnswers / letterEasyStats.questionsAnswered) * 100)}%`
+                          : "-"}
+                      </td>
+                    </tr>
+                    <tr>
+                      <td className="px-5 py-3 font-extrabold text-sky-700 flex items-center gap-2">
+                        <span>⭐</span> Sedang (Huruf Benda)
+                      </td>
+                      <td className="px-5 py-3">{letterMedStats.gamesCompleted} sesi</td>
+                      <td className="px-5 py-3 text-amber-600 font-extrabold">⭐ {letterMedStats.stars}</td>
+                      <td className="px-5 py-3">
+                        {letterMedStats.questionsAnswered > 0
+                          ? `${Math.round((letterMedStats.correctAnswers / letterMedStats.questionsAnswered) * 100)}%`
+                          : "-"}
+                      </td>
+                    </tr>
+                    <tr>
+                      <td className="px-5 py-3 font-extrabold text-purple-700 flex items-center gap-2">
+                        <span>👑</span> Sulit (Besar & Kecil)
+                      </td>
+                      <td className="px-5 py-3">{letterHardStats.gamesCompleted} sesi</td>
+                      <td className="px-5 py-3 text-amber-600 font-extrabold">⭐ {letterHardStats.stars}</td>
+                      <td className="px-5 py-3">
+                        {letterHardStats.questionsAnswered > 0
+                          ? `${Math.round((letterHardStats.correctAnswers / letterHardStats.questionsAnswered) * 100)}%`
+                          : "-"}
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            {/* Difficulty Breakdown Table - Puzzle Game */}
+            <div className="bg-white rounded-3xl border-2 border-slate-200 overflow-hidden shadow-sm">
+              <div className="p-4 bg-indigo-50 border-b border-indigo-200">
+                <h3 className="text-base font-black text-indigo-950 flex items-center gap-2">
+                  <span>🧩</span> Rincian Tingkat Kesulitan: Puzzle Bergambar
+                </h3>
+              </div>
+
+              <div className="overflow-x-auto">
+                <table className="w-full text-left text-sm font-bold text-slate-700">
+                  <thead className="bg-slate-50 text-xs font-black text-slate-500 uppercase">
+                    <tr>
+                      <th className="px-5 py-3">Tingkat</th>
+                      <th className="px-5 py-3">Selesai</th>
+                      <th className="px-5 py-3">Bintang Diraih</th>
+                      <th className="px-5 py-3">Ketepatan</th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-slate-100">
+                    <tr>
+                      <td className="px-5 py-3 font-extrabold text-emerald-700 flex items-center gap-2">
+                        <span>🌱</span> Mudah (4 Keping)
+                      </td>
+                      <td className="px-5 py-3">{puzzleEasyStats.gamesCompleted} puzzle</td>
+                      <td className="px-5 py-3 text-amber-600 font-extrabold">⭐ {puzzleEasyStats.stars}</td>
+                      <td className="px-5 py-3">
+                        {puzzleEasyStats.questionsAnswered > 0
+                          ? `${Math.round((puzzleEasyStats.correctAnswers / (puzzleEasyStats.correctAnswers + puzzleEasyStats.incorrectAnswers)) * 100)}%`
+                          : "-"}
+                      </td>
+                    </tr>
+                    <tr>
+                      <td className="px-5 py-3 font-extrabold text-sky-700 flex items-center gap-2">
+                        <span>⭐</span> Sedang (6 Keping)
+                      </td>
+                      <td className="px-5 py-3">{puzzleMedStats.gamesCompleted} puzzle</td>
+                      <td className="px-5 py-3 text-amber-600 font-extrabold">⭐ {puzzleMedStats.stars}</td>
+                      <td className="px-5 py-3">
+                        {puzzleMedStats.questionsAnswered > 0
+                          ? `${Math.round((puzzleMedStats.correctAnswers / (puzzleMedStats.correctAnswers + puzzleMedStats.incorrectAnswers)) * 100)}%`
+                          : "-"}
+                      </td>
+                    </tr>
+                    <tr>
+                      <td className="px-5 py-3 font-extrabold text-purple-700 flex items-center gap-2">
+                        <span>👑</span> Sulit (9 Keping)
+                      </td>
+                      <td className="px-5 py-3">{puzzleHardStats.gamesCompleted} puzzle</td>
+                      <td className="px-5 py-3 text-amber-600 font-extrabold">⭐ {puzzleHardStats.stars}</td>
+                      <td className="px-5 py-3">
+                        {puzzleHardStats.questionsAnswered > 0
+                          ? `${Math.round((puzzleHardStats.correctAnswers / (puzzleHardStats.correctAnswers + puzzleHardStats.incorrectAnswers)) * 100)}%`
+                          : "-"}
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            {/* Difficulty Breakdown Table - Colors & Shapes Game */}
+            <div className="bg-white rounded-3xl border-2 border-slate-200 overflow-hidden shadow-sm">
+              <div className="p-4 bg-amber-50 border-b border-amber-200">
+                <h3 className="text-base font-black text-amber-950 flex items-center gap-2">
+                  <span>🎨</span> Rincian Tingkat Kesulitan: Warna & Bentuk
+                </h3>
+              </div>
+
+              <div className="overflow-x-auto">
+                <table className="w-full text-left text-sm font-bold text-slate-700">
+                  <thead className="bg-slate-50 text-xs font-black text-slate-500 uppercase">
+                    <tr>
+                      <th className="px-5 py-3">Tingkat</th>
+                      <th className="px-5 py-3">Selesai</th>
+                      <th className="px-5 py-3">Bintang Diraih</th>
+                      <th className="px-5 py-3">Akurasi</th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-slate-100">
+                    <tr>
+                      <td className="px-5 py-3 font-extrabold text-emerald-700 flex items-center gap-2">
+                        <span>🌱</span> Mudah (1 Atribut)
+                      </td>
+                      <td className="px-5 py-3">{colorsEasyStats.gamesCompleted} sesi</td>
+                      <td className="px-5 py-3 text-amber-600 font-extrabold">⭐ {colorsEasyStats.stars}</td>
+                      <td className="px-5 py-3">
+                        {colorsEasyStats.questionsAnswered > 0
+                          ? `${Math.round((colorsEasyStats.correctAnswers / colorsEasyStats.questionsAnswered) * 100)}%`
+                          : "-"}
+                      </td>
+                    </tr>
+                    <tr>
+                      <td className="px-5 py-3 font-extrabold text-sky-700 flex items-center gap-2">
+                        <span>⭐</span> Sedang (Kombinasi / Siluet)
+                      </td>
+                      <td className="px-5 py-3">{colorsMedStats.gamesCompleted} sesi</td>
+                      <td className="px-5 py-3 text-amber-600 font-extrabold">⭐ {colorsMedStats.stars}</td>
+                      <td className="px-5 py-3">
+                        {colorsMedStats.questionsAnswered > 0
+                          ? `${Math.round((colorsMedStats.correctAnswers / colorsMedStats.questionsAnswered) * 100)}%`
+                          : "-"}
+                      </td>
+                    </tr>
+                    <tr>
+                      <td className="px-5 py-3 font-extrabold text-purple-700 flex items-center gap-2">
+                        <span>👑</span> Sulit (Pengelompokan Keranjang)
+                      </td>
+                      <td className="px-5 py-3">{colorsHardStats.gamesCompleted} sesi</td>
+                      <td className="px-5 py-3 text-amber-600 font-extrabold">⭐ {colorsHardStats.stars}</td>
+                      <td className="px-5 py-3">
+                        {colorsHardStats.questionsAnswered > 0
+                          ? `${Math.round((colorsHardStats.correctAnswers / colorsHardStats.questionsAnswered) * 100)}%`
+                          : "-"}
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            {/* Difficulty Breakdown Table - Numbers Game */}
+            <div className="bg-white rounded-3xl border-2 border-slate-200 overflow-hidden shadow-sm">
+              <div className="p-4 bg-yellow-50 border-b border-yellow-200">
+                <h3 className="text-base font-black text-amber-950 flex items-center gap-2">
+                  <span>🔢</span> Rincian Tingkat Kesulitan: Belajar Angka & Berhitung
+                </h3>
+              </div>
+
+              <div className="overflow-x-auto">
+                <table className="w-full text-left text-sm font-bold text-slate-700">
+                  <thead className="bg-slate-50 text-xs font-black text-slate-500 uppercase">
+                    <tr>
+                      <th className="px-5 py-3">Tingkat</th>
+                      <th className="px-5 py-3">Selesai</th>
+                      <th className="px-5 py-3">Bintang Diraih</th>
+                      <th className="px-5 py-3">Akurasi</th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-slate-100">
+                    <tr>
+                      <td className="px-5 py-3 font-extrabold text-emerald-700 flex items-center gap-2">
+                        <span>🌱</span> Mudah (Rentang 1–5)
+                      </td>
+                      <td className="px-5 py-3">{numbersEasyStats.gamesCompleted} sesi</td>
+                      <td className="px-5 py-3 text-amber-600 font-extrabold">⭐ {numbersEasyStats.stars}</td>
+                      <td className="px-5 py-3">
+                        {numbersEasyStats.questionsAnswered > 0
+                          ? `${Math.round((numbersEasyStats.correctAnswers / numbersEasyStats.questionsAnswered) * 100)}%`
+                          : "-"}
+                      </td>
+                    </tr>
+                    <tr>
+                      <td className="px-5 py-3 font-extrabold text-sky-700 flex items-center gap-2">
+                        <span>⭐</span> Sedang (Rentang 1–10)
+                      </td>
+                      <td className="px-5 py-3">{numbersMedStats.gamesCompleted} sesi</td>
+                      <td className="px-5 py-3 text-amber-600 font-extrabold">⭐ {numbersMedStats.stars}</td>
+                      <td className="px-5 py-3">
+                        {numbersMedStats.questionsAnswered > 0
+                          ? `${Math.round((numbersMedStats.correctAnswers / numbersMedStats.questionsAnswered) * 100)}%`
+                          : "-"}
+                      </td>
+                    </tr>
+                    <tr>
+                      <td className="px-5 py-3 font-extrabold text-purple-700 flex items-center gap-2">
+                        <span>👑</span> Sulit (Rentang 1–20)
+                      </td>
+                      <td className="px-5 py-3">{numbersHardStats.gamesCompleted} sesi</td>
+                      <td className="px-5 py-3 text-amber-600 font-extrabold">⭐ {numbersHardStats.stars}</td>
+                      <td className="px-5 py-3">
+                        {numbersHardStats.questionsAnswered > 0
+                          ? `${Math.round((numbersHardStats.correctAnswers / numbersHardStats.questionsAnswered) * 100)}%`
+                          : "-"}
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            {/* Difficulty Breakdown Table - Memory Game */}
+            <div className="bg-white rounded-3xl border-2 border-slate-200 overflow-hidden shadow-sm">
+              <div className="p-4 bg-purple-50 border-b border-purple-200">
+                <h3 className="text-base font-black text-purple-950 flex items-center gap-2">
+                  <span>🧠</span> Rincian Tingkat Kesulitan: Tebak Memori
+                </h3>
+              </div>
+
+              <div className="overflow-x-auto">
+                <table className="w-full text-left text-sm font-bold text-slate-700">
+                  <thead className="bg-slate-50 text-xs font-black text-slate-500 uppercase">
+                    <tr>
+                      <th className="px-5 py-3">Tingkat</th>
+                      <th className="px-5 py-3">Selesai</th>
+                      <th className="px-5 py-3">Bintang Diraih</th>
+                      <th className="px-5 py-3">Efisiensi Pasangan</th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-slate-100">
+                    <tr>
+                      <td className="px-5 py-3 font-extrabold text-emerald-700 flex items-center gap-2">
+                        <span>🌱</span> Mudah (4 Kartu / 2 Pasang)
+                      </td>
+                      <td className="px-5 py-3">{memoryEasyStats.gamesCompleted} sesi</td>
+                      <td className="px-5 py-3 text-amber-600 font-extrabold">⭐ {memoryEasyStats.stars}</td>
+                      <td className="px-5 py-3">
+                        {memoryEasyStats.questionsAnswered > 0
+                          ? `${Math.round((memoryEasyStats.correctAnswers / (memoryEasyStats.correctAnswers + memoryEasyStats.incorrectAnswers)) * 100)}%`
+                          : "-"}
+                      </td>
+                    </tr>
+                    <tr>
+                      <td className="px-5 py-3 font-extrabold text-sky-700 flex items-center gap-2">
+                        <span>⭐</span> Sedang (6 Kartu / 3 Pasang)
+                      </td>
+                      <td className="px-5 py-3">{memoryMedStats.gamesCompleted} sesi</td>
+                      <td className="px-5 py-3 text-amber-600 font-extrabold">⭐ {memoryMedStats.stars}</td>
+                      <td className="px-5 py-3">
+                        {memoryMedStats.questionsAnswered > 0
+                          ? `${Math.round((memoryMedStats.correctAnswers / (memoryMedStats.correctAnswers + memoryMedStats.incorrectAnswers)) * 100)}%`
+                          : "-"}
+                      </td>
+                    </tr>
+                    <tr>
+                      <td className="px-5 py-3 font-extrabold text-purple-700 flex items-center gap-2">
+                        <span>👑</span> Sulit (12 Kartu / 6 Pasang)
+                      </td>
+                      <td className="px-5 py-3">{memoryHardStats.gamesCompleted} sesi</td>
+                      <td className="px-5 py-3 text-amber-600 font-extrabold">⭐ {memoryHardStats.stars}</td>
+                      <td className="px-5 py-3">
+                        {memoryHardStats.questionsAnswered > 0
+                          ? `${Math.round((memoryHardStats.correctAnswers / (memoryHardStats.correctAnswers + memoryHardStats.incorrectAnswers)) * 100)}%`
                           : "-"}
                       </td>
                     </tr>

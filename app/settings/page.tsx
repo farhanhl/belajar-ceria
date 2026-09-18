@@ -65,7 +65,7 @@ export default function SettingsPage() {
     <div className="min-h-screen flex flex-col justify-between">
       <ChildNavbar />
 
-      <main className="flex-1 max-w-2xl w-full mx-auto p-4 sm:p-8 space-y-6">
+      <main className="flex-1 max-w-6xl w-full mx-auto space-y-6 py-8">
         {/* Header */}
         <div className="flex items-center justify-between gap-4">
           <Link
@@ -128,11 +128,10 @@ export default function SettingsPage() {
             <button
               type="button"
               onClick={handleToggleSound}
-              className={`px-5 py-2.5 rounded-2xl font-black text-sm transition cursor-pointer shadow ${
-                soundEnabled
+              className={`px-5 py-2.5 rounded-2xl font-black text-sm transition cursor-pointer shadow ${soundEnabled
                   ? "bg-emerald-500 text-white hover:bg-emerald-600"
                   : "bg-slate-300 text-slate-700 hover:bg-slate-400"
-              }`}
+                }`}
             >
               {soundEnabled ? "ON" : "OFF"}
             </button>
@@ -178,11 +177,10 @@ export default function SettingsPage() {
             <button
               type="button"
               onClick={handleToggleAutoTts}
-              className={`px-5 py-2.5 rounded-2xl font-black text-sm transition cursor-pointer shadow ${
-                autoTts
+              className={`px-5 py-2.5 rounded-2xl font-black text-sm transition cursor-pointer shadow ${autoTts
                   ? "bg-emerald-500 text-white hover:bg-emerald-600"
                   : "bg-slate-300 text-slate-700 hover:bg-slate-400"
-              }`}
+                }`}
             >
               {autoTts ? "ON" : "OFF"}
             </button>
@@ -199,11 +197,10 @@ export default function SettingsPage() {
               <button
                 type="button"
                 onClick={() => handleLanguageChange("id")}
-                className={`py-3 px-4 rounded-2xl font-black text-base flex items-center justify-center gap-2 border-2 transition cursor-pointer ${
-                  language === "id"
+                className={`py-3 px-4 rounded-2xl font-black text-base flex items-center justify-center gap-2 border-2 transition cursor-pointer ${language === "id"
                     ? "bg-amber-400 border-amber-600 text-amber-950 shadow-md scale-102"
                     : "bg-white border-slate-200 text-slate-700 hover:bg-slate-50"
-                }`}
+                  }`}
               >
                 {language === "id" && <Check className="w-4 h-4 stroke-[3]" />}
                 Bahasa Indonesia
@@ -212,11 +209,10 @@ export default function SettingsPage() {
               <button
                 type="button"
                 onClick={() => handleLanguageChange("en")}
-                className={`py-3 px-4 rounded-2xl font-black text-base flex items-center justify-center gap-2 border-2 transition cursor-pointer ${
-                  language === "en"
+                className={`py-3 px-4 rounded-2xl font-black text-base flex items-center justify-center gap-2 border-2 transition cursor-pointer ${language === "en"
                     ? "bg-amber-400 border-amber-600 text-amber-950 shadow-md scale-102"
                     : "bg-white border-slate-200 text-slate-700 hover:bg-slate-50"
-                }`}
+                  }`}
               >
                 {language === "en" && <Check className="w-4 h-4 stroke-[3]" />}
                 English

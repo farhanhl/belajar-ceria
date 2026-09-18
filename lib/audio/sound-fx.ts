@@ -108,6 +108,10 @@ class SoundEffects {
     }
   }
 
+  playIncorrect(volume: number = 0.8) {
+    this.playTryAgain(volume);
+  }
+
   /**
    * Star pop sound
    */
@@ -169,6 +173,53 @@ class SoundEffects {
         osc.start(ctx.currentTime + note.t);
         osc.stop(ctx.currentTime + note.t + note.d + 0.05);
       });
+    } catch {
+      // Audio failed silently
+    }
+  }
+
+  playCelebration(volume: number = 0.8) {
+    this.playVictory(volume);
+  }
+
+  /**
+   * Satisfying snap / click sound when puzzle piece locks into place
+   */
+  playPieceSnap(volume: number = 0.8) {
+    const ctx = this.getContext();
+    if (!ctx) return;
+
+    try {
+      // First quick pop
+      const osc1 = ctx.createOscillator();
+      const gain1 = ctx.createGain();
+      osc1.type = "sine";
+      osc1.frequency.setValueAtTime(600, ctx.currentTime);
+      osc1.frequency.exponentialRampToValueAtTime(1200, ctx.currentTime + 0.05);
+
+      gain1.gain.setValueAtTime(volume * 0.4, ctx.currentTime);
+      gain1.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.05);
+
+      osc1.connect(gain1);
+      gain1.connect(ctx.destination);
+
+      osc1.start();
+      osc1.stop(ctx.currentTime + 0.05);
+
+      // Sweet harmonic bell chime
+      const osc2 = ctx.createOscillator();
+      const gain2 = ctx.createGain();
+      osc2.type = "triangle";
+      osc2.frequency.setValueAtTime(987.77, ctx.currentTime + 0.03); // B5
+
+      gain2.gain.setValueAtTime(volume * 0.35, ctx.currentTime + 0.03);
+      gain2.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.2);
+
+      osc2.connect(gain2);
+      gain2.connect(ctx.destination);
+
+      osc2.start(ctx.currentTime + 0.03);
+      osc2.stop(ctx.currentTime + 0.2);
     } catch {
       // Audio failed silently
     }

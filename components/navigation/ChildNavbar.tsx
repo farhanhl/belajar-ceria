@@ -18,18 +18,38 @@ export function ChildNavbar({ showControls = true }: ChildNavbarProps) {
   const { activeProfile } = useProfileStore();
   const { language } = useSettingsStore();
 
-  // Calculate total stars across all difficulty levels for matching game
-  const totalStars = activeProfile
+  // Calculate total stars across all difficulty levels and games
+  const matchingStars = activeProfile
     ? (activeProfile.progress?.matching?.easy?.stars || 0) +
       (activeProfile.progress?.matching?.medium?.stars || 0) +
       (activeProfile.progress?.matching?.hard?.stars || 0)
     : 0;
 
+  const lettersStars = activeProfile
+    ? (activeProfile.progress?.letters?.easy?.stars || 0) +
+      (activeProfile.progress?.letters?.medium?.stars || 0) +
+      (activeProfile.progress?.letters?.hard?.stars || 0)
+    : 0;
+
+  const puzzleStars = activeProfile
+    ? (activeProfile.progress?.puzzle?.easy?.stars || 0) +
+      (activeProfile.progress?.puzzle?.medium?.stars || 0) +
+      (activeProfile.progress?.puzzle?.hard?.stars || 0)
+    : 0;
+
+  const totalStars = matchingStars + lettersStars + puzzleStars;
+
   const currentLevel = activeProfile
     ? Math.max(
         activeProfile.progress?.matching?.easy?.currentLevel || 1,
         activeProfile.progress?.matching?.medium?.currentLevel || 1,
-        activeProfile.progress?.matching?.hard?.currentLevel || 1
+        activeProfile.progress?.matching?.hard?.currentLevel || 1,
+        activeProfile.progress?.letters?.easy?.currentLevel || 1,
+        activeProfile.progress?.letters?.medium?.currentLevel || 1,
+        activeProfile.progress?.letters?.hard?.currentLevel || 1,
+        activeProfile.progress?.puzzle?.easy?.currentLevel || 1,
+        activeProfile.progress?.puzzle?.medium?.currentLevel || 1,
+        activeProfile.progress?.puzzle?.hard?.currentLevel || 1
       )
     : 1;
 

@@ -1,4 +1,5 @@
 export type Difficulty = "easy" | "medium" | "hard";
+export type GameDifficulty = Difficulty;
 
 export interface MatchingItem {
   id: string;

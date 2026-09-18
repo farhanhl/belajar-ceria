@@ -5,8 +5,17 @@ import { motion } from "motion/react";
 import { soundFx } from "@/lib/audio/sound-fx";
 import { useSettingsStore } from "@/stores/settings-store";
 
-export type ButtonVariant = "primary" | "secondary" | "success" | "warning" | "danger" | "purple";
-export type ButtonSize = "md" | "lg" | "xl";
+export type ButtonVariant =
+  | "primary"
+  | "secondary"
+  | "success"
+  | "warning"
+  | "danger"
+  | "purple"
+  | "pink"
+  | "indigo"
+  | "teal";
+export type ButtonSize = "sm" | "md" | "lg" | "xl";
 
 interface ChildButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: ButtonVariant;
@@ -42,9 +51,16 @@ export function ChildButton({
       "bg-rose-500 hover:bg-rose-600 text-white border-b-4 border-rose-700 shadow-rose-200",
     purple:
       "bg-purple-500 hover:bg-purple-600 text-white border-b-4 border-purple-700 shadow-purple-200",
+    pink:
+      "bg-pink-500 hover:bg-pink-600 text-white border-b-4 border-pink-700 shadow-pink-200",
+    indigo:
+      "bg-indigo-500 hover:bg-indigo-600 text-white border-b-4 border-indigo-700 shadow-indigo-200",
+    teal:
+      "bg-teal-500 hover:bg-teal-600 text-white border-b-4 border-teal-700 shadow-teal-200",
   };
 
   const sizeStyles: Record<ButtonSize, string> = {
+    sm: "px-4 py-1.5 text-sm font-bold rounded-xl min-h-[38px]",
     md: "px-5 py-2.5 text-lg font-bold rounded-2xl min-h-[48px]",
     lg: "px-7 py-3.5 text-xl font-extrabold rounded-3xl min-h-[58px]",
     xl: "px-9 py-5 text-2xl font-black rounded-3xl min-h-[72px]",
@@ -70,8 +86,8 @@ export function ChildButton({
       } ${sizeStyles[size]} ${disabled ? "opacity-50 cursor-not-allowed filter grayscale" : ""} ${className}`}
       {...(props as any)}
     >
-      {icon && <span className="shrink-0">{icon}</span>}
-      {children && <span>{children}</span>}
+      {icon && <span className="shrink-0 inline-flex items-center justify-center">{icon}</span>}
+      {children && <span className="inline-flex items-center justify-center gap-2 leading-none">{children}</span>}
     </motion.button>
   );
 }

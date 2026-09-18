@@ -92,15 +92,57 @@ export default function ProfilesPage() {
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-5">
           {profiles.map((profile) => {
             const isSelected = activeProfile?.id === profile.id;
-            const totalStars =
+            const matchingStars =
               (profile.progress?.matching?.easy?.stars || 0) +
               (profile.progress?.matching?.medium?.stars || 0) +
               (profile.progress?.matching?.hard?.stars || 0);
 
+            const lettersStars =
+              (profile.progress?.letters?.easy?.stars || 0) +
+              (profile.progress?.letters?.medium?.stars || 0) +
+              (profile.progress?.letters?.hard?.stars || 0);
+
+            const puzzleStars =
+              (profile.progress?.puzzle?.easy?.stars || 0) +
+              (profile.progress?.puzzle?.medium?.stars || 0) +
+              (profile.progress?.puzzle?.hard?.stars || 0);
+
+            const colorsStars =
+              (profile.progress?.colors?.easy?.stars || 0) +
+              (profile.progress?.colors?.medium?.stars || 0) +
+              (profile.progress?.colors?.hard?.stars || 0);
+
+            const numbersStars =
+              (profile.progress?.numbers?.easy?.stars || 0) +
+              (profile.progress?.numbers?.medium?.stars || 0) +
+              (profile.progress?.numbers?.hard?.stars || 0);
+
+            const memoryStars =
+              (profile.progress?.memory?.easy?.stars || 0) +
+              (profile.progress?.memory?.medium?.stars || 0) +
+              (profile.progress?.memory?.hard?.stars || 0);
+
+            const totalStars = matchingStars + lettersStars + puzzleStars + colorsStars + numbersStars + memoryStars;
+
             const level = Math.max(
               profile.progress?.matching?.easy?.currentLevel || 1,
               profile.progress?.matching?.medium?.currentLevel || 1,
-              profile.progress?.matching?.hard?.currentLevel || 1
+              profile.progress?.matching?.hard?.currentLevel || 1,
+              profile.progress?.letters?.easy?.currentLevel || 1,
+              profile.progress?.letters?.medium?.currentLevel || 1,
+              profile.progress?.letters?.hard?.currentLevel || 1,
+              profile.progress?.puzzle?.easy?.currentLevel || 1,
+              profile.progress?.puzzle?.medium?.currentLevel || 1,
+              profile.progress?.puzzle?.hard?.currentLevel || 1,
+              profile.progress?.colors?.easy?.currentLevel || 1,
+              profile.progress?.colors?.medium?.currentLevel || 1,
+              profile.progress?.colors?.hard?.currentLevel || 1,
+              profile.progress?.numbers?.easy?.currentLevel || 1,
+              profile.progress?.numbers?.medium?.currentLevel || 1,
+              profile.progress?.numbers?.hard?.currentLevel || 1,
+              profile.progress?.memory?.easy?.currentLevel || 1,
+              profile.progress?.memory?.medium?.currentLevel || 1,
+              profile.progress?.memory?.hard?.currentLevel || 1
             );
 
             return (

@@ -36,43 +36,43 @@ export default function MatchingLevelSelectPage() {
     starsNeeded: number;
     icon: string;
   }[] = [
-    {
-      id: "easy",
-      nameKey: "games.matching.easy",
-      descKey: "games.matching.easyDesc",
-      color: "from-emerald-400 to-teal-400",
-      borderColor: "border-emerald-400",
-      badgeBg: "bg-emerald-500",
-      starsNeeded: 0,
-      icon: "🌱",
-    },
-    {
-      id: "medium",
-      nameKey: "games.matching.medium",
-      descKey: "games.matching.mediumDesc",
-      color: "from-sky-400 to-blue-400",
-      borderColor: "border-sky-400",
-      badgeBg: "bg-sky-500",
-      starsNeeded: 5,
-      icon: "⭐",
-    },
-    {
-      id: "hard",
-      nameKey: "games.matching.hard",
-      descKey: "games.matching.hardDesc",
-      color: "from-purple-400 to-pink-400",
-      borderColor: "border-purple-400",
-      badgeBg: "bg-purple-500",
-      starsNeeded: 10,
-      icon: "👑",
-    },
-  ];
+      {
+        id: "easy",
+        nameKey: "games.matching.easy",
+        descKey: "games.matching.easyDesc",
+        color: "from-emerald-400 to-teal-400",
+        borderColor: "border-emerald-400",
+        badgeBg: "bg-emerald-500",
+        starsNeeded: 0,
+        icon: "🌱",
+      },
+      {
+        id: "medium",
+        nameKey: "games.matching.medium",
+        descKey: "games.matching.mediumDesc",
+        color: "from-sky-400 to-blue-400",
+        borderColor: "border-sky-400",
+        badgeBg: "bg-sky-500",
+        starsNeeded: 5,
+        icon: "⭐",
+      },
+      {
+        id: "hard",
+        nameKey: "games.matching.hard",
+        descKey: "games.matching.hardDesc",
+        color: "from-purple-400 to-pink-400",
+        borderColor: "border-purple-400",
+        badgeBg: "bg-purple-500",
+        starsNeeded: 10,
+        icon: "👑",
+      },
+    ];
 
   return (
     <div className="min-h-screen flex flex-col">
       <ChildNavbar />
 
-      <main className="flex-1 max-w-4xl w-full mx-auto p-4 sm:p-8 space-y-6">
+      <main className="flex-1 max-w-6xl w-full mx-auto space-y-6 py-8">
         {/* Back Link & Title */}
         <div className="flex items-center justify-between gap-4">
           <Link

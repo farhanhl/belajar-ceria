@@ -18,6 +18,61 @@ export const ProfileProgressSchema = z.object({
     medium: GameProgressSchema,
     hard: GameProgressSchema,
   }),
+  letters: z
+    .object({
+      easy: GameProgressSchema,
+      medium: GameProgressSchema,
+      hard: GameProgressSchema,
+    })
+    .default(() => ({
+      easy: GameProgressSchema.parse({}),
+      medium: GameProgressSchema.parse({}),
+      hard: GameProgressSchema.parse({}),
+    })),
+  puzzle: z
+    .object({
+      easy: GameProgressSchema,
+      medium: GameProgressSchema,
+      hard: GameProgressSchema,
+    })
+    .default(() => ({
+      easy: GameProgressSchema.parse({}),
+      medium: GameProgressSchema.parse({}),
+      hard: GameProgressSchema.parse({}),
+    })),
+  colors: z
+    .object({
+      easy: GameProgressSchema,
+      medium: GameProgressSchema,
+      hard: GameProgressSchema,
+    })
+    .default(() => ({
+      easy: GameProgressSchema.parse({}),
+      medium: GameProgressSchema.parse({}),
+      hard: GameProgressSchema.parse({}),
+    })),
+  numbers: z
+    .object({
+      easy: GameProgressSchema,
+      medium: GameProgressSchema,
+      hard: GameProgressSchema,
+    })
+    .default(() => ({
+      easy: GameProgressSchema.parse({}),
+      medium: GameProgressSchema.parse({}),
+      hard: GameProgressSchema.parse({}),
+    })),
+  memory: z
+    .object({
+      easy: GameProgressSchema,
+      medium: GameProgressSchema,
+      hard: GameProgressSchema,
+    })
+    .default(() => ({
+      easy: GameProgressSchema.parse({}),
+      medium: GameProgressSchema.parse({}),
+      hard: GameProgressSchema.parse({}),
+    })),
 });
 
 export const ChildProfileSchema = z.object({
