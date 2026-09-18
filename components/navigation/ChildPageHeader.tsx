@@ -26,11 +26,18 @@ export function ChildPageHeader({
   const label = backLabel || getTranslation("app.backToMenu", {}, language);
 
   const handleBack = () => {
-    // Use browser back navigation so scroll position is restored natively.
-    // Fall back to href if there is no history entry to go back to.
-    if (window.history.length > 1) {
+    // Check if the previous history entry came from the expected back destination.
+    // document.referrer contains the URL of the page the user navigated from.
+    const referrer = typeof document !== "undefined" ? document.referrer : "";
+    const fromExpectedPage =
+      referrer.length > 0 &&
+      new URL(referrer, window.location.href).pathname === backHref;
+
+    if (fromExpectedPage) {
+      // Came from the menu page → go back so scroll position is restored natively.
       router.back();
     } else {
+      // Came from somewhere else (direct URL, external link, etc.) → push to the menu.
       router.push(backHref);
     }
   };

@@ -155,21 +155,20 @@ export default function NumbersPlayPage() {
             </span>
 
             <span
-              className={`font-black px-3.5 py-1.5 rounded-full text-xs sm:text-sm text-white shadow-sm ${
-                difficulty === "easy"
+              className={`font-black px-3.5 py-1.5 rounded-full text-xs sm:text-sm text-white shadow-sm ${difficulty === "easy"
                   ? "bg-emerald-500"
                   : difficulty === "medium"
-                  ? "bg-amber-500"
-                  : "bg-rose-500"
-              }`}
+                    ? "bg-amber-500"
+                    : "bg-rose-500"
+                }`}
             >
               {mode === "addition"
                 ? "Penjumlahan ➕"
                 : mode === "subtraction"
-                ? "Pengurangan ➖"
-                : mode === "counting"
-                ? "Membilang 🍉"
-                : "Gabungan 🔀"}
+                  ? "Pengurangan ➖"
+                  : mode === "counting"
+                    ? "Membilang 🍉"
+                    : "Gabungan 🔀"}
             </span>
           </div>
         </div>
@@ -221,13 +220,12 @@ export default function NumbersPlayPage() {
                     whileTap={{ scale: 0.94 }}
                     disabled={isAnswered}
                     onClick={() => handleOptionSelect(option.value)}
-                    className={`relative py-4 px-3 rounded-2xl font-black text-3xl sm:text-4xl shadow-md border-4 transition-all ${
-                      isCorrect
+                    className={`relative py-4 px-3 rounded-2xl font-black text-3xl sm:text-4xl shadow-md border-4 transition-all ${isCorrect
                         ? "bg-emerald-500 text-white border-emerald-400 ring-4 ring-emerald-200"
                         : isWrong
-                        ? "bg-rose-500 text-white border-rose-400 ring-4 ring-rose-200 animate-shake"
-                        : "bg-white text-slate-800 hover:bg-amber-50 border-amber-200 hover:border-amber-400"
-                    } ${isAnswered ? "cursor-default" : "cursor-pointer"}`}
+                          ? "bg-rose-500 text-white border-rose-400 ring-4 ring-rose-200 animate-shake"
+                          : "bg-white text-slate-800 hover:bg-amber-50 border-amber-200 hover:border-amber-400"
+                      } ${isAnswered ? "cursor-default" : "cursor-pointer"}`}
                   >
                     <span>{option.value}</span>
 

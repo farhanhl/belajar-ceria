@@ -52,11 +52,10 @@ export function ColoringToolsBar({ onFinish }: ColoringToolsBarProps) {
           onClick={handleUndo}
           disabled={history.length === 0}
           title={language === "id" ? "Batalkan (Undo)" : "Undo"}
-          className={`flex items-center gap-1.5 px-3 sm:px-4 py-2 rounded-2xl font-black text-xs sm:text-sm cursor-pointer transition-all ${
-            history.length > 0
+          className={`flex items-center gap-1.5 px-3 sm:px-4 py-2 rounded-2xl font-black text-xs sm:text-sm cursor-pointer transition-all ${history.length > 0
               ? "bg-amber-100 hover:bg-amber-200 text-amber-950 shadow-sm active:scale-95"
               : "bg-slate-100 text-slate-400 cursor-not-allowed"
-          }`}
+            }`}
         >
           <RotateCcw className="w-4 h-4" />
           <span className="hidden xs:inline">{language === "id" ? "Batal" : "Undo"}</span>
@@ -68,11 +67,10 @@ export function ColoringToolsBar({ onFinish }: ColoringToolsBarProps) {
           onClick={handleReset}
           disabled={coloredCount === 0}
           title={language === "id" ? "Hapus Semua Warna" : "Clear All"}
-          className={`flex items-center gap-1.5 px-3 sm:px-4 py-2 rounded-2xl font-black text-xs sm:text-sm cursor-pointer transition-all ${
-            coloredCount > 0
+          className={`flex items-center gap-1.5 px-3 sm:px-4 py-2 rounded-2xl font-black text-xs sm:text-sm cursor-pointer transition-all ${coloredCount > 0
               ? "bg-rose-100 hover:bg-rose-200 text-rose-950 shadow-sm active:scale-95"
               : "bg-slate-100 text-slate-400 cursor-not-allowed"
-          }`}
+            }`}
         >
           <Trash2 className="w-4 h-4 text-rose-600" />
           <span className="hidden xs:inline">{language === "id" ? "Hapus" : "Clear"}</span>

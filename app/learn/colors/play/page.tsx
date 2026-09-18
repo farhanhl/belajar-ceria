@@ -179,19 +179,18 @@ export default function ColorsPlayPage() {
             </span>
 
             <span
-              className={`font-black px-3.5 py-1.5 rounded-full text-xs sm:text-sm text-white shadow-sm ${
-                difficulty === "easy"
+              className={`font-black px-3.5 py-1.5 rounded-full text-xs sm:text-sm text-white shadow-sm ${difficulty === "easy"
                   ? "bg-emerald-500"
                   : difficulty === "medium"
-                  ? "bg-amber-500"
-                  : "bg-rose-500"
-              }`}
+                    ? "bg-amber-500"
+                    : "bg-rose-500"
+                }`}
             >
               {difficulty === "easy"
                 ? "Mudah"
                 : difficulty === "medium"
-                ? "Sedang"
-                : "Sulit"}
+                  ? "Sedang"
+                  : "Sulit"}
             </span>
           </div>
         </div>
