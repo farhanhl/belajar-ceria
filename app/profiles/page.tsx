@@ -14,6 +14,8 @@ import { getTranslation } from "@/lib/i18n";
 import { motion, AnimatePresence } from "motion/react";
 import Link from "next/link";
 
+import Image from "next/image";
+
 export default function ProfilesPage() {
   const router = useRouter();
   const { profiles, activeProfile, selectProfile, createProfile, deleteProfile } = useProfileStore();
@@ -53,7 +55,20 @@ export default function ProfilesPage() {
   return (
     <div className="min-h-screen flex flex-col justify-between p-4 sm:p-8 max-w-4xl mx-auto space-y-8">
       {/* Top Header */}
-      <div className="text-center space-y-2">
+      <div className="text-center flex flex-col items-center space-y-2">
+        <Link
+          href="/"
+          className="inline-flex items-center justify-center p-2 rounded-2xl bg-white/95 border-2 border-amber-300 shadow-md hover:scale-105 hover:border-amber-400 transition-all shrink-0"
+        >
+          <Image
+            src="/logo.png"
+            alt="Logo Belajar Ceria"
+            width={80}
+            height={80}
+            className="w-16 h-16 sm:w-20 sm:h-20 object-contain"
+            priority
+          />
+        </Link>
         <h1 className="text-3xl sm:text-5xl font-black text-amber-950 tracking-tight">
           {getTranslation("profiles.title", {}, language)}
         </h1>

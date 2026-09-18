@@ -8,6 +8,8 @@ import { ChildAvatar } from "@/components/profile/ChildAvatar";
 import { Star, Trophy, Settings, Users, Sparkles } from "lucide-react";
 import { motion } from "motion/react";
 
+import Image from "next/image";
+
 interface ChildNavbarProps {
   showControls?: boolean;
 }
@@ -32,15 +34,22 @@ export function ChildNavbar({ showControls = true }: ChildNavbarProps) {
     : 1;
 
   return (
-    <header className="w-full bg-white/90 backdrop-blur-md border-b-4 border-amber-200 sticky top-0 z-40 px-4 sm:px-8 py-3.5 shadow-sm">
+    <header className="w-full bg-white/90 backdrop-blur-md border-b-4 border-amber-200 sticky top-0 z-40 px-4 sm:px-8 py-2.5 shadow-sm">
       <div className="max-w-6xl mx-auto flex items-center justify-between gap-4">
         {/* Logo / Home */}
-        <Link href="/learn" className="flex items-center gap-2.5 group">
-          <div className="w-11 h-11 bg-amber-400 rounded-2xl flex items-center justify-center border-2 border-amber-500 shadow-md group-hover:scale-105 transition-transform">
-            <Sparkles className="w-6 h-6 text-amber-900 fill-amber-900" />
+        <Link href="/learn" className="flex items-center gap-3 group">
+          <div className="p-1 rounded-2xl bg-white/95 border-2 border-amber-300 shadow-sm flex items-center justify-center overflow-hidden group-hover:scale-105 group-hover:border-amber-400 group-hover:shadow transition-all shrink-0">
+            <Image
+              src="/logo.png"
+              alt="Logo Belajar Ceria"
+              width={52}
+              height={52}
+              className="w-10 h-10 sm:w-12 sm:h-12 object-contain"
+              priority
+            />
           </div>
           <div>
-            <span className="text-xl sm:text-2xl font-black tracking-wide bg-gradient-to-r from-amber-600 via-orange-600 to-rose-600 bg-clip-text text-transparent">
+            <span className="text-xl sm:text-2xl font-black tracking-tight bg-gradient-to-r from-amber-600 via-orange-600 to-rose-600 bg-clip-text text-transparent">
               Belajar Ceria
             </span>
             <span className="hidden md:block text-xs font-bold text-amber-700">

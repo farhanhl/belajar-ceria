@@ -11,6 +11,8 @@ import { ChildCard } from "@/components/ui/ChildCard";
 import { Sparkles, ArrowRight } from "lucide-react";
 import { getTranslation } from "@/lib/i18n";
 
+import Image from "next/image";
+
 export default function HomePage() {
   const router = useRouter();
   const { profiles, activeProfile, createProfile, isHydrated } = useProfileStore();
@@ -66,15 +68,22 @@ export default function HomePage() {
   return (
     <main className="min-h-screen flex flex-col items-center justify-center p-4 sm:p-8">
       <div className="w-full max-w-xl space-y-6">
-        {/* Brand Header */}
-        <div className="text-center space-y-2">
-          <div className="inline-flex items-center gap-2 bg-amber-200/80 text-amber-900 px-4 py-1.5 rounded-full text-sm font-extrabold shadow-sm">
+        {/* Brand Header with Logo in Rounded Frame */}
+        <div className="text-center flex flex-col items-center space-y-3">
+          <div className="inline-flex items-center justify-center p-3 sm:p-4 rounded-3xl bg-white/95 border-4 border-amber-300 shadow-xl hover:scale-105 transition-transform shrink-0">
+            <Image
+              src="/logo.png"
+              alt="Belajar Ceria"
+              width={220}
+              height={220}
+              className="w-40 h-40 sm:w-52 sm:h-52 object-contain"
+              priority
+            />
+          </div>
+          <div className="inline-flex items-center gap-2 bg-amber-200/90 text-amber-950 px-4 py-1.5 rounded-full text-sm font-extrabold shadow-sm">
             <Sparkles className="w-4 h-4 text-amber-600 fill-amber-500" />
             {getTranslation("app.tagline", {}, language)}
           </div>
-          <h1 className="text-4xl sm:text-5xl font-black text-amber-950 tracking-tight">
-            Belajar Ceria
-          </h1>
         </div>
 
         {/* Teacher Welcome Message */}

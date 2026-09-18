@@ -13,9 +13,20 @@ const nunito = Nunito({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL(process.env.NEXT_PUBLIC_APP_URL || "https://belajar-ceria-zeta.vercel.app"),
   title: "Belajar Ceria — Belajar Jadi Menyenangkan!",
   description: "Website pembelajaran interaktif dan permainan edukatif untuk anak usia dini dengan panduan suara Ibu Guru ramah anak.",
   keywords: ["belajar ceria", "edukasi anak", "game edukasi", "anak 5 tahun", "mencocokkan gambar", "tts anak"],
+  icons: {
+    icon: "/logo.png",
+    shortcut: "/logo.png",
+    apple: "/logo.png",
+  },
+  openGraph: {
+    title: "Belajar Ceria — Belajar Jadi Menyenangkan!",
+    description: "Website pembelajaran interaktif dan permainan edukatif untuk anak usia dini dengan panduan suara Ibu Guru ramah anak.",
+    images: ["/logo.png"],
+  },
 };
 
 export default function RootLayout({
