@@ -430,14 +430,13 @@ export default function DashboardPage() {
             >
               <ChildCard
                 borderColor="border-pink-400"
-                bgGradient="bg-gradient-to-br from-pink-100 via-rose-50 to-amber-50"
-                className="h-full flex flex-col justify-between p-6 sm:p-8 hover:shadow-2xl transition-all group"
+                bgGradient="bg-gradient-to-br from-pink-100/90 via-white to-rose-50"
+                className="relative overflow-hidden group shadow-xl h-full flex flex-col justify-between"
               >
-                <div className="flex items-start justify-between gap-4">
-                  <div className="space-y-2">
-                    <div className="inline-flex items-center gap-1.5 bg-pink-500 text-white px-3 py-1 rounded-full text-xs font-black shadow-sm">
-                      <Star className="w-3.5 h-3.5 fill-white" />
-                      <span>{coloringStars} {language === "id" ? "Bintang" : "Stars"}</span>
+                <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
+                  <div className="space-y-2 text-center sm:text-left">
+                    <div className="inline-flex items-center gap-1.5 bg-pink-500 text-white font-black text-xs px-3 py-1 rounded-full uppercase tracking-wider shadow-sm">
+                      <Sparkles className="w-3.5 h-3.5 fill-white" /> {language === "id" ? "Kreatif & Seni" : "Creative & Art"}
                     </div>
                     <h3 className="text-2xl sm:text-3xl font-black text-pink-950">
                       {getTranslation("games.coloring.title", {}, language)}
@@ -475,14 +474,13 @@ export default function DashboardPage() {
             >
               <ChildCard
                 borderColor="border-emerald-400"
-                bgGradient="bg-gradient-to-br from-emerald-100 via-teal-50 to-amber-50"
-                className="h-full flex flex-col justify-between p-6 sm:p-8 hover:shadow-2xl transition-all group"
+                bgGradient="bg-gradient-to-br from-emerald-100/90 via-white to-teal-50"
+                className="relative overflow-hidden group shadow-xl h-full flex flex-col justify-between"
               >
-                <div className="flex items-start justify-between gap-4">
-                  <div className="space-y-2">
-                    <div className="inline-flex items-center gap-1.5 bg-emerald-600 text-white px-3 py-1 rounded-full text-xs font-black shadow-sm">
-                      <Star className="w-3.5 h-3.5 fill-white" />
-                      <span>{sortingStars} {language === "id" ? "Bintang" : "Stars"}</span>
+                <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
+                  <div className="space-y-2 text-center sm:text-left">
+                    <div className="inline-flex items-center gap-1.5 bg-emerald-600 text-white font-black text-xs px-3 py-1 rounded-full uppercase tracking-wider shadow-sm">
+                      <Sparkles className="w-3.5 h-3.5 fill-white" /> {language === "id" ? "Kemandirian & Rapi" : "Life Skills & Logic"}
                     </div>
                     <h3 className="text-2xl sm:text-3xl font-black text-emerald-950">
                       {getTranslation("games.sorting.title", {}, language)}
