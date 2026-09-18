@@ -5,6 +5,8 @@ import { useRouter } from "next/navigation";
 import {
   DndContext,
   DragEndEvent,
+  DragStartEvent,
+  DragOverlay,
   MouseSensor,
   TouchSensor,
   useSensor,
@@ -15,6 +17,7 @@ import { useProfileStore } from "@/stores/profile-store";
 import { useSettingsStore } from "@/stores/settings-store";
 import { MatchingCard } from "./MatchingCard";
 import { MatchingTarget } from "./MatchingTarget";
+import { GameIcon } from "@/components/illustrations/GameIcons";
 import { Teacher } from "@/components/teacher/Teacher";
 import { TeacherExpression } from "@/components/teacher/TeacherAvatar";
 import { ProgressBar } from "@/components/ui/ProgressBar";
@@ -47,6 +50,7 @@ export function MatchingBoard() {
   const [matchedItem, setMatchedItem] = useState<MatchingItem | null>(null);
   const [isSuccess, setIsSuccess] = useState(false);
   const [selectedCardId, setSelectedCardId] = useState<string | null>(null);
+  const [activeDragItem, setActiveDragItem] = useState<MatchingItem | null>(null);
 
   const currentQ = questions[currentIndex];
   const childName = activeProfile?.name || "Teman";
@@ -54,13 +58,13 @@ export function MatchingBoard() {
   // Configure sensors for touch and mouse
   const mouseSensor = useSensor(MouseSensor, {
     activationConstraint: {
-      distance: 8,
+      distance: 5,
     },
   });
   const touchSensor = useSensor(TouchSensor, {
     activationConstraint: {
-      delay: 150,
-      tolerance: 6,
+      delay: 50,
+      tolerance: 8,
     },
   });
   const sensors = useSensors(mouseSensor, touchSensor);
@@ -71,6 +75,7 @@ export function MatchingBoard() {
     setMatchedItem(null);
     setIsSuccess(false);
     setSelectedCardId(null);
+    setActiveDragItem(null);
     setIsAnswering(false);
     setTeacherExpression("idle");
 
@@ -149,11 +154,23 @@ export function MatchingBoard() {
     }
   };
 
+  const handleDragStart = (event: DragStartEvent) => {
+    const item = currentQ.options.find((o) => o.id === event.active.id);
+    if (item) {
+      setActiveDragItem(item);
+    }
+  };
+
   const handleDragEnd = (event: DragEndEvent) => {
+    setActiveDragItem(null);
     const { over, active } = event;
     if (over && over.id === "matching-drop-target") {
       handleEvaluateAnswer(String(active.id));
     }
+  };
+
+  const handleDragCancel = () => {
+    setActiveDragItem(null);
   };
 
   const handleCardClick = (item: MatchingItem) => {
@@ -192,7 +209,12 @@ export function MatchingBoard() {
       />
 
       {/* Matching Board Arena with DndContext */}
-      <DndContext sensors={sensors} onDragEnd={handleDragEnd}>
+      <DndContext
+        sensors={sensors}
+        onDragStart={handleDragStart}
+        onDragEnd={handleDragEnd}
+        onDragCancel={handleDragCancel}
+      >
         <div className="bg-gradient-to-b from-amber-50 to-orange-50/50 rounded-3xl border-4 border-amber-300 p-6 sm:p-10 shadow-xl space-y-8">
           {/* Target Matching Zone */}
           <MatchingTarget
@@ -225,6 +247,18 @@ export function MatchingBoard() {
             </div>
           </div>
         </div>
+
+        {/* Drag Overlay to smoothly follow cursor/finger */}
+        <DragOverlay dropAnimation={{ duration: 200, easing: "cubic-bezier(0.18, 0.67, 0.6, 1.22)" }}>
+          {activeDragItem ? (
+            <div className="p-3 sm:p-5 rounded-3xl border-4 border-amber-400 bg-white shadow-2xl flex flex-col items-center justify-center scale-110 rotate-3 cursor-grabbing select-none min-w-[90px] sm:min-w-[120px] min-h-[90px] sm:min-h-[120px] ring-4 ring-amber-300">
+              <GameIcon name={activeDragItem.iconName} className="w-16 h-16 sm:w-20 sm:h-20" />
+              <span className="mt-1 sm:mt-2 text-xs sm:text-sm font-black text-slate-700 tracking-wide">
+                {activeDragItem.label}
+              </span>
+            </div>
+          ) : null}
+        </DragOverlay>
       </DndContext>
     </div>
   );
