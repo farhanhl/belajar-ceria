@@ -65,4 +65,37 @@ export const GAMES_CATALOG: GameDefinition[] = [
     available: true,
     levels: ["easy", "medium", "hard"],
   },
+  {
+    id: "hijaiyah",
+    titleKey: "games.hijaiyah.title",
+    descriptionKey: "games.hijaiyah.subtitle",
+    icon: "quran",
+    available: true,
+    levels: ["easy", "medium", "hard"],
+  },
+  {
+    id: "detective",
+    titleKey: "games.detective.title",
+    descriptionKey: "games.detective.subtitle",
+    icon: "search",
+    available: true,
+    levels: ["easy", "medium", "hard"],
+  },
+  {
+    id: "tracing",
+    titleKey: "games.tracing.title",
+    descriptionKey: "games.tracing.subtitle",
+    icon: "pencil",
+    available: true,
+    levels: ["easy", "medium", "hard"],
+  },
+  {
+    id: "adab",
+    titleKey: "games.adab.title",
+    descriptionKey: "games.adab.subtitle",
+    icon: "sparkles",
+    available: true,
+    levels: ["easy", "medium", "hard"],
+  },
 ];
+

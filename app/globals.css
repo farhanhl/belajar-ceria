@@ -3,12 +3,22 @@
 @layer base {
   :root {
     --font-sans: var(--font-nunito), system-ui, -apple-system, sans-serif;
+    --font-arabic: var(--font-amiri), "Amiri", "Traditional Arabic", "Noto Sans Arabic", "Scheherazade New", Tahoma, sans-serif;
   }
 
   body {
     font-family: var(--font-sans);
     -webkit-tap-highlight-color: transparent;
   }
+
+  button:not(:disabled),
+  [role="button"]:not([aria-disabled="true"]) {
+    cursor: pointer;
+  }
+}
+
+.font-arabic {
+  font-family: var(--font-arabic);
 }
 
 /* Fun subtle floating animation for decorative badges */

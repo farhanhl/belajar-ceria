@@ -13,6 +13,11 @@ import {
   recordNumbersGameResult as recordNumbersGameResultStorage,
   recordMemoryGameResult as recordMemoryGameResultStorage,
   recordColoringGameResult as recordColoringGameResultStorage,
+  recordSortingGameResult as recordSortingGameResultStorage,
+  recordHijaiyahGameResult as recordHijaiyahGameResultStorage,
+  recordDetectiveGameResult as recordDetectiveGameResultStorage,
+  recordTracingGameResult as recordTracingGameResultStorage,
+  recordAdabGameResult as recordAdabGameResultStorage,
   deleteProfile as deleteProfileStorage,
 } from "@/lib/storage/profile-storage";
 import { isStorageAvailable } from "@/lib/storage/storage";
@@ -71,6 +76,51 @@ interface ProfileState {
     completedAt: string;
   }) => boolean;
   recordColoringResult: (result: {
+    profileId: string;
+    difficulty: import("@/types/game").Difficulty;
+    totalQuestions: number;
+    correctAnswers: number;
+    incorrectAnswers: number;
+    starsEarned: number;
+    completedAt: string;
+  }) => boolean;
+  recordSortingResult: (result: {
+    profileId: string;
+    difficulty: import("@/types/game").Difficulty;
+    totalQuestions: number;
+    correctAnswers: number;
+    incorrectAnswers: number;
+    starsEarned: number;
+    completedAt: string;
+  }) => boolean;
+  recordHijaiyahResult: (result: {
+    profileId: string;
+    difficulty: import("@/types/game").Difficulty;
+    totalQuestions: number;
+    correctAnswers: number;
+    incorrectAnswers: number;
+    starsEarned: number;
+    completedAt: string;
+  }) => boolean;
+  recordDetectiveResult: (result: {
+    profileId: string;
+    difficulty: import("@/types/game").Difficulty;
+    totalQuestions: number;
+    correctAnswers: number;
+    incorrectAnswers: number;
+    starsEarned: number;
+    completedAt: string;
+  }) => boolean;
+  recordTracingResult: (result: {
+    profileId: string;
+    difficulty: import("@/types/game").Difficulty;
+    totalQuestions: number;
+    correctAnswers: number;
+    incorrectAnswers: number;
+    starsEarned: number;
+    completedAt: string;
+  }) => boolean;
+  recordAdabResult: (result: {
     profileId: string;
     difficulty: import("@/types/game").Difficulty;
     totalQuestions: number;
@@ -175,6 +225,56 @@ export const useProfileStore = create<ProfileState>((set, get) => ({
 
   recordColoringResult: (result) => {
     const success = recordColoringGameResultStorage(result);
+    if (success) {
+      const profiles = getProfiles();
+      const activeProfile = getActiveProfile();
+      set({ profiles, activeProfile });
+    }
+    return success;
+  },
+
+  recordSortingResult: (result) => {
+    const success = recordSortingGameResultStorage(result);
+    if (success) {
+      const profiles = getProfiles();
+      const activeProfile = getActiveProfile();
+      set({ profiles, activeProfile });
+    }
+    return success;
+  },
+
+  recordHijaiyahResult: (result) => {
+    const success = recordHijaiyahGameResultStorage(result);
+    if (success) {
+      const profiles = getProfiles();
+      const activeProfile = getActiveProfile();
+      set({ profiles, activeProfile });
+    }
+    return success;
+  },
+
+  recordDetectiveResult: (result) => {
+    const success = recordDetectiveGameResultStorage(result);
+    if (success) {
+      const profiles = getProfiles();
+      const activeProfile = getActiveProfile();
+      set({ profiles, activeProfile });
+    }
+    return success;
+  },
+
+  recordTracingResult: (result) => {
+    const success = recordTracingGameResultStorage(result);
+    if (success) {
+      const profiles = getProfiles();
+      const activeProfile = getActiveProfile();
+      set({ profiles, activeProfile });
+    }
+    return success;
+  },
+
+  recordAdabResult: (result) => {
+    const success = recordAdabGameResultStorage(result);
     if (success) {
       const profiles = getProfiles();
       const activeProfile = getActiveProfile();

@@ -95,6 +95,50 @@ export const ProfileProgressSchema = z.object({
       medium: GameProgressSchema.parse({}),
       hard: GameProgressSchema.parse({}),
     })),
+  hijaiyah: z
+    .object({
+      easy: GameProgressSchema,
+      medium: GameProgressSchema,
+      hard: GameProgressSchema,
+    })
+    .default(() => ({
+      easy: GameProgressSchema.parse({}),
+      medium: GameProgressSchema.parse({}),
+      hard: GameProgressSchema.parse({}),
+    })),
+  detective: z
+    .object({
+      easy: GameProgressSchema,
+      medium: GameProgressSchema,
+      hard: GameProgressSchema,
+    })
+    .default(() => ({
+      easy: GameProgressSchema.parse({}),
+      medium: GameProgressSchema.parse({}),
+      hard: GameProgressSchema.parse({}),
+    })),
+  tracing: z
+    .object({
+      easy: GameProgressSchema,
+      medium: GameProgressSchema,
+      hard: GameProgressSchema,
+    })
+    .default(() => ({
+      easy: GameProgressSchema.parse({}),
+      medium: GameProgressSchema.parse({}),
+      hard: GameProgressSchema.parse({}),
+    })),
+  adab: z
+    .object({
+      easy: GameProgressSchema,
+      medium: GameProgressSchema,
+      hard: GameProgressSchema,
+    })
+    .default(() => ({
+      easy: GameProgressSchema.parse({}),
+      medium: GameProgressSchema.parse({}),
+      hard: GameProgressSchema.parse({}),
+    })),
 });
 
 export const ChildProfileSchema = z.object({

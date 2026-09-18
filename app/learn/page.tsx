@@ -76,7 +76,39 @@ export default function DashboardPage() {
     (activeProfile.progress?.sorting?.medium?.stars || 0) +
     (activeProfile.progress?.sorting?.hard?.stars || 0);
 
-  const totalStars = matchingStars + lettersStars + puzzleStars + colorsStars + numbersStars + memoryStars + coloringStars + sortingStars;
+  const hijaiyahStars =
+    (activeProfile.progress?.hijaiyah?.easy?.stars || 0) +
+    (activeProfile.progress?.hijaiyah?.medium?.stars || 0) +
+    (activeProfile.progress?.hijaiyah?.hard?.stars || 0);
+
+  const detectiveStars =
+    (activeProfile.progress?.detective?.easy?.stars || 0) +
+    (activeProfile.progress?.detective?.medium?.stars || 0) +
+    (activeProfile.progress?.detective?.hard?.stars || 0);
+
+  const tracingStars =
+    (activeProfile.progress?.tracing?.easy?.stars || 0) +
+    (activeProfile.progress?.tracing?.medium?.stars || 0) +
+    (activeProfile.progress?.tracing?.hard?.stars || 0);
+
+  const adabStars =
+    (activeProfile.progress?.adab?.easy?.stars || 0) +
+    (activeProfile.progress?.adab?.medium?.stars || 0) +
+    (activeProfile.progress?.adab?.hard?.stars || 0);
+
+  const totalStars =
+    matchingStars +
+    lettersStars +
+    puzzleStars +
+    colorsStars +
+    numbersStars +
+    memoryStars +
+    coloringStars +
+    sortingStars +
+    hijaiyahStars +
+    detectiveStars +
+    tracingStars +
+    adabStars;
 
   const level = Math.max(
     activeProfile.progress?.matching?.easy?.currentLevel || 1,
@@ -102,7 +134,19 @@ export default function DashboardPage() {
     activeProfile.progress?.coloring?.hard?.currentLevel || 1,
     activeProfile.progress?.sorting?.easy?.currentLevel || 1,
     activeProfile.progress?.sorting?.medium?.currentLevel || 1,
-    activeProfile.progress?.sorting?.hard?.currentLevel || 1
+    activeProfile.progress?.sorting?.hard?.currentLevel || 1,
+    activeProfile.progress?.hijaiyah?.easy?.currentLevel || 1,
+    activeProfile.progress?.hijaiyah?.medium?.currentLevel || 1,
+    activeProfile.progress?.hijaiyah?.hard?.currentLevel || 1,
+    activeProfile.progress?.detective?.easy?.currentLevel || 1,
+    activeProfile.progress?.detective?.medium?.currentLevel || 1,
+    activeProfile.progress?.detective?.hard?.currentLevel || 1,
+    activeProfile.progress?.tracing?.easy?.currentLevel || 1,
+    activeProfile.progress?.tracing?.medium?.currentLevel || 1,
+    activeProfile.progress?.tracing?.hard?.currentLevel || 1,
+    activeProfile.progress?.adab?.easy?.currentLevel || 1,
+    activeProfile.progress?.adab?.medium?.currentLevel || 1,
+    activeProfile.progress?.adab?.hard?.currentLevel || 1
   );
 
   return (
@@ -159,7 +203,7 @@ export default function DashboardPage() {
             </h2>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6">
             {[
               {
                 id: "matching",
@@ -296,6 +340,75 @@ export default function DashboardPage() {
                 visualEmoji: "📦",
                 visualTextColor: "text-emerald-700",
                 href: "/learn/sorting",
+                buttonVariant: "success" as const,
+                buttonText: getTranslation("dashboard.startPlay", {}, language),
+              },
+              {
+                id: "hijaiyah",
+                title: getTranslation("games.hijaiyah.title", {}, language),
+                subtitle: getTranslation("games.hijaiyah.subtitle", {}, language),
+                badgeText: language === "id" ? "Literasi Qur'ani" : "Islamic Literacy",
+                badgeBgColor: "bg-teal-600",
+                badgeTextColor: "text-white",
+                borderColor: "border-teal-400",
+                bgGradient: "bg-gradient-to-br from-teal-100/90 via-white to-emerald-50",
+                visualBgColor: "bg-teal-200",
+                visualBorderColor: "border-teal-400",
+                visualEmoji: "🕌",
+                visualTextColor: "text-teal-800",
+                href: "/learn/hijaiyah",
+                buttonVariant: "success" as const,
+                buttonText: getTranslation("dashboard.startPlay", {}, language),
+              },
+              {
+                id: "detective",
+                title: getTranslation("games.detective.title", {}, language),
+                subtitle: getTranslation("games.detective.subtitle", {}, language),
+                badgeText: language === "id" ? "Observasi & Fokus" : "Observation & Focus",
+                badgeBgColor: "bg-amber-500",
+                badgeTextColor: "text-amber-950",
+                borderColor: "border-amber-400",
+                bgGradient: "bg-gradient-to-br from-amber-100/90 via-white to-orange-50",
+                visualBgColor: "bg-amber-200",
+                visualBorderColor: "border-amber-400",
+                visualEmoji: "🔍",
+                visualTextColor: "text-amber-800",
+                href: "/learn/detective",
+                buttonVariant: "primary" as const,
+                buttonIconFill: "fill-amber-950",
+                buttonText: getTranslation("dashboard.startPlay", {}, language),
+              },
+              {
+                id: "tracing",
+                title: getTranslation("games.tracing.title", {}, language),
+                subtitle: getTranslation("games.tracing.subtitle", {}, language),
+                badgeText: language === "id" ? "Motorik & Pra-Tulis" : "Motor Skills & Tracing",
+                badgeBgColor: "bg-indigo-600",
+                badgeTextColor: "text-white",
+                borderColor: "border-indigo-400",
+                bgGradient: "bg-gradient-to-br from-indigo-100/90 via-white to-purple-50",
+                visualBgColor: "bg-indigo-200",
+                visualBorderColor: "border-indigo-400",
+                visualEmoji: "✏️",
+                visualTextColor: "text-indigo-800",
+                href: "/learn/tracing",
+                buttonVariant: "purple" as const,
+                buttonText: getTranslation("dashboard.startPlay", {}, language),
+              },
+              {
+                id: "adab",
+                title: getTranslation("games.adab.title", {}, language),
+                subtitle: getTranslation("games.adab.subtitle", {}, language),
+                badgeText: language === "id" ? "Karakter & Akhlak" : "Character & Habits",
+                badgeBgColor: "bg-emerald-600",
+                badgeTextColor: "text-white",
+                borderColor: "border-emerald-400",
+                bgGradient: "bg-gradient-to-br from-emerald-100/90 via-white to-teal-50",
+                visualBgColor: "bg-emerald-200",
+                visualBorderColor: "border-emerald-400",
+                visualEmoji: "🌟",
+                visualTextColor: "text-emerald-800",
+                href: "/learn/adab",
                 buttonVariant: "success" as const,
                 buttonText: getTranslation("dashboard.startPlay", {}, language),
               },

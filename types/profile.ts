@@ -56,6 +56,30 @@ export interface SortingProgress {
   hard: GameProgress;
 }
 
+export interface HijaiyahProgress {
+  easy: GameProgress;
+  medium: GameProgress;
+  hard: GameProgress;
+}
+
+export interface DetectiveProgress {
+  easy: GameProgress;
+  medium: GameProgress;
+  hard: GameProgress;
+}
+
+export interface TracingProgress {
+  easy: GameProgress;
+  medium: GameProgress;
+  hard: GameProgress;
+}
+
+export interface AdabProgress {
+  easy: GameProgress;
+  medium: GameProgress;
+  hard: GameProgress;
+}
+
 export interface ProfileProgress {
   matching: MatchingProgress;
   letters: LettersProgress;
@@ -65,6 +89,10 @@ export interface ProfileProgress {
   memory: MemoryProgress;
   coloring: ColoringProgress;
   sorting: SortingProgress;
+  hijaiyah: HijaiyahProgress;
+  detective: DetectiveProgress;
+  tracing: TracingProgress;
+  adab: AdabProgress;
 }
 
 export interface ChildProfile {
@@ -130,6 +158,27 @@ export function createInitialProfileProgress(): ProfileProgress {
       medium: createInitialGameProgress(),
       hard: createInitialGameProgress(),
     },
+    hijaiyah: {
+      easy: createInitialGameProgress(),
+      medium: createInitialGameProgress(),
+      hard: createInitialGameProgress(),
+    },
+    detective: {
+      easy: createInitialGameProgress(),
+      medium: createInitialGameProgress(),
+      hard: createInitialGameProgress(),
+    },
+    tracing: {
+      easy: createInitialGameProgress(),
+      medium: createInitialGameProgress(),
+      hard: createInitialGameProgress(),
+    },
+    adab: {
+      easy: createInitialGameProgress(),
+      medium: createInitialGameProgress(),
+      hard: createInitialGameProgress(),
+    },
   };
 }
+
 

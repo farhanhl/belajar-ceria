@@ -61,7 +61,25 @@ export function ChildNavbar({ showControls = true }: ChildNavbarProps) {
       (activeProfile.progress?.memory?.hard?.stars || 0)
     : 0;
 
-  const totalStars = matchingStars + lettersStars + puzzleStars + colorsStars + numbersStars + memoryStars;
+  const coloringStars = activeProfile
+    ? (activeProfile.progress?.coloring?.easy?.stars || 0) +
+      (activeProfile.progress?.coloring?.medium?.stars || 0) +
+      (activeProfile.progress?.coloring?.hard?.stars || 0)
+    : 0;
+
+  const sortingStars = activeProfile
+    ? (activeProfile.progress?.sorting?.easy?.stars || 0) +
+      (activeProfile.progress?.sorting?.medium?.stars || 0) +
+      (activeProfile.progress?.sorting?.hard?.stars || 0)
+    : 0;
+
+  const hijaiyahStars = activeProfile
+    ? (activeProfile.progress?.hijaiyah?.easy?.stars || 0) +
+      (activeProfile.progress?.hijaiyah?.medium?.stars || 0) +
+      (activeProfile.progress?.hijaiyah?.hard?.stars || 0)
+    : 0;
+
+  const totalStars = matchingStars + lettersStars + puzzleStars + colorsStars + numbersStars + memoryStars + coloringStars + sortingStars + hijaiyahStars;
 
   const currentLevel = activeProfile
     ? Math.max(
@@ -82,7 +100,16 @@ export function ChildNavbar({ showControls = true }: ChildNavbarProps) {
         activeProfile.progress?.numbers?.hard?.currentLevel || 1,
         activeProfile.progress?.memory?.easy?.currentLevel || 1,
         activeProfile.progress?.memory?.medium?.currentLevel || 1,
-        activeProfile.progress?.memory?.hard?.currentLevel || 1
+        activeProfile.progress?.memory?.hard?.currentLevel || 1,
+        activeProfile.progress?.coloring?.easy?.currentLevel || 1,
+        activeProfile.progress?.coloring?.medium?.currentLevel || 1,
+        activeProfile.progress?.coloring?.hard?.currentLevel || 1,
+        activeProfile.progress?.sorting?.easy?.currentLevel || 1,
+        activeProfile.progress?.sorting?.medium?.currentLevel || 1,
+        activeProfile.progress?.sorting?.hard?.currentLevel || 1,
+        activeProfile.progress?.hijaiyah?.easy?.currentLevel || 1,
+        activeProfile.progress?.hijaiyah?.medium?.currentLevel || 1,
+        activeProfile.progress?.hijaiyah?.hard?.currentLevel || 1
       )
     : 1;
 

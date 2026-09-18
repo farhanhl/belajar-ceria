@@ -8,14 +8,15 @@ import { getColoringPictureById } from "@/games/coloring/data/coloring-data";
 import { useColoringGameStore } from "@/stores/coloring-game-store";
 import { useProfileStore } from "@/stores/profile-store";
 import { useSettingsStore } from "@/stores/settings-store";
+import { soundFx } from "@/lib/audio/sound-fx";
 import { getTranslation } from "@/lib/i18n";
-import { Palette } from "lucide-react";
+import { Palette, RotateCcw } from "lucide-react";
 
 export default function ColoringResultPage() {
   const router = useRouter();
-  const { lastResult, filledColors, activePictureId } = useColoringGameStore();
+  const { lastResult, filledColors, activePictureId, startPicture } = useColoringGameStore();
   const { activeProfile } = useProfileStore();
-  const { language } = useSettingsStore();
+  const { language, soundEnabled, volume } = useSettingsStore();
 
   useEffect(() => {
     if (!lastResult) {
@@ -33,6 +34,12 @@ export default function ColoringResultPage() {
     language === "id"
       ? `Luar biasa, ${childName}! Lukisan ${picture?.title.id || "kamu"} berwarna sangat indah dan rapi!`
       : `Incredible job, ${childName}! Your ${picture?.title.en || "artwork"} looks wonderfully colorful and creative!`;
+
+  const handlePlayAgain = () => {
+    if (soundEnabled) soundFx.playClick(volume);
+    startPicture(activePictureId);
+    router.push("/learn/coloring/play");
+  };
 
   return (
     <GameResultView
@@ -67,6 +74,9 @@ export default function ColoringResultPage() {
           value: `${lastResult.timeSpentSeconds}s`,
         },
       ]}
+      onPlayAgain={handlePlayAgain}
+      playAgainLabel={language === "id" ? "Warnai Lagi" : "Color Again"}
+      playAgainIcon={<RotateCcw className="w-5 h-5" />}
       chooseLevelHref="/learn/coloring"
       chooseLevelLabel={getTranslation("games.coloring.chooseOtherPicture", {}, language)}
       chooseLevelIcon={<Palette className="w-5 h-5" />}

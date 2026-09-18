@@ -3,6 +3,7 @@ import {
   createProfile,
   getProfiles,
   recordGameResult,
+  recordAdabGameResult,
   deleteProfile,
 } from "@/lib/storage/profile-storage";
 import { loadAppData, saveAppData } from "@/lib/storage/storage";
@@ -85,5 +86,24 @@ describe("Storage & Profile Isolation", () => {
     const remaining = getProfiles();
     expect(remaining).toHaveLength(1);
     expect(remaining[0].name).toBe("Rizky");
+  });
+
+  it("should record adab game progress accurately", () => {
+    const p = createProfile("Aisyah", "girl-2");
+    recordAdabGameResult({
+      profileId: p.id,
+      difficulty: "easy",
+      totalQuestions: 4,
+      correctAnswers: 4,
+      incorrectAnswers: 0,
+      starsEarned: 5,
+      completedAt: new Date().toISOString(),
+    });
+
+    const profiles = getProfiles();
+    const aisyah = profiles.find((item) => item.id === p.id);
+    expect(aisyah?.progress.adab?.easy.stars).toBe(5);
+    expect(aisyah?.progress.adab?.easy.gamesCompleted).toBe(1);
+    expect(aisyah?.progress.adab?.easy.correctAnswers).toBe(4);
   });
 });

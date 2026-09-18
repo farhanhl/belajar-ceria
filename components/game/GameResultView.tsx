@@ -128,8 +128,6 @@ export function GameResultView({
     }
   }, [soundEnabled, volume, celebrationSoundType]);
 
-  const displayedStarsText = starsText ?? `Kamu Mendapatkan ${stars} Bintang!`;
-
   return (
     <div className="min-h-screen flex flex-col">
       <ChildNavbar showControls={false} />
@@ -218,8 +216,23 @@ export function GameResultView({
               </div>
             )}
 
-            {/* Action Buttons: 2 proportional side-by-side buttons */}
+            {/* Action Buttons */}
             <div className="flex flex-col sm:flex-row items-stretch justify-center gap-3 sm:gap-4 pt-4 border-t-2 border-amber-100/80 w-full">
+              {onPlayAgain && (
+                <div className="flex-1 w-full">
+                  <ChildButton
+                    type="button"
+                    variant="primary"
+                    size="lg"
+                    onClick={onPlayAgain}
+                    icon={playAgainIcon ?? <RotateCcw className="w-5 h-5" />}
+                    className="w-full h-full text-sm sm:text-base font-black shadow-md hover:shadow-lg transition-all justify-center py-3.5"
+                  >
+                    {finalPlayAgain}
+                  </ChildButton>
+                </div>
+              )}
+
               {chooseLevelHref && (
                 <Link href={chooseLevelHref} className="flex-1 w-full">
                   <ChildButton
@@ -238,7 +251,7 @@ export function GameResultView({
                 <Link href={homeHref} className="flex-1 w-full">
                   <ChildButton
                     type="button"
-                    variant="primary"
+                    variant={onPlayAgain ? "secondary" : "primary"}
                     size="lg"
                     icon={<Home className="w-5 h-5" />}
                     className="w-full h-full text-sm sm:text-base font-black shadow-md hover:shadow-lg transition-all justify-center py-3.5"

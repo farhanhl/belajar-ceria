@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Nunito } from "next/font/google";
+import { Nunito, Amiri } from "next/font/google";
 import "./globals.css";
 import { AppProvider } from "@/components/providers/AppProvider";
 import { PlayfulBackground } from "@/components/layout/PlayfulBackground";
@@ -9,6 +9,13 @@ const nunito = Nunito({
   subsets: ["latin"],
   weight: ["400", "600", "700", "800", "900"],
   variable: "--font-nunito",
+  display: "swap",
+});
+
+const amiri = Amiri({
+  subsets: ["arabic", "latin"],
+  weight: ["400", "700"],
+  variable: "--font-amiri",
   display: "swap",
 });
 
@@ -71,7 +78,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="id" className={`${nunito.variable} h-full antialiased`}>
+    <html lang="id" className={`${nunito.variable} ${amiri.variable} h-full antialiased`}>
       <body className="font-sans min-h-screen bg-sky-50 text-slate-800 flex flex-col selection:bg-amber-300 selection:text-amber-900 relative">
         <PlayfulBackground />
         <AppProvider>

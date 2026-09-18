@@ -461,6 +461,202 @@ export function recordSortingGameResult(result: {
 }
 
 /**
+ * Update Hijaiyah game progress for a specific profile (isolation guaranteed)
+ */
+export function recordHijaiyahGameResult(result: {
+  profileId: string;
+  difficulty: Difficulty;
+  totalQuestions: number;
+  correctAnswers: number;
+  incorrectAnswers: number;
+  starsEarned: number;
+  completedAt: string;
+}): boolean {
+  const data = loadAppData();
+  const profileIndex = data.profiles.findIndex((p) => p.id === result.profileId);
+  if (profileIndex === -1) return false;
+
+  const profile = data.profiles[profileIndex];
+  if (!profile.progress.hijaiyah) {
+    profile.progress.hijaiyah = {
+      easy: createInitialGameProgress(),
+      medium: createInitialGameProgress(),
+      hard: createInitialGameProgress(),
+    };
+  }
+
+  const diff = result.difficulty || "easy";
+  const currentProgress: GameProgress =
+    profile.progress.hijaiyah[diff] || createInitialGameProgress();
+
+  const updatedProgress: GameProgress = {
+    currentLevel: Math.max(
+      currentProgress.currentLevel,
+      diff === "easy" ? 1 : diff === "medium" ? 2 : 3
+    ),
+    stars: currentProgress.stars + result.starsEarned,
+    gamesCompleted: currentProgress.gamesCompleted + 1,
+    questionsAnswered: currentProgress.questionsAnswered + result.totalQuestions,
+    correctAnswers: currentProgress.correctAnswers + result.correctAnswers,
+    incorrectAnswers: currentProgress.incorrectAnswers + result.incorrectAnswers,
+    lastPlayedAt: result.completedAt,
+  };
+
+  profile.progress.hijaiyah[diff] = updatedProgress;
+  profile.updatedAt = new Date().toISOString();
+
+  data.profiles[profileIndex] = profile;
+  return saveAppData(data);
+}
+
+/**
+ * Update Detective game progress for a specific profile (isolation guaranteed)
+ */
+export function recordDetectiveGameResult(result: {
+  profileId: string;
+  difficulty: Difficulty;
+  totalQuestions: number;
+  correctAnswers: number;
+  incorrectAnswers: number;
+  starsEarned: number;
+  completedAt: string;
+}): boolean {
+  const data = loadAppData();
+  const profileIndex = data.profiles.findIndex((p) => p.id === result.profileId);
+  if (profileIndex === -1) return false;
+
+  const profile = data.profiles[profileIndex];
+  if (!profile.progress.detective) {
+    profile.progress.detective = {
+      easy: createInitialGameProgress(),
+      medium: createInitialGameProgress(),
+      hard: createInitialGameProgress(),
+    };
+  }
+
+  const diff = result.difficulty || "easy";
+  const currentProgress: GameProgress =
+    profile.progress.detective[diff] || createInitialGameProgress();
+
+  const updatedProgress: GameProgress = {
+    currentLevel: Math.max(
+      currentProgress.currentLevel,
+      diff === "easy" ? 1 : diff === "medium" ? 2 : 3
+    ),
+    stars: currentProgress.stars + result.starsEarned,
+    gamesCompleted: currentProgress.gamesCompleted + 1,
+    questionsAnswered: currentProgress.questionsAnswered + result.totalQuestions,
+    correctAnswers: currentProgress.correctAnswers + result.correctAnswers,
+    incorrectAnswers: currentProgress.incorrectAnswers + result.incorrectAnswers,
+    lastPlayedAt: result.completedAt,
+  };
+
+  profile.progress.detective[diff] = updatedProgress;
+  profile.updatedAt = new Date().toISOString();
+
+  data.profiles[profileIndex] = profile;
+  return saveAppData(data);
+}
+
+/**
+ * Update Tracing game progress for a specific profile (isolation guaranteed)
+ */
+export function recordTracingGameResult(result: {
+  profileId: string;
+  difficulty: Difficulty;
+  totalQuestions: number;
+  correctAnswers: number;
+  incorrectAnswers: number;
+  starsEarned: number;
+  completedAt: string;
+}): boolean {
+  const data = loadAppData();
+  const profileIndex = data.profiles.findIndex((p) => p.id === result.profileId);
+  if (profileIndex === -1) return false;
+
+  const profile = data.profiles[profileIndex];
+  if (!profile.progress.tracing) {
+    profile.progress.tracing = {
+      easy: createInitialGameProgress(),
+      medium: createInitialGameProgress(),
+      hard: createInitialGameProgress(),
+    };
+  }
+
+  const diff = result.difficulty || "easy";
+  const currentProgress: GameProgress =
+    profile.progress.tracing[diff] || createInitialGameProgress();
+
+  const updatedProgress: GameProgress = {
+    currentLevel: Math.max(
+      currentProgress.currentLevel,
+      diff === "easy" ? 1 : diff === "medium" ? 2 : 3
+    ),
+    stars: currentProgress.stars + result.starsEarned,
+    gamesCompleted: currentProgress.gamesCompleted + 1,
+    questionsAnswered: currentProgress.questionsAnswered + result.totalQuestions,
+    correctAnswers: currentProgress.correctAnswers + result.correctAnswers,
+    incorrectAnswers: currentProgress.incorrectAnswers + result.incorrectAnswers,
+    lastPlayedAt: result.completedAt,
+  };
+
+  profile.progress.tracing[diff] = updatedProgress;
+  profile.updatedAt = new Date().toISOString();
+
+  data.profiles[profileIndex] = profile;
+  return saveAppData(data);
+}
+
+/**
+ * Update Adab & Good Habits game progress for a specific profile (isolation guaranteed)
+ */
+export function recordAdabGameResult(result: {
+  profileId: string;
+  difficulty: Difficulty;
+  totalQuestions: number;
+  correctAnswers: number;
+  incorrectAnswers: number;
+  starsEarned: number;
+  completedAt: string;
+}): boolean {
+  const data = loadAppData();
+  const profileIndex = data.profiles.findIndex((p) => p.id === result.profileId);
+  if (profileIndex === -1) return false;
+
+  const profile = data.profiles[profileIndex];
+  if (!profile.progress.adab) {
+    profile.progress.adab = {
+      easy: createInitialGameProgress(),
+      medium: createInitialGameProgress(),
+      hard: createInitialGameProgress(),
+    };
+  }
+
+  const diff = result.difficulty || "easy";
+  const currentProgress: GameProgress =
+    profile.progress.adab[diff] || createInitialGameProgress();
+
+  const updatedProgress: GameProgress = {
+    currentLevel: Math.max(
+      currentProgress.currentLevel,
+      diff === "easy" ? 1 : diff === "medium" ? 2 : 3
+    ),
+    stars: currentProgress.stars + result.starsEarned,
+    gamesCompleted: currentProgress.gamesCompleted + 1,
+    questionsAnswered: currentProgress.questionsAnswered + result.totalQuestions,
+    correctAnswers: currentProgress.correctAnswers + result.correctAnswers,
+    incorrectAnswers: currentProgress.incorrectAnswers + result.incorrectAnswers,
+    lastPlayedAt: result.completedAt,
+  };
+
+  profile.progress.adab[diff] = updatedProgress;
+  profile.updatedAt = new Date().toISOString();
+
+  data.profiles[profileIndex] = profile;
+  return saveAppData(data);
+}
+
+/**
  * Delete a profile
  */
 export function deleteProfile(profileId: string): boolean {

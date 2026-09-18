@@ -45,50 +45,56 @@ export function GameMenuCard({
 }: GameMenuCardProps) {
   return (
     <motion.div
-      whileHover={{ scale: 1.03, y: -4 }}
+      whileHover={{ scale: 1.02, y: -4 }}
       whileTap={{ scale: 0.98 }}
       className="h-full"
     >
       <ChildCard
         borderColor={borderColor}
         bgGradient={bgGradient}
-        className="relative overflow-hidden group shadow-xl h-full flex flex-col justify-between"
+        className="relative overflow-hidden group shadow-lg h-full flex flex-col justify-between p-5 sm:p-6 bg-white/95"
       >
-        <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
-          <div className="space-y-2 text-center sm:text-left">
+        <div>
+          {/* Header with Category Badge and Visual Emoji Box */}
+          <div className="flex items-start justify-between gap-3 mb-3.5">
             <div
-              className={`inline-flex items-center gap-1.5 ${badgeBgColor} ${badgeTextColor} font-black text-xs px-3 py-1 rounded-full uppercase tracking-wider shadow-sm`}
+              className={`inline-flex items-center gap-1.5 ${badgeBgColor} ${badgeTextColor} font-black text-[11px] sm:text-xs px-3 py-1 rounded-full uppercase tracking-wider shadow-sm`}
             >
               <Sparkles className="w-3.5 h-3.5 fill-current" />
               <span>{badgeText}</span>
             </div>
-            <h3 className="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight">
+
+            {/* Decorative Visual Box */}
+            <div
+              className={`relative w-16 h-16 sm:w-20 sm:h-20 ${visualBgColor} rounded-2xl sm:rounded-3xl border-3 sm:border-4 ${visualBorderColor} flex items-center justify-center shadow-inner group-hover:rotate-6 transition-transform shrink-0`}
+            >
+              <span
+                className={`text-3xl sm:text-4xl select-none font-black ${visualTextColor}`}
+              >
+                {visualEmoji}
+              </span>
+            </div>
+          </div>
+
+          {/* Title & Description */}
+          <div className="space-y-1.5 text-left mb-4">
+            <h3 className="text-xl sm:text-2xl font-black text-slate-900 tracking-tight leading-snug">
               {title}
             </h3>
-            <p className="text-sm font-bold text-slate-700">
+            <p className="text-xs sm:text-sm font-bold text-slate-600 leading-relaxed">
               {subtitle}
             </p>
           </div>
-
-          {/* Decorative Visual Box */}
-          <div
-            className={`relative w-24 h-24 sm:w-28 sm:h-28 ${visualBgColor} rounded-3xl border-4 ${visualBorderColor} flex items-center justify-center shadow-inner group-hover:rotate-6 transition-transform shrink-0`}
-          >
-            <span
-              className={`text-4xl sm:text-5xl select-none font-black ${visualTextColor}`}
-            >
-              {visualEmoji}
-            </span>
-          </div>
         </div>
 
-        <div className="pt-4">
-          <Link href={href}>
+        {/* Action Button */}
+        <div className="pt-2 mt-auto">
+          <Link href={href} className="block w-full">
             <ChildButton
               variant={buttonVariant}
               size="md"
-              icon={<Play className={`w-5 h-5 ${buttonIconFill || "fill-current"}`} />}
-              className="w-full sm:w-auto font-black"
+              icon={<Play className={`w-4 h-4 ${buttonIconFill || "fill-current"}`} />}
+              className="w-full font-black justify-center py-3 shadow-md hover:shadow-lg transition-all"
             >
               {buttonText}
             </ChildButton>
