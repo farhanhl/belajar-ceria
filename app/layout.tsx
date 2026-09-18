@@ -16,16 +16,52 @@ export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_APP_URL || "https://belajar-ceria-zeta.vercel.app"),
   title: "Belajar Ceria — Belajar Jadi Menyenangkan!",
   description: "Website pembelajaran interaktif dan permainan edukatif untuk anak usia dini dengan panduan suara Ibu Guru ramah anak.",
-  keywords: ["belajar ceria", "edukasi anak", "game edukasi", "anak 5 tahun", "mencocokkan gambar", "tts anak"],
+  keywords: [
+    "belajar ceria",
+    "edukasi anak",
+    "game edukasi",
+    "anak usia dini",
+    "PAUD",
+    "TK",
+    "mencocokkan gambar",
+    "tts suara anak",
+    "game anak cerdas"
+  ],
+  authors: [{ name: "O'om (Farhan)", url: "https://farhanhl.dev/" }],
+  creator: "Farhan (@farhanhl)",
+  publisher: "Belajar Ceria",
   icons: {
     icon: "/logo.png",
     shortcut: "/logo.png",
     apple: "/logo.png",
   },
   openGraph: {
+    type: "website",
+    locale: "id_ID",
+    url: "https://belajar-ceria-zeta.vercel.app",
+    siteName: "Belajar Ceria",
+    title: "Belajar Ceria — Belajar Jadi Menyenangkan!",
+    description: "Website pembelajaran interaktif dan permainan edukatif untuk anak usia dini dengan panduan suara Ibu Guru ramah anak.",
+    images: [
+      {
+        url: "/logo.png",
+        width: 1024,
+        height: 1024,
+        alt: "Logo Belajar Ceria - Game Edukasi Anak",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
     title: "Belajar Ceria — Belajar Jadi Menyenangkan!",
     description: "Website pembelajaran interaktif dan permainan edukatif untuk anak usia dini dengan panduan suara Ibu Guru ramah anak.",
     images: ["/logo.png"],
+    creator: "@farhanhl",
+  },
+  appleWebApp: {
+    capable: true,
+    title: "Belajar Ceria",
+    statusBarStyle: "default",
   },
 };
 
