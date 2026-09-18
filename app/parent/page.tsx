@@ -376,7 +376,7 @@ export default function ParentPage() {
     <div className="min-h-screen bg-slate-50 flex flex-col justify-between">
       {/* Top Header */}
       <header className="bg-white border-b-2 border-slate-200 px-4 sm:px-8 py-4 shadow-sm">
-        <div className="max-w-5xl mx-auto flex items-center justify-between gap-4">
+        <div className="max-w-6xl mx-auto flex items-center justify-between gap-4">
           <div className="flex items-center gap-3">
             <div className="p-2.5 bg-indigo-100 text-indigo-800 rounded-2xl">
               <ShieldCheck className="w-7 h-7" />
@@ -401,7 +401,7 @@ export default function ParentPage() {
         </div>
       </header>
 
-      <main className="flex-1 max-w-5xl w-full mx-auto p-4 sm:p-8 space-y-8">
+      <main className="flex-1 max-w-6xl w-full mx-auto space-y-6 py-8">
         {/* Child Selector */}
         <div className="bg-white rounded-3xl p-5 border-2 border-slate-200 shadow-sm space-y-3">
           <label className="text-sm font-black text-slate-700 uppercase tracking-wider">

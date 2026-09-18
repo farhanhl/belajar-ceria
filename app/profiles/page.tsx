@@ -53,8 +53,9 @@ export default function ProfilesPage() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col justify-between p-4 sm:p-8 max-w-4xl mx-auto space-y-8">
-      {/* Top Header */}
+    <div className="min-h-screen flex flex-col justify-between">
+      <main className="flex-1 max-w-6xl w-full mx-auto space-y-6 py-8">
+        {/* Top Header */}
       <div className="text-center flex flex-col items-center space-y-2">
         <Link
           href="/"
@@ -295,26 +296,27 @@ export default function ProfilesPage() {
         </AnimatePresence>
       </div>
 
-      {/* Footer Navigation: Parent Area */}
-      <div className="pt-6 border-t-2 border-amber-200/80 flex flex-col sm:flex-row items-center justify-between gap-4">
-        <Link
-          href="/parent"
-          className="inline-flex items-center gap-2 text-base font-extrabold text-amber-900 hover:text-amber-700 bg-amber-100/80 hover:bg-amber-200/80 px-5 py-2.5 rounded-2xl shadow-sm transition"
-        >
-          <ShieldCheck className="w-5 h-5 text-amber-700" />
-          <span>{getTranslation("profiles.parentArea", {}, language)}</span>
-        </Link>
-
-        {activeProfile && (
+        {/* Footer Navigation: Parent Area */}
+        <div className="pt-6 border-t-2 border-amber-200/80 flex flex-col sm:flex-row items-center justify-between gap-4">
           <Link
-            href="/learn"
-            className="inline-flex items-center gap-2 text-base font-extrabold text-white bg-amber-500 hover:bg-amber-600 px-6 py-2.5 rounded-2xl shadow transition"
+            href="/parent"
+            className="inline-flex items-center gap-2 text-base font-extrabold text-amber-900 hover:text-amber-700 bg-amber-100/80 hover:bg-amber-200/80 px-5 py-2.5 rounded-2xl shadow-sm transition"
           >
-            <span>Lanjut Belajar ({activeProfile.name})</span>
-            <span>➔</span>
+            <ShieldCheck className="w-5 h-5 text-amber-700" />
+            <span>{getTranslation("profiles.parentArea", {}, language)}</span>
           </Link>
-        )}
-      </div>
+
+          {activeProfile && (
+            <Link
+              href="/learn"
+              className="inline-flex items-center gap-2 text-base font-extrabold text-white bg-amber-500 hover:bg-amber-600 px-6 py-2.5 rounded-2xl shadow transition"
+            >
+              <span>Lanjut Belajar ({activeProfile.name})</span>
+              <span>➔</span>
+            </Link>
+          )}
+        </div>
+      </main>
     </div>
   );
 }
