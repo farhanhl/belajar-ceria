@@ -141,19 +141,7 @@ export function ColorShapeQuestionCard({
 
   return (
     <div className="space-y-6 w-full">
-      {/* Target Preview for Silhouette Matching or Visual Focus */}
-      {isSilhouette && question.targetShapeId && (
-        <div className="flex flex-col items-center justify-center p-4 bg-slate-100 rounded-3xl border-2 border-dashed border-slate-300 w-40 h-40 mx-auto shadow-inner">
-          <ShapeVector
-            shapeId={question.targetShapeId}
-            isSilhouette={true}
-            size={100}
-          />
-          <span className="text-[11px] font-black text-slate-500 mt-1">
-            Siluet Target
-          </span>
-        </div>
-      )}
+
 
       {/* Options Grid */}
       <div
