@@ -1,15 +1,14 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useSettingsStore } from "@/stores/settings-store";
 import { ChildNavbar } from "@/components/navigation/ChildNavbar";
 import { ChildPageHeader } from "@/components/navigation/ChildPageHeader";
 import { ChildCard } from "@/components/ui/ChildCard";
 import { Teacher } from "@/components/teacher/Teacher";
-import { Volume2, VolumeX, Mic, Globe, ArrowLeft, Check, Music, Music2 } from "lucide-react";
+import { Volume2, VolumeX, Mic, Globe, Check, Music, Music2 } from "lucide-react";
 import { getTranslation } from "@/lib/i18n";
 import { Language } from "@/types/settings";
-import Link from "next/link";
 import { soundFx } from "@/lib/audio/sound-fx";
 import { ttsService } from "@/lib/tts/tts";
 
@@ -21,13 +20,33 @@ export default function SettingsPage() {
     autoTts,
     volume,
     musicVolume,
+    ttsVoiceURI,
     setLanguage,
     setSoundEnabled,
     setMusicEnabled,
     setAutoTts,
     setVolume,
     setMusicVolume,
+    setTtsVoiceURI,
   } = useSettingsStore();
+
+  const [availableVoices, setAvailableVoices] = useState<SpeechSynthesisVoice[]>([]);
+
+  useEffect(() => {
+    const loadVoices = () => {
+      const voices = ttsService.getAvailableVoices();
+      if (voices.length > 0) setAvailableVoices(voices);
+    };
+    loadVoices();
+    if (typeof window !== "undefined" && "speechSynthesis" in window) {
+      window.speechSynthesis.onvoiceschanged = loadVoices;
+    }
+    return () => {
+      if (typeof window !== "undefined" && "speechSynthesis" in window) {
+        window.speechSynthesis.onvoiceschanged = null;
+      }
+    };
+  }, []);
 
   const [savedMessage, setSavedMessage] = useState("");
 
@@ -71,6 +90,7 @@ export default function SettingsPage() {
       text: getTranslation("settings.testVoiceSpeech", {}, language),
       language,
       volume,
+      voiceURI: ttsVoiceURI || undefined,
     });
   };
 
@@ -99,23 +119,75 @@ export default function SettingsPage() {
         {/* Settings Card */}
         <ChildCard borderColor="border-amber-300" className="space-y-6 bg-white shadow-xl">
           {/* Voice Test — Female Indonesian only */}
-          <div className="flex items-center justify-between gap-4 p-4 bg-pink-50/70 rounded-2xl border-2 border-pink-200">
-            <div className="space-y-1">
-              <p className="text-base font-black text-amber-950 flex items-center gap-2">
-                {getTranslation("settings.teacherVoice", {}, language)}
-              </p>
-              <p className="text-xs font-bold text-amber-700">
-                {getTranslation("settings.teacherVoiceDesc", {}, language)}
-              </p>
+          <div className="space-y-3 p-4 bg-pink-50/70 rounded-2xl border-2 border-pink-200">
+            <div className="flex items-center justify-between gap-4">
+              <div className="space-y-1">
+                <p className="text-base font-black text-amber-950 flex items-center gap-2">
+                  {getTranslation("settings.teacherVoice", {}, language)}
+                </p>
+                <p className="text-xs font-bold text-amber-700">
+                  {getTranslation("settings.teacherVoiceDesc", {}, language)}
+                </p>
+              </div>
+              <button
+                type="button"
+                onClick={handleTestVoice}
+                className="px-5 py-2.5 rounded-2xl bg-pink-400 hover:bg-pink-500 text-white font-black text-sm shadow cursor-pointer transition flex items-center gap-2 shrink-0"
+              >
+                <Volume2 className="w-5 h-5" />
+                {getTranslation("settings.testVoice", {}, language)}
+              </button>
             </div>
-            <button
-              type="button"
-              onClick={handleTestVoice}
-              className="px-5 py-2.5 rounded-2xl bg-pink-400 hover:bg-pink-500 text-white font-black text-sm shadow cursor-pointer transition flex items-center gap-2"
-            >
-              <Volume2 className="w-5 h-5" />
-              {getTranslation("settings.testVoice", {}, language)}
-            </button>
+
+            {/* Voice Selector */}
+            {availableVoices.length > 0 && (
+              <div className="space-y-1.5">
+                <p className="text-xs font-black text-pink-900/80 uppercase tracking-wider">
+                  {language === "id" ? "Pilih Suara Ibu Guru:" : "Select Teacher Voice:"}
+                </p>
+                <select
+                  value={ttsVoiceURI}
+                  onChange={(e) => {
+                    setTtsVoiceURI(e.target.value);
+                    triggerSaveFeedback();
+                  }}
+                  className="w-full bg-white border-2 border-pink-200 rounded-2xl px-3 py-2.5 text-sm font-bold text-slate-800 cursor-pointer focus:outline-none focus:border-pink-400 shadow-sm"
+                >
+                  <option value="">
+                    {language === "id" ? "⚙️ Otomatis (Pilih Terbaik)" : "⚙️ Auto (Best Match)"}
+                  </option>
+                  {/* Indonesian voices first */}
+                  {availableVoices.filter(v => v.lang.toLowerCase().startsWith("id")).length > 0 && (
+                    <optgroup label={language === "id" ? "🇮🇩 Bahasa Indonesia" : "🇮🇩 Indonesian"}>
+                      {availableVoices
+                        .filter(v => v.lang.toLowerCase().startsWith("id"))
+                        .map(v => (
+                          <option key={v.voiceURI} value={v.voiceURI}>
+                            {v.name} ({v.lang}){v.localService ? " 📱" : " ☁️"}
+                          </option>
+                        ))}
+                    </optgroup>
+                  )}
+                  {/* Other languages */}
+                  {availableVoices.filter(v => !v.lang.toLowerCase().startsWith("id")).length > 0 && (
+                    <optgroup label={language === "id" ? "🌐 Bahasa Lainnya" : "🌐 Other Languages"}>
+                      {availableVoices
+                        .filter(v => !v.lang.toLowerCase().startsWith("id"))
+                        .map(v => (
+                          <option key={v.voiceURI} value={v.voiceURI}>
+                            {v.name} ({v.lang}){v.localService ? " 📱" : " ☁️"}
+                          </option>
+                        ))}
+                    </optgroup>
+                  )}
+                </select>
+                <p className="text-[11px] font-bold text-pink-700/80">
+                  {language === "id"
+                    ? "📱 = Suara bawaan perangkat  ☁️ = Suara online (Google/Microsoft)"
+                    : "📱 = Device voice  ☁️ = Online voice (Google/Microsoft)"}
+                </p>
+              </div>
+            )}
           </div>
 
           {/* Music (Backsound) Toggle */}

@@ -7,6 +7,7 @@ export interface SpeakOptions {
   volume?: number;
   rate?: number;
   pitch?: number;
+  voiceURI?: string; // explicit voice URI to use (overrides auto-detection)
   onStart?: () => void;
   onEnd?: () => void;
   onError?: (err: unknown) => void;
@@ -46,6 +47,13 @@ class TtsService {
       this.initVoices();
     }
     return this.voices;
+  }
+
+  /** Find a voice by its voiceURI string. Returns null if not found. */
+  public getVoiceByURI(uri: string): SpeechSynthesisVoice | null {
+    if (!uri) return null;
+    const all = this.getAvailableVoices();
+    return all.find((v) => v.voiceURI === uri) || null;
   }
 
   public isSupported(): boolean {
@@ -175,7 +183,9 @@ class TtsService {
     utterance.lang = "id-ID";
     utterance.volume = options.volume !== undefined ? Math.max(0, Math.min(1, options.volume)) : 0.95;
 
-    const femaleVoice = this.getFemaleVoice();
+    const femaleVoice = options.voiceURI
+      ? this.getVoiceByURI(options.voiceURI) ?? this.getFemaleVoice()
+      : this.getFemaleVoice();
 
     if (femaleVoice) {
       utterance.voice = femaleVoice;

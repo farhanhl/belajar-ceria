@@ -7,6 +7,7 @@ export interface AppSettings {
   autoTts: boolean;
   volume: number; // 0.0 to 1.0 (Sound FX)
   musicVolume: number; // 0.0 to 1.0 (Backsound)
+  ttsVoiceURI: string; // URI of selected TTS voice (empty = auto)
 }
 
 export const DEFAULT_SETTINGS: AppSettings = {
@@ -16,4 +17,5 @@ export const DEFAULT_SETTINGS: AppSettings = {
   autoTts: true,
   volume: 0.8,
   musicVolume: 0.5,
+  ttsVoiceURI: "", // empty = auto-detect best female voice
 };

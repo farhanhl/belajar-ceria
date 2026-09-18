@@ -13,6 +13,7 @@ interface SettingsState extends AppSettings {
   setAutoTts: (enabled: boolean) => void;
   setVolume: (volume: number) => void;
   setMusicVolume: (volume: number) => void;
+  setTtsVoiceURI: (uri: string) => void;
   updateSettings: (settings: Partial<AppSettings>) => void;
 }
 
@@ -61,6 +62,11 @@ export const useSettingsStore = create<SettingsState>((set) => ({
     updateSettingsStorage({ musicVolume });
     bgm.setVolume(musicVolume);
     set({ musicVolume });
+  },
+
+  setTtsVoiceURI: (ttsVoiceURI: string) => {
+    updateSettingsStorage({ ttsVoiceURI });
+    set({ ttsVoiceURI });
   },
 
   updateSettings: (partial: Partial<AppSettings>) => {

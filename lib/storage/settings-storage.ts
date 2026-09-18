@@ -3,7 +3,8 @@ import { loadAppData, saveAppData } from "./storage";
 
 export function getSettings(): AppSettings {
   const data = loadAppData();
-  return data.settings || DEFAULT_SETTINGS;
+  // Merge with DEFAULT_SETTINGS so new fields added to AppSettings always have a value
+  return { ...DEFAULT_SETTINGS, ...(data.settings || {}) };
 }
 
 export function updateSettings(partial: Partial<AppSettings>): AppSettings {
