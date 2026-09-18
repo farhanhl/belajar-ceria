@@ -8,6 +8,7 @@ import { ChildNavbar } from "@/components/navigation/ChildNavbar";
 import { Teacher } from "@/components/teacher/Teacher";
 import { ChildButton } from "@/components/ui/ChildButton";
 import { ChildCard } from "@/components/ui/ChildCard";
+import { GameMenuCard } from "@/components/game/GameMenuCard";
 import { GAMES_CATALOG } from "@/games";
 import { Star, Trophy, Play, Lock, Sparkles } from "lucide-react";
 import { getTranslation } from "@/lib/i18n";
@@ -159,357 +160,148 @@ export default function DashboardPage() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {/* Game 1: Cocokkan & Temukan */}
-            <motion.div
-              whileHover={{ scale: 1.03, y: -4 }}
-              whileTap={{ scale: 0.98 }}
-            >
-              <ChildCard
-                borderColor="border-amber-400"
-                bgGradient="bg-gradient-to-br from-amber-100/90 via-white to-orange-50"
-                className="relative overflow-hidden group shadow-xl h-full flex flex-col justify-between"
-              >
-                <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
-                  <div className="space-y-2 text-center sm:text-left">
-                    <div className="inline-flex items-center gap-1.5 bg-amber-400 text-amber-950 font-black text-xs px-3 py-1 rounded-full uppercase tracking-wider shadow-sm">
-                      <Sparkles className="w-3.5 h-3.5 fill-amber-950" /> {language === "id" ? "Permainan Seru" : "Fun Game"}
-                    </div>
-                    <h3 className="text-2xl sm:text-3xl font-black text-amber-950">
-                      {getTranslation("games.matching.title", {}, language)}
-                    </h3>
-                    <p className="text-sm font-bold text-amber-800">
-                      {getTranslation("games.matching.subtitle", {}, language)}
-                    </p>
-                  </div>
-
-                  {/* Decorative Game Visual */}
-                  <div className="relative w-24 h-24 sm:w-28 sm:h-28 bg-amber-200 rounded-3xl border-4 border-amber-400 flex items-center justify-center shadow-inner group-hover:rotate-3 transition-transform shrink-0">
-                    <span className="text-4xl sm:text-5xl select-none">🧩</span>
-                  </div>
-                </div>
-
-                <div className="pt-4">
-                  <Link href="/learn/matching">
-                    <ChildButton
-                      variant="primary"
-                      size="md"
-                      icon={<Play className="w-5 h-5 fill-amber-950" />}
-                      className="w-full sm:w-auto"
-                    >
-                      {getTranslation("dashboard.startPlay", {}, language)}
-                    </ChildButton>
-                  </Link>
-                </div>
-              </ChildCard>
-            </motion.div>
-
-            {/* Game 2: Belajar Huruf */}
-            <motion.div
-              whileHover={{ scale: 1.03, y: -4 }}
-              whileTap={{ scale: 0.98 }}
-            >
-              <ChildCard
-                borderColor="border-pink-400"
-                bgGradient="bg-gradient-to-br from-pink-100/90 via-white to-rose-50"
-                className="relative overflow-hidden group shadow-xl h-full flex flex-col justify-between"
-              >
-                <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
-                  <div className="space-y-2 text-center sm:text-left">
-                    <div className="inline-flex items-center gap-1.5 bg-pink-400 text-white font-black text-xs px-3 py-1 rounded-full uppercase tracking-wider shadow-sm">
-                      <Sparkles className="w-3.5 h-3.5 fill-white" /> {language === "id" ? "Baru & Ceria" : "Fresh & Cheerful"}
-                    </div>
-                    <h3 className="text-2xl sm:text-3xl font-black text-pink-950">
-                      {getTranslation("games.letters.title", {}, language)}
-                    </h3>
-                    <p className="text-sm font-bold text-pink-800">
-                      {getTranslation("games.letters.subtitle", {}, language)}
-                    </p>
-                  </div>
-
-                  {/* Decorative Letter Visual */}
-                  <div className="relative w-24 h-24 sm:w-28 sm:h-28 bg-pink-200 rounded-3xl border-4 border-pink-400 flex items-center justify-center shadow-inner group-hover:rotate-3 transition-transform shrink-0">
-                    <span className="text-4xl sm:text-5xl select-none font-black text-pink-700">🔤</span>
-                  </div>
-                </div>
-
-                <div className="pt-4">
-                  <Link href="/learn/letters">
-                    <ChildButton
-                      variant="pink"
-                      size="md"
-                      icon={<Play className="w-5 h-5 fill-current" />}
-                      className="w-full sm:w-auto"
-                    >
-                      {getTranslation("dashboard.startPlay", {}, language)}
-                    </ChildButton>
-                  </Link>
-                </div>
-              </ChildCard>
-            </motion.div>
-
-            {/* Game 3: Puzzle Bergambar */}
-            <motion.div
-              whileHover={{ scale: 1.03, y: -4 }}
-              whileTap={{ scale: 0.98 }}
-            >
-              <ChildCard
-                borderColor="border-indigo-400"
-                bgGradient="bg-gradient-to-br from-indigo-100/90 via-white to-purple-50"
-                className="relative overflow-hidden group shadow-xl h-full flex flex-col justify-between"
-              >
-                <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
-                  <div className="space-y-2 text-center sm:text-left">
-                    <div className="inline-flex items-center gap-1.5 bg-indigo-500 text-white font-black text-xs px-3 py-1 rounded-full uppercase tracking-wider shadow-sm">
-                      <Sparkles className="w-3.5 h-3.5 fill-white" /> {language === "id" ? "Logika & Visual" : "Logic & Visual"}
-                    </div>
-                    <h3 className="text-2xl sm:text-3xl font-black text-indigo-950">
-                      {getTranslation("games.puzzle.title", {}, language)}
-                    </h3>
-                    <p className="text-sm font-bold text-indigo-800">
-                      {getTranslation("games.puzzle.subtitle", {}, language)}
-                    </p>
-                  </div>
-
-                  {/* Decorative Puzzle Visual */}
-                  <div className="relative w-24 h-24 sm:w-28 sm:h-28 bg-indigo-200 rounded-3xl border-4 border-indigo-400 flex items-center justify-center shadow-inner group-hover:rotate-3 transition-transform shrink-0">
-                    <span className="text-4xl sm:text-5xl select-none font-black text-indigo-700">🖼️</span>
-                  </div>
-                </div>
-
-                <div className="pt-4">
-                  <Link href="/learn/puzzle">
-                    <ChildButton
-                      variant="indigo"
-                      size="md"
-                      icon={<Play className="w-5 h-5 fill-current" />}
-                      className="w-full sm:w-auto"
-                    >
-                      {getTranslation("dashboard.startPlay", {}, language)}
-                    </ChildButton>
-                  </Link>
-                </div>
-              </ChildCard>
-            </motion.div>
-
-            {/* Game 4: Warna & Bentuk */}
-            <motion.div
-              whileHover={{ scale: 1.03, y: -4 }}
-              whileTap={{ scale: 0.98 }}
-            >
-              <ChildCard
-                borderColor="border-emerald-400"
-                bgGradient="bg-gradient-to-br from-emerald-100/90 via-white to-teal-50"
-                className="relative overflow-hidden group shadow-xl h-full flex flex-col justify-between"
-              >
-                <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
-                  <div className="space-y-2 text-center sm:text-left">
-                    <div className="inline-flex items-center gap-1.5 bg-emerald-500 text-white font-black text-xs px-3 py-1 rounded-full uppercase tracking-wider shadow-sm">
-                      <Sparkles className="w-3.5 h-3.5 fill-white" /> {language === "id" ? "Kreatif & Ceria" : "Creative & Bright"}
-                    </div>
-                    <h3 className="text-2xl sm:text-3xl font-black text-emerald-950">
-                      {getTranslation("games.colors.title", {}, language)}
-                    </h3>
-                    <p className="text-sm font-bold text-emerald-800">
-                      {getTranslation("games.colors.subtitle", {}, language)}
-                    </p>
-                  </div>
-
-                  {/* Decorative Color/Shapes Visual */}
-                  <div className="relative w-24 h-24 sm:w-28 sm:h-28 bg-emerald-200 rounded-3xl border-4 border-emerald-400 flex items-center justify-center shadow-inner group-hover:rotate-3 transition-transform shrink-0">
-                    <span className="text-4xl sm:text-5xl select-none font-black text-emerald-700">🎨</span>
-                  </div>
-                </div>
-
-                <div className="pt-4">
-                  <Link href="/learn/colors">
-                    <ChildButton
-                      variant="success"
-                      size="md"
-                      icon={<Play className="w-5 h-5 fill-current" />}
-                      className="w-full sm:w-auto"
-                    >
-                      {getTranslation("dashboard.startPlay", {}, language)}
-                    </ChildButton>
-                  </Link>
-                </div>
-              </ChildCard>
-            </motion.div>
-
-            {/* Game 5: Belajar Angka & Berhitung */}
-            <motion.div
-              whileHover={{ scale: 1.03, y: -4 }}
-              whileTap={{ scale: 0.98 }}
-            >
-              <ChildCard
-                borderColor="border-amber-400"
-                bgGradient="bg-gradient-to-br from-amber-100/90 via-white to-yellow-50"
-                className="relative overflow-hidden group shadow-xl h-full flex flex-col justify-between"
-              >
-                <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
-                  <div className="space-y-2 text-center sm:text-left">
-                    <div className="inline-flex items-center gap-1.5 bg-amber-500 text-white font-black text-xs px-3 py-1 rounded-full uppercase tracking-wider shadow-sm">
-                      <Sparkles className="w-3.5 h-3.5 fill-white" /> {language === "id" ? "Berhitung Ceria" : "Joyful Math"}
-                    </div>
-                    <h3 className="text-2xl sm:text-3xl font-black text-amber-950">
-                      {getTranslation("games.numbers.title", {}, language)}
-                    </h3>
-                    <p className="text-sm font-bold text-amber-800">
-                      {getTranslation("games.numbers.subtitle", {}, language)}
-                    </p>
-                  </div>
-
-                  {/* Decorative Number Visual */}
-                  <div className="relative w-24 h-24 sm:w-28 sm:h-28 bg-amber-200 rounded-3xl border-4 border-amber-400 flex items-center justify-center shadow-inner group-hover:rotate-3 transition-transform shrink-0">
-                    <span className="text-4xl sm:text-5xl select-none font-black text-amber-700">🔢</span>
-                  </div>
-                </div>
-
-                <div className="pt-4">
-                  <Link href="/learn/numbers">
-                    <ChildButton
-                      variant="primary"
-                      size="md"
-                      icon={<Play className="w-5 h-5 fill-amber-950" />}
-                      className="w-full sm:w-auto"
-                    >
-                      {getTranslation("dashboard.startPlay", {}, language)}
-                    </ChildButton>
-                  </Link>
-                </div>
-              </ChildCard>
-            </motion.div>
-
-            {/* Game 6: Tebak Memori */}
-            <motion.div
-              whileHover={{ scale: 1.03, y: -4 }}
-              whileTap={{ scale: 0.98 }}
-            >
-              <ChildCard
-                borderColor="border-purple-400"
-                bgGradient="bg-gradient-to-br from-purple-100/90 via-white to-pink-50"
-                className="relative overflow-hidden group shadow-xl h-full flex flex-col justify-between"
-              >
-                <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
-                  <div className="space-y-2 text-center sm:text-left">
-                    <div className="inline-flex items-center gap-1.5 bg-purple-500 text-white font-black text-xs px-3 py-1 rounded-full uppercase tracking-wider shadow-sm">
-                      <Sparkles className="w-3.5 h-3.5 fill-white" /> {language === "id" ? "Ingatan & Fokus" : "Memory & Focus"}
-                    </div>
-                    <h3 className="text-2xl sm:text-3xl font-black text-purple-950">
-                      {getTranslation("games.memory.title", {}, language)}
-                    </h3>
-                    <p className="text-sm font-bold text-purple-800">
-                      {getTranslation("games.memory.subtitle", {}, language)}
-                    </p>
-                  </div>
-
-                  {/* Decorative Memory Visual */}
-                  <div className="relative w-24 h-24 sm:w-28 sm:h-28 bg-purple-200 rounded-3xl border-4 border-purple-400 flex items-center justify-center shadow-inner group-hover:rotate-3 transition-transform shrink-0">
-                    <span className="text-4xl sm:text-5xl select-none font-black text-purple-700">🧠</span>
-                  </div>
-                </div>
-
-                <div className="pt-4">
-                  <Link href="/learn/memory">
-                    <ChildButton
-                      variant="purple"
-                      size="md"
-                      icon={<Play className="w-5 h-5 fill-white" />}
-                      className="w-full sm:w-auto"
-                    >
-                      {getTranslation("dashboard.startPlay", {}, language)}
-                    </ChildButton>
-                  </Link>
-                </div>
-              </ChildCard>
-            </motion.div>
-
-            {/* Game 7: Mewarnai */}
-            <motion.div
-              whileHover={{ scale: 1.03, y: -4 }}
-              whileTap={{ scale: 0.98 }}
-            >
-              <ChildCard
-                borderColor="border-pink-400"
-                bgGradient="bg-gradient-to-br from-pink-100/90 via-white to-rose-50"
-                className="relative overflow-hidden group shadow-xl h-full flex flex-col justify-between"
-              >
-                <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
-                  <div className="space-y-2 text-center sm:text-left">
-                    <div className="inline-flex items-center gap-1.5 bg-pink-500 text-white font-black text-xs px-3 py-1 rounded-full uppercase tracking-wider shadow-sm">
-                      <Sparkles className="w-3.5 h-3.5 fill-white" /> {language === "id" ? "Kreatif & Seni" : "Creative & Art"}
-                    </div>
-                    <h3 className="text-2xl sm:text-3xl font-black text-pink-950">
-                      {getTranslation("games.coloring.title", {}, language)}
-                    </h3>
-                    <p className="text-sm font-bold text-pink-800">
-                      {getTranslation("games.coloring.subtitle", {}, language)}
-                    </p>
-                  </div>
-
-                  {/* Decorative Palette Visual */}
-                  <div className="relative w-24 h-24 sm:w-28 sm:h-28 bg-pink-200 rounded-3xl border-4 border-pink-400 flex items-center justify-center shadow-inner group-hover:rotate-6 transition-transform shrink-0">
-                    <span className="text-4xl sm:text-5xl select-none font-black text-pink-700">🎨</span>
-                  </div>
-                </div>
-
-                <div className="pt-4">
-                  <Link href="/learn/coloring">
-                    <ChildButton
-                      variant="pink"
-                      size="md"
-                      icon={<Play className="w-5 h-5 fill-white" />}
-                      className="w-full sm:w-auto font-black"
-                    >
-                      {getTranslation("dashboard.startPlay", {}, language)}
-                    </ChildButton>
-                  </Link>
-                </div>
-              </ChildCard>
-            </motion.div>
-
-            {/* Game 8: Pilah & Rapikan */}
-            <motion.div
-              whileHover={{ scale: 1.03, y: -4 }}
-              whileTap={{ scale: 0.98 }}
-            >
-              <ChildCard
-                borderColor="border-emerald-400"
-                bgGradient="bg-gradient-to-br from-emerald-100/90 via-white to-teal-50"
-                className="relative overflow-hidden group shadow-xl h-full flex flex-col justify-between"
-              >
-                <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
-                  <div className="space-y-2 text-center sm:text-left">
-                    <div className="inline-flex items-center gap-1.5 bg-emerald-600 text-white font-black text-xs px-3 py-1 rounded-full uppercase tracking-wider shadow-sm">
-                      <Sparkles className="w-3.5 h-3.5 fill-white" /> {language === "id" ? "Kemandirian & Rapi" : "Life Skills & Logic"}
-                    </div>
-                    <h3 className="text-2xl sm:text-3xl font-black text-emerald-950">
-                      {getTranslation("games.sorting.title", {}, language)}
-                    </h3>
-                    <p className="text-sm font-bold text-emerald-800">
-                      {getTranslation("games.sorting.subtitle", {}, language)}
-                    </p>
-                  </div>
-
-                  {/* Decorative Boxes Visual */}
-                  <div className="relative w-24 h-24 sm:w-28 sm:h-28 bg-emerald-200 rounded-3xl border-4 border-emerald-400 flex items-center justify-center shadow-inner group-hover:rotate-6 transition-transform shrink-0">
-                    <span className="text-4xl sm:text-5xl select-none font-black text-emerald-700">📦</span>
-                  </div>
-                </div>
-
-                <div className="pt-4">
-                  <Link href="/learn/sorting">
-                    <ChildButton
-                      variant="success"
-                      size="md"
-                      icon={<Play className="w-5 h-5 fill-white" />}
-                      className="w-full sm:w-auto font-black"
-                    >
-                      {getTranslation("dashboard.startPlay", {}, language)}
-                    </ChildButton>
-                  </Link>
-                </div>
-              </ChildCard>
-            </motion.div>
+            {[
+              {
+                id: "matching",
+                title: getTranslation("games.matching.title", {}, language),
+                subtitle: getTranslation("games.matching.subtitle", {}, language),
+                badgeText: language === "id" ? "Kognitif & Fokus" : "Cognitive & Focus",
+                badgeBgColor: "bg-amber-400",
+                badgeTextColor: "text-amber-950",
+                borderColor: "border-amber-400",
+                bgGradient: "bg-gradient-to-br from-amber-100/90 via-white to-orange-50",
+                visualBgColor: "bg-amber-200",
+                visualBorderColor: "border-amber-400",
+                visualEmoji: "🧩",
+                visualTextColor: "text-amber-800",
+                href: "/learn/matching",
+                buttonVariant: "primary" as const,
+                buttonIconFill: "fill-amber-950",
+                buttonText: getTranslation("dashboard.startPlay", {}, language),
+              },
+              {
+                id: "letters",
+                title: getTranslation("games.letters.title", {}, language),
+                subtitle: getTranslation("games.letters.subtitle", {}, language),
+                badgeText: language === "id" ? "Literasi Dasar" : "Early Literacy",
+                badgeBgColor: "bg-pink-400",
+                badgeTextColor: "text-white",
+                borderColor: "border-pink-400",
+                bgGradient: "bg-gradient-to-br from-pink-100/90 via-white to-rose-50",
+                visualBgColor: "bg-pink-200",
+                visualBorderColor: "border-pink-400",
+                visualEmoji: "🔤",
+                visualTextColor: "text-pink-700",
+                href: "/learn/letters",
+                buttonVariant: "pink" as const,
+                buttonText: getTranslation("dashboard.startPlay", {}, language),
+              },
+              {
+                id: "puzzle",
+                title: getTranslation("games.puzzle.title", {}, language),
+                subtitle: getTranslation("games.puzzle.subtitle", {}, language),
+                badgeText: language === "id" ? "Spasial & Logika" : "Spatial & Logic",
+                badgeBgColor: "bg-sky-500",
+                badgeTextColor: "text-white",
+                borderColor: "border-sky-400",
+                bgGradient: "bg-gradient-to-br from-sky-100/90 via-white to-blue-50",
+                visualBgColor: "bg-sky-200",
+                visualBorderColor: "border-sky-400",
+                visualEmoji: "🖼️",
+                visualTextColor: "text-sky-700",
+                href: "/learn/puzzle",
+                buttonVariant: "indigo" as const,
+                buttonText: getTranslation("dashboard.startPlay", {}, language),
+              },
+              {
+                id: "colors",
+                title: getTranslation("games.colors.title", {}, language),
+                subtitle: getTranslation("games.colors.subtitle", {}, language),
+                badgeText: language === "id" ? "Kreatif & Ceria" : "Creative & Bright",
+                badgeBgColor: "bg-emerald-500",
+                badgeTextColor: "text-white",
+                borderColor: "border-emerald-400",
+                bgGradient: "bg-gradient-to-br from-emerald-100/90 via-white to-teal-50",
+                visualBgColor: "bg-emerald-200",
+                visualBorderColor: "border-emerald-400",
+                visualEmoji: "🎨",
+                visualTextColor: "text-emerald-700",
+                href: "/learn/colors",
+                buttonVariant: "success" as const,
+                buttonText: getTranslation("dashboard.startPlay", {}, language),
+              },
+              {
+                id: "numbers",
+                title: getTranslation("games.numbers.title", {}, language),
+                subtitle: getTranslation("games.numbers.subtitle", {}, language),
+                badgeText: language === "id" ? "Berhitung Ceria" : "Joyful Math",
+                badgeBgColor: "bg-amber-500",
+                badgeTextColor: "text-white",
+                borderColor: "border-amber-400",
+                bgGradient: "bg-gradient-to-br from-amber-100/90 via-white to-yellow-50",
+                visualBgColor: "bg-amber-200",
+                visualBorderColor: "border-amber-400",
+                visualEmoji: "🔢",
+                visualTextColor: "text-amber-700",
+                href: "/learn/numbers",
+                buttonVariant: "primary" as const,
+                buttonIconFill: "fill-amber-950",
+                buttonText: getTranslation("dashboard.startPlay", {}, language),
+              },
+              {
+                id: "memory",
+                title: getTranslation("games.memory.title", {}, language),
+                subtitle: getTranslation("games.memory.subtitle", {}, language),
+                badgeText: language === "id" ? "Ingatan & Fokus" : "Memory & Focus",
+                badgeBgColor: "bg-purple-500",
+                badgeTextColor: "text-white",
+                borderColor: "border-purple-400",
+                bgGradient: "bg-gradient-to-br from-purple-100/90 via-white to-pink-50",
+                visualBgColor: "bg-purple-200",
+                visualBorderColor: "border-purple-400",
+                visualEmoji: "🧠",
+                visualTextColor: "text-purple-700",
+                href: "/learn/memory",
+                buttonVariant: "purple" as const,
+                buttonText: getTranslation("dashboard.startPlay", {}, language),
+              },
+              {
+                id: "coloring",
+                title: getTranslation("games.coloring.title", {}, language),
+                subtitle: getTranslation("games.coloring.subtitle", {}, language),
+                badgeText: language === "id" ? "Kreatif & Seni" : "Creative & Art",
+                badgeBgColor: "bg-pink-500",
+                badgeTextColor: "text-white",
+                borderColor: "border-pink-400",
+                bgGradient: "bg-gradient-to-br from-pink-100/90 via-white to-rose-50",
+                visualBgColor: "bg-pink-200",
+                visualBorderColor: "border-pink-400",
+                visualEmoji: "🎨",
+                visualTextColor: "text-pink-700",
+                href: "/learn/coloring",
+                buttonVariant: "pink" as const,
+                buttonText: getTranslation("dashboard.startPlay", {}, language),
+              },
+              {
+                id: "sorting",
+                title: getTranslation("games.sorting.title", {}, language),
+                subtitle: getTranslation("games.sorting.subtitle", {}, language),
+                badgeText: language === "id" ? "Kemandirian & Rapi" : "Life Skills & Logic",
+                badgeBgColor: "bg-emerald-600",
+                badgeTextColor: "text-white",
+                borderColor: "border-emerald-400",
+                bgGradient: "bg-gradient-to-br from-emerald-100/90 via-white to-teal-50",
+                visualBgColor: "bg-emerald-200",
+                visualBorderColor: "border-emerald-400",
+                visualEmoji: "📦",
+                visualTextColor: "text-emerald-700",
+                href: "/learn/sorting",
+                buttonVariant: "success" as const,
+                buttonText: getTranslation("dashboard.startPlay", {}, language),
+              },
+            ].map((game) => (
+              <GameMenuCard key={game.id} {...game} />
+            ))}
 
             {/* Locked Future Games */}
             {GAMES_CATALOG.filter((g) => !g.available).map((game) => (

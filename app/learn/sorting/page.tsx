@@ -3,6 +3,7 @@
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import { ChildNavbar } from "@/components/navigation/ChildNavbar";
+import { ChildPageHeader } from "@/components/navigation/ChildPageHeader";
 import { Teacher } from "@/components/teacher/Teacher";
 import { ChildButton } from "@/components/ui/ChildButton";
 import { ChildCard } from "@/components/ui/ChildCard";
@@ -35,25 +36,11 @@ export default function SortingSelectPage() {
       <ChildNavbar />
 
       <main className="flex-1 max-w-6xl w-full mx-auto space-y-6 py-8">
-        {/* Header Back & Title */}
-        <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
-          <Link href="/learn">
-            <ChildButton variant="secondary" size="sm" className="gap-2">
-              <ArrowLeft className="w-4 h-4" />
-              <span>{getTranslation("app.back", {}, language)}</span>
-            </ChildButton>
-          </Link>
-
-          <div className="text-center sm:text-right space-y-1">
-            <div className="inline-flex items-center gap-1.5 bg-emerald-100 text-emerald-950 px-3 py-1 rounded-full text-xs font-black">
-              <Boxes className="w-3.5 h-3.5 text-emerald-600" />
-              <span>{getTranslation("games.sorting.moduleBadge", {}, language)}</span>
-            </div>
-            <h1 className="text-2xl sm:text-4xl font-black text-amber-950 tracking-tight">
-              {getTranslation("games.sorting.title", {}, language)} 📦
-            </h1>
-          </div>
-        </div>
+        {/* Uniform Header */}
+        <ChildPageHeader
+          title={`${getTranslation("games.sorting.title", {}, language)} 📦`}
+          backHref="/learn"
+        />
 
         {/* Teacher Guide */}
         <Teacher

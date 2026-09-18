@@ -6,6 +6,7 @@ import { useGameStore } from "@/stores/game-store";
 import { useProfileStore } from "@/stores/profile-store";
 import { useSettingsStore } from "@/stores/settings-store";
 import { ChildNavbar } from "@/components/navigation/ChildNavbar";
+import { ChildPageHeader } from "@/components/navigation/ChildPageHeader";
 import { Teacher } from "@/components/teacher/Teacher";
 import { ChildCard } from "@/components/ui/ChildCard";
 import { ChildButton } from "@/components/ui/ChildButton";
@@ -73,20 +74,11 @@ export default function MatchingLevelSelectPage() {
       <ChildNavbar />
 
       <main className="flex-1 max-w-6xl w-full mx-auto space-y-6 py-8">
-        {/* Back Link & Title */}
-        <div className="flex items-center justify-between gap-4">
-          <Link
-            href="/learn"
-            className="p-2.5 sm:px-4 sm:py-2 bg-amber-100 hover:bg-amber-200 text-amber-900 rounded-2xl transition flex items-center gap-1.5 font-bold text-sm sm:text-base shadow-sm"
-          >
-            <ArrowLeft className="w-5 h-5" />
-            <span>{getTranslation("app.backToMenu", {}, language)}</span>
-          </Link>
-
-          <h1 className="text-2xl sm:text-3xl font-black text-amber-950">
-            {getTranslation("games.matching.title", {}, language)}
-          </h1>
-        </div>
+        {/* Uniform Header */}
+        <ChildPageHeader
+          title={getTranslation("games.matching.title", {}, language)}
+          backHref="/learn"
+        />
 
         {/* Teacher Guidance */}
         <Teacher

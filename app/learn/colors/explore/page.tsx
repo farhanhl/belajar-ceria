@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import { COLORS_CATALOG, SHAPES_CATALOG } from "@/games/colors/data/colors-shapes-data";
 import { ColorShapeExploreCard } from "@/games/colors/components/ColorShapeExploreCard";
 import { ChildNavbar } from "@/components/navigation/ChildNavbar";
+import { ChildPageHeader } from "@/components/navigation/ChildPageHeader";
 import { Teacher } from "@/components/teacher/Teacher";
 import { ChildButton } from "@/components/ui/ChildButton";
 import { useSettingsStore } from "@/stores/settings-store";
@@ -28,49 +29,46 @@ export default function ColorsExplorePage() {
       <ChildNavbar />
 
       <main className="flex-1 max-w-6xl w-full mx-auto space-y-6 py-8">
-        {/* Top Navigation */}
-        <div className="flex items-center justify-between gap-4 flex-wrap">
-          <Link href="/learn/colors">
-            <ChildButton variant="secondary" size="sm" className="gap-2">
-              <ArrowLeft className="w-4 h-4" />
-              <span>{getTranslation("app.back", {}, language)}</span>
-            </ChildButton>
-          </Link>
-
-          {/* Filter Tabs */}
-          <div className="flex items-center gap-2 bg-white/90 p-1.5 rounded-full border border-amber-200 shadow-sm">
-            <button
-              onClick={() => handleTabChange("all")}
-              className={`px-3.5 py-1.5 rounded-full font-black text-xs sm:text-sm transition-all cursor-pointer ${
-                activeTab === "all"
-                  ? "bg-amber-500 text-white shadow"
-                  : "text-amber-950 hover:bg-amber-100/50"
-              }`}
-            >
-              {language === "id" ? "Semua (16)" : "All (16)"}
-            </button>
-            <button
-              onClick={() => handleTabChange("colors")}
-              className={`px-3.5 py-1.5 rounded-full font-black text-xs sm:text-sm transition-all cursor-pointer ${
-                activeTab === "colors"
-                  ? "bg-amber-500 text-white shadow"
-                  : "text-amber-950 hover:bg-amber-100/50"
-              }`}
-            >
-              {getTranslation("games.colors.tabColors", {}, language)}
-            </button>
-            <button
-              onClick={() => handleTabChange("shapes")}
-              className={`px-3.5 py-1.5 rounded-full font-black text-xs sm:text-sm transition-all cursor-pointer ${
-                activeTab === "shapes"
-                  ? "bg-amber-500 text-white shadow"
-                  : "text-amber-950 hover:bg-amber-100/50"
-              }`}
-            >
-              {getTranslation("games.colors.tabShapes", {}, language)}
-            </button>
-          </div>
-        </div>
+        {/* Uniform Header */}
+        <ChildPageHeader
+          title={getTranslation("games.colors.exploreTitle", {}, language) || "Eksplorasi Warna & Bentuk"}
+          backHref="/learn/colors"
+          backLabel={getTranslation("app.back", {}, language)}
+          rightContent={
+            <div className="flex items-center gap-1.5 sm:gap-2 bg-white/90 p-1 sm:p-1.5 rounded-full border border-amber-200 shadow-sm">
+              <button
+                onClick={() => handleTabChange("all")}
+                className={`px-3 py-1 sm:px-3.5 sm:py-1.5 rounded-full font-black text-xs sm:text-sm transition-all cursor-pointer ${
+                  activeTab === "all"
+                    ? "bg-amber-500 text-white shadow"
+                    : "text-amber-950 hover:bg-amber-100/50"
+                }`}
+              >
+                {language === "id" ? "Semua" : "All"}
+              </button>
+              <button
+                onClick={() => handleTabChange("colors")}
+                className={`px-3 py-1 sm:px-3.5 sm:py-1.5 rounded-full font-black text-xs sm:text-sm transition-all cursor-pointer ${
+                  activeTab === "colors"
+                    ? "bg-amber-500 text-white shadow"
+                    : "text-amber-950 hover:bg-amber-100/50"
+                }`}
+              >
+                {getTranslation("games.colors.tabColors", {}, language)}
+              </button>
+              <button
+                onClick={() => handleTabChange("shapes")}
+                className={`px-3 py-1 sm:px-3.5 sm:py-1.5 rounded-full font-black text-xs sm:text-sm transition-all cursor-pointer ${
+                  activeTab === "shapes"
+                    ? "bg-amber-500 text-white shadow"
+                    : "text-amber-950 hover:bg-amber-100/50"
+                }`}
+              >
+                {getTranslation("games.colors.tabShapes", {}, language)}
+              </button>
+            </div>
+          }
+        />
 
         {/* Teacher Avatar Feedback */}
         <Teacher

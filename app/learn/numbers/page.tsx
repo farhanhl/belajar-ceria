@@ -9,6 +9,7 @@ import { useNumbersGameStore } from "@/stores/numbers-game-store";
 import { useProfileStore } from "@/stores/profile-store";
 import { useSettingsStore } from "@/stores/settings-store";
 import { ChildNavbar } from "@/components/navigation/ChildNavbar";
+import { ChildPageHeader } from "@/components/navigation/ChildPageHeader";
 import { Teacher } from "@/components/teacher/Teacher";
 import { ChildCard } from "@/components/ui/ChildCard";
 import { ChildButton } from "@/components/ui/ChildButton";
@@ -53,20 +54,11 @@ export default function NumbersMenuPage() {
       <ChildNavbar />
 
       <main className="flex-1 max-w-6xl w-full mx-auto space-y-6 py-8">
-        {/* Top Header */}
-        <div className="flex items-center justify-between gap-4 flex-wrap">
-          <Link href="/learn">
-            <ChildButton variant="secondary" size="sm" className="gap-2">
-              <ArrowLeft className="w-4 h-4" />
-              <span>{getTranslation("app.backToLearn", {}, language)}</span>
-            </ChildButton>
-          </Link>
-
-          <div className="inline-flex items-center gap-2 bg-amber-200 text-amber-950 font-black px-4 py-2 rounded-full text-sm shadow-sm">
-            <Star className="w-5 h-5 fill-amber-500 text-amber-600" />
-            <span>{getTranslation("app.starsCollected", { count: numbersStars }, language)}</span>
-          </div>
-        </div>
+        {/* Uniform Header */}
+        <ChildPageHeader
+          title={getTranslation("games.numbers.title", {}, language)}
+          backHref="/learn"
+        />
 
         {/* Teacher Avatar Greeting */}
         <Teacher

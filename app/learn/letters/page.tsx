@@ -7,6 +7,7 @@ import { useSettingsStore } from "@/stores/settings-store";
 import { useProfileStore } from "@/stores/profile-store";
 import { Teacher } from "@/components/teacher/Teacher";
 import { ChildNavbar } from "@/components/navigation/ChildNavbar";
+import { ChildPageHeader } from "@/components/navigation/ChildPageHeader";
 import { ChildButton } from "@/components/ui/ChildButton";
 import { GameDifficulty } from "@/types/game";
 import { motion } from "motion/react";
@@ -39,20 +40,11 @@ export default function LettersMenuPage() {
       <ChildNavbar />
 
       <main className="flex-1 max-w-6xl w-full mx-auto space-y-6 py-8">
-        {/* Header & Back */}
-        <div className="flex items-center justify-between gap-4">
-          <Link
-            href="/learn"
-            className="p-2.5 sm:px-4 sm:py-2 bg-amber-100 hover:bg-amber-200 text-amber-900 rounded-2xl transition flex items-center gap-1.5 font-black text-sm sm:text-base shadow-sm"
-          >
-            <ArrowLeft className="w-5 h-5" />
-            <span>{getTranslation("app.backToMenu", {}, language)}</span>
-          </Link>
-
-          <h1 className="text-2xl sm:text-4xl font-black text-amber-950 tracking-tight">
-            {getTranslation("games.letters.titleFull", {}, language)}
-          </h1>
-        </div>
+        {/* Uniform Header */}
+        <ChildPageHeader
+          title={getTranslation("games.letters.titleFull", {}, language)}
+          backHref="/learn"
+        />
 
         {/* Teacher Welcome */}
         <Teacher

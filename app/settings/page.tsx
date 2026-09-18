@@ -3,6 +3,7 @@
 import React, { useState } from "react";
 import { useSettingsStore } from "@/stores/settings-store";
 import { ChildNavbar } from "@/components/navigation/ChildNavbar";
+import { ChildPageHeader } from "@/components/navigation/ChildPageHeader";
 import { ChildCard } from "@/components/ui/ChildCard";
 import { Teacher } from "@/components/teacher/Teacher";
 import { Volume2, VolumeX, Mic, Globe, ArrowLeft, Check, Music, Music2 } from "lucide-react";
@@ -83,20 +84,11 @@ export default function SettingsPage() {
       <ChildNavbar />
 
       <main className="flex-1 max-w-6xl w-full mx-auto space-y-6 py-8">
-        {/* Header */}
-        <div className="flex items-center justify-between gap-4">
-          <Link
-            href="/learn"
-            className="p-2.5 sm:px-4 sm:py-2 bg-amber-100 hover:bg-amber-200 text-amber-900 rounded-2xl transition flex items-center gap-1.5 font-bold text-sm sm:text-base shadow-sm"
-          >
-            <ArrowLeft className="w-5 h-5" />
-            <span>{getTranslation("app.back", {}, language)}</span>
-          </Link>
-
-          <h1 className="text-3xl font-black text-amber-950">
-            {getTranslation("settings.title", {}, language)}
-          </h1>
-        </div>
+        {/* Uniform Header */}
+        <ChildPageHeader
+          title={getTranslation("settings.title", {}, language)}
+          backHref="/learn"
+        />
 
         {/* Teacher Feedback in Settings */}
         <Teacher

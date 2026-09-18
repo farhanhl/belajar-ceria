@@ -3,6 +3,7 @@
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import { ChildNavbar } from "@/components/navigation/ChildNavbar";
+import { ChildPageHeader } from "@/components/navigation/ChildPageHeader";
 import { Teacher } from "@/components/teacher/Teacher";
 import { ChildButton } from "@/components/ui/ChildButton";
 import { ChildCard } from "@/components/ui/ChildCard";
@@ -41,25 +42,11 @@ export default function PuzzleSelectPage() {
       <ChildNavbar />
 
       <main className="flex-1 max-w-6xl w-full mx-auto space-y-6 py-8">
-        {/* Header Back & Title */}
-        <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
-          <Link href="/learn">
-            <ChildButton variant="secondary" size="sm" className="gap-2">
-              <ArrowLeft className="w-4 h-4" />
-              <span>{getTranslation("app.back", {}, language)}</span>
-            </ChildButton>
-          </Link>
-
-          <div className="text-center sm:text-right space-y-1">
-            <div className="inline-flex items-center gap-1.5 bg-amber-100 text-amber-950 px-3 py-1 rounded-full text-xs font-black">
-              <Layers className="w-3.5 h-3.5 text-amber-600" />
-              <span>{getTranslation("games.puzzle.moduleBadge", {}, language)}</span>
-            </div>
-            <h1 className="text-2xl sm:text-4xl font-black text-amber-950 tracking-tight">
-              {getTranslation("games.puzzle.title", {}, language)} 🧩
-            </h1>
-          </div>
-        </div>
+        {/* Uniform Header */}
+        <ChildPageHeader
+          title={`${getTranslation("games.puzzle.title", {}, language)} 🧩`}
+          backHref="/learn"
+        />
 
         {/* Teacher Guide */}
         <Teacher
